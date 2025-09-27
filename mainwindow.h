@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "interface_formateur.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,10 +19,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
-    void on_pushButton_clicked();
+    void on_pushButton_clicked();  // bouton qui ouvre interface formateur
 
 private:
     Ui::MainWindow *ui;
+    interface_formateur *inter_form;  // pointeur vers la 2e fenêtre
+
+
 };
 #endif // MAINWINDOW_H

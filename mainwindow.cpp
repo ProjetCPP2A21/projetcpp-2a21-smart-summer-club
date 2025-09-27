@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "formation.h"
-
+#include "interface_formateur.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    inter_form = new interface_formateur(); // création fenêtre formateur
 }
 
 MainWindow::~MainWindow()
@@ -17,16 +17,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-Formation f;
-f.setId(ui->lineEdit_id->text());
-f.setNom(ui->lineEdit_nom->text());
-f.setType(ui->lineEdit_type->currentText());
-f.setHoraire(ui->lineEdit_h->text());
-f.setDuree(ui->lineEdit_D->text());
-f.setLieu(ui->lineEdit_lieu->text());
-f.setCapacite(ui->lineEdit_Ca->text());
-f.setTarif(ui->lineEdit_Ta->text());
-
-
+    inter_form->show();  // quand je clique, la 2e fenêtre s'affiche
+    this->hide();  // cacher la fenêtre principale
 }
+
+
+
 
