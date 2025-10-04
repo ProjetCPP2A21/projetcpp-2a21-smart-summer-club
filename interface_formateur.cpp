@@ -1,50 +1,89 @@
 #include "interface_formateur.h"
 #include "ui_interface_formateur.h"
+#include "statisticsdialog.h"
+#include "mainwindow.h"
 #include <QMessageBox>
 
-interface_formateur::interface_formateur(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::interface_formateur)
+interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
+    : QMainWindow(parent),
+    ui(new Ui::interface_formateur),
+    menuPrincipal(menu)   // on initialise avec le menu passé en paramètre
 {
     ui->setupUi(this);
 }
+
 
 interface_formateur::~interface_formateur()
 {
     delete ui;
 }
 
-/*void interface_formateur::on_pushButton_stat_clicked()
+void interface_formateur::setPage(int index)
 {
-    stat = new statistique(this);  // création de l'interface_formateur
-    stat->show();
-    // this->hide();
-}*/
+    ui->stackedWidget->setCurrentIndex(index);
+}
+
+
+
 
 void interface_formateur::on_pushButton_clicked()
 {
     QMessageBox::information(this, "Formateur", "Bouton Formateur cliqué !");
 }
 
-
-
-/*void interface_formateur::on_pushButton_rapport_clicked()
+void interface_formateur::on_pushButton_retour_menu_clicked()
 {
-    rap = new rapport(this);  // création de dialog rapport
-    rap->show();
-    // this->hide();
+    this->hide();                // cacher la fenêtre
+    menuPrincipal->show();       // réafficher le menu principal
+}
 
-    // QMessageBox::information(this, "rapport", "Bouton rapport cliqué !");
-}*/
+void interface_formateur::on_pushButton_employe_clicked()
+{
+        ui->stackedWidget->setCurrentIndex(0);
+}
 
+void interface_formateur::on_pushButton_formateur_clicked()
+{
+       ui->stackedWidget->setCurrentIndex(1);
+}
+
+void interface_formateur::on_pushButton_formation_clicked()
+{
+        ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+
+
+
+
+
+
+
+
+void interface_formateur::on_pushButton_stat_4_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+
+}
+
+
+void interface_formateur::on_pushButton_stat_3_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+
+
+}
 
 
 
 
 void interface_formateur::on_pushButton_stat_2_clicked()
 {
-    stat = new statistique(this);  // création de l'interface_formateur
-    stat->show();
-    // this->hide();
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+
 }
 
