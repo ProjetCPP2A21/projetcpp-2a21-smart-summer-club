@@ -1,6 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include "interface_formateur.h"
 
@@ -22,11 +21,16 @@ public:
 
 private slots:
     void on_pushButton_clicked();  // bouton qui ouvre interface formateur
+    void on_pushButton_gestionemploye_clicked(); // bouton qui ouvre interface employe
+
+    void on_pushButton_gestionformation_clicked();
+
+
+
+    void on_pushButton_gestionservice_clicked();
 
 private:
     Ui::MainWindow *ui;
     interface_formateur *inter_form;  // pointeur vers la 2e fenêtre
-
-
 };
 #endif // MAINWINDOW_H

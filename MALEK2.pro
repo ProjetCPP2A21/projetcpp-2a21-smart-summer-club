@@ -12,17 +12,17 @@ SOURCES += \
     interface_formateur.cpp \
     main.cpp \
     mainwindow.cpp \
-    statistique.cpp
+    statisticsdialog.cpp
 
 HEADERS += \
     interface_formateur.h \
     mainwindow.h \
-    statistique.h
+    statisticsdialog.h
 
 FORMS += \
     interface_formateur.ui \
     mainwindow.ui \
-    statistique.ui
+    statisticsdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

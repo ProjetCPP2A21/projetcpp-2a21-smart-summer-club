@@ -3,12 +3,12 @@
 #include "interface_formateur.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    inter_form = new interface_formateur(); // création fenêtre formateur
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -17,10 +17,38 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    inter_form->show();  // quand je clique, la 2e fenêtre s'affiche
-    this->hide();  // cacher la fenêtre principale
+    interface_formateur *inter = new interface_formateur(this);
+    inter->setPage(1); //forcer l'affichage dans la page formateur
+    inter->show();
+    this->hide();
+}
+
+void MainWindow::on_pushButton_gestionemploye_clicked()
+{
+    interface_formateur *inter = new interface_formateur(this);
+    inter->setPage(0); //forcer l'affichage dans la page employe
+    inter->show();
+    this->hide();
+}
+
+
+void MainWindow::on_pushButton_gestionformation_clicked()
+{
+    interface_formateur *inter = new interface_formateur(this);
+    inter->setPage(2); //forcer l'affichage dans la page employe
+    inter->show();
+    this->hide();
 }
 
 
 
+
+
+void MainWindow::on_pushButton_gestionservice_clicked()
+{
+    interface_formateur *inter = new interface_formateur(this);
+    inter->setPage(5); //forcer l'affichage dans la page employe
+    inter->show();
+    this->hide();
+}
 
