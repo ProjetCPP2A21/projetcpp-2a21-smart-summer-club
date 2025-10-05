@@ -17,10 +17,3920 @@
    <string notr="true">background-color: rgb(4, 4, 87);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>1271</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="currentIndex">
+     <number>3</number>
+    </property>
+    <widget class="QWidget" name="page_employe">
+     <widget class="QWidget" name="Formateur" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1271</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+      <widget class="QFrame" name="frame_9">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>40</y>
+         <width>271</width>
+         <height>701</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(58, 196, 255);
+background-color: rgb(83, 130, 171);
+border-radius:20px;
+
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLineEdit" name="lineEdit_cin_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>60</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+        <property name="maxLength">
+         <number>8</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>510</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Contact</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_contact_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>530</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_6">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>180</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Prénom</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_nom_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>130</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <property name="maxLength">
+         <number>20</number>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_prenom_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>200</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_cin_4">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>60</y>
+          <width>51</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Valider</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_6">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>40</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ID employe</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>41</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Nom</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_embauche_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>600</y>
+          <width>121</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_embauhe_6">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>580</y>
+          <width>131</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Date d'embauche</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_ANNULER_4">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>670</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Annuler</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_AJOUTER_4">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>640</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter</string>
+        </property>
+       </widget>
+       <widget class="QStackedWidget" name="stackedWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>120</y>
+          <width>120</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <widget class="QWidget" name="page_3"/>
+        <widget class="QWidget" name="page_4"/>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_prenom_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>270</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>250</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CIN</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_12">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>390</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Poste</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_prenom_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>410</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_prenom_12">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>340</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_13">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>320</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Adresse email</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>450</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Mot de passe</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_contact_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>470</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_10">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>20</y>
+         <width>211</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 157, 206);
+border: 3px solid #040457;
+border-radius:20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_embauhe_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>161</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(100, 157, 206);
+border: 2px solid #649dce;
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter un formateur</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_11">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>40</y>
+         <width>1001</width>
+         <height>681</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 3px solid #040457;
+border-radius:20px;
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QTableWidget" name="tableau_liste_3">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>330</y>
+          <width>841</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;
+border-radius: 20px;
+</string>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Sunken</enum>
+        </property>
+        <property name="lineWidth">
+         <number>-7</number>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="rowCount">
+         <number>0</number>
+        </property>
+        <property name="columnCount">
+         <number>7</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Prenom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>CIN</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Adresse email</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Mot de passe</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date d'embauche</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_RECHERCHE_3">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>260</y>
+          <width>321</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+        </property>
+        <property name="text">
+         <string>      Rechercher un formateur à partir de son ID</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_27">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>300</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>    Modifier</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_28">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>300</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/poubelle.png</normaloff>:/img/poubelle.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_29">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>300</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>  Trier</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
+        </property>
+        <property name="autoRepeatInterval">
+         <number>97</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_30">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>630</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>50</y>
+          <width>331</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(106, 166, 218);
+color: rgb(83, 130, 171);
+color: rgb(157, 235, 255);
+border: none;
+font: 30pt &quot;Rockwell&quot;;</string>
+        </property>
+        <property name="text">
+         <string>EMPLOYE</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_stat_2">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>300</y>
+          <width>111</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string> Statistiques</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_31">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>260</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+background-color: rgb(255, 255, 255);
+border-radius : 10px;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/loupe.png</normaloff>:/img/loupe.png</iconset>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_formateur">
+     <widget class="QWidget" name="Formateur_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1271</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+      <widget class="QFrame" name="frame_12">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>40</y>
+         <width>271</width>
+         <height>701</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(58, 196, 255);
+background-color: rgb(83, 130, 171);
+border-radius:20px;
+
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_specialite_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>470</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(4, 4, 87);</string>
+        </property>
+        <property name="text">
+         <string>Spécialité</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_cin_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>60</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+        <property name="maxLength">
+         <number>8</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>330</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Contact</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_contact_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>350</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>180</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Prénom</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_nom_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>130</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <property name="maxLength">
+         <number>20</number>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_prenom_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>200</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_cin_5">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>60</y>
+          <width>51</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Valider</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>40</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CIN</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_9">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>41</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Nom</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_heureprevue_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>560</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_embauche_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>420</y>
+          <width>121</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_embauhe_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>400</y>
+          <width>131</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Date d'embauche</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_10">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>540</y>
+          <width>191</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Nombre d'heures prévues / mois</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_remuneration_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>630</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_11">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>610</y>
+          <width>191</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Salaire</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>280</y>
+          <width>91</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(83, 130, 171);
+border-color: rgb(255, 255, 255);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Homme</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_8">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>280</y>
+          <width>91</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Femme</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_9">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>260</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sexe</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_ANNULER_5">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>670</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Annuler</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_AJOUTER_5">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>640</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_3">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>490</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Français</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Anglais</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Science</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Physique</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Arabe</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QStackedWidget" name="stackedWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>120</y>
+          <width>120</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <widget class="QWidget" name="page_5"/>
+        <widget class="QWidget" name="page_6"/>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_13">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>20</y>
+         <width>211</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 157, 206);
+border: 3px solid #040457;
+border-radius:20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_embauhe_9">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>161</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(100, 157, 206);
+border: 2px solid #649dce;
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter un formateur</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_14">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>40</y>
+         <width>1001</width>
+         <height>681</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 3px solid #040457;
+border-radius:20px;
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QTableWidget" name="tableau_liste_4">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>330</y>
+          <width>841</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;
+border-radius: 20px;
+</string>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Sunken</enum>
+        </property>
+        <property name="lineWidth">
+         <number>-7</number>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="rowCount">
+         <number>0</number>
+        </property>
+        <property name="columnCount">
+         <number>9</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>CIN</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Prenom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Sexe</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Contact</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date d'embauche</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Spécialité</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>heures prevues</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string/>
+         </property>
+        </column>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_RECHERCHE_4">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>260</y>
+          <width>321</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+        </property>
+        <property name="text">
+         <string>      Rechercher un formateur à partir de son ID</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_33">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>300</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>    Modifier</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_34">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>300</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/poubelle.png</normaloff>:/img/poubelle.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_35">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>300</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>  Trier</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
+        </property>
+        <property name="autoRepeatInterval">
+         <number>97</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_36">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>630</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>50</y>
+          <width>331</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(106, 166, 218);
+color: rgb(83, 130, 171);
+color: rgb(157, 235, 255);
+border: none;
+font: 30pt &quot;Rockwell&quot;;</string>
+        </property>
+        <property name="text">
+         <string>FORMATEUR</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_stat_3">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>300</y>
+          <width>111</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string> Statistiques</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_37">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>260</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+background-color: rgb(255, 255, 255);
+border-radius : 10px;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/loupe.png</normaloff>:/img/loupe.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_38">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>630</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255,255);
+border-radius:10px;
+border: 3px solid #ff0000;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+}
+</string>
+        </property>
+        <property name="text">
+         <string>  Analyse prédictive </string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_formation">
+     <widget class="QWidget" name="Formateur_3" native="true">
+      <property name="geometry">
+       <rect>
+        <x>-10</x>
+        <y>0</y>
+        <width>1371</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+      <widget class="QFrame" name="frame_16">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>20</y>
+         <width>211</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 157, 206);
+border: 3px solid #040457;
+border-radius:20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_embauhe_11">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>161</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(100, 157, 206);
+border: 2px solid #649dce;
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter un formateur</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_17">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>60</y>
+         <width>1001</width>
+         <height>681</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 3px solid #040457;
+border-radius:20px;
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QTableWidget" name="tableau_liste_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>330</y>
+          <width>901</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;
+border-radius: 20px;
+</string>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Sunken</enum>
+        </property>
+        <property name="lineWidth">
+         <number>-7</number>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="rowCount">
+         <number>0</number>
+        </property>
+        <property name="columnCount">
+         <number>9</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>Id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Nom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Horaire</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Duree</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Lieu</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Capacite</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Tarif</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string/>
+         </property>
+        </column>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_RECHERCHE_5">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>260</y>
+          <width>321</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+        </property>
+        <property name="text">
+         <string>      Rechercher une formation son nom</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_39">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>300</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>    Modifier</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_40">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>300</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/poubelle.png</normaloff>:/img/poubelle.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_41">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>300</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>  Trier</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
+        </property>
+        <property name="autoRepeatInterval">
+         <number>97</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_42">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>630</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>50</y>
+          <width>331</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(106, 166, 218);
+color: rgb(83, 130, 171);
+color: rgb(157, 235, 255);
+border: none;
+font: 30pt &quot;Rockwell&quot;;</string>
+        </property>
+        <property name="text">
+         <string>FORMATION</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_stat_4">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>300</y>
+          <width>111</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string> Statistiques</string>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_43">
+        <property name="geometry">
+         <rect>
+          <x>540</x>
+          <y>260</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+background-color: rgb(255, 255, 255);
+border-radius : 10px;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="image.qrc">
+          <normaloff>:/img/loupe.png</normaloff>:/img/loupe.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_44">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>300</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Gmail</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_45">
+        <property name="geometry">
+         <rect>
+          <x>720</x>
+          <y>630</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Calendrier</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_6">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>40</y>
+         <width>271</width>
+         <height>701</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(58, 196, 255);
+background-color: rgb(83, 130, 171);
+border-radius:20px;
+
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QLineEdit" name="lineEditId">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>60</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+        <property name="maxLength">
+         <number>8</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_3">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>250</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Horaire</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_prenom_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>180</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_Nom">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>130</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <property name="maxLength">
+         <number>20</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>40</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Id</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cin_5">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>41</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Nom</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_embauhe_4">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>400</y>
+          <width>131</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Lieu</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_Ta">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>570</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_contact_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>550</y>
+          <width>191</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Tarif</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonAjouter">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>640</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Ajouter</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="lineEdit_type">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>200</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Français</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Anglais</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Science</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Physique</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Arabe</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_contact_6">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>320</y>
+          <width>63</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Duree</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_D">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>340</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QTimeEdit" name="lineEdit_h">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>270</y>
+          <width>118</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_lieu">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>420</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_Ca">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>490</y>
+          <width>113</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_embauhe_10">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>470</y>
+          <width>131</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Capacite</string>
+        </property>
+       </widget>
+      </widget>
+      <zorder>frame_6</zorder>
+      <zorder>frame_16</zorder>
+      <zorder>frame_17</zorder>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_equipement">
+     <widget class="QWidget" name="Formateur_7" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1271</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+      <widget class="QWidget" name="Formateur_4" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1271</width>
+         <height>751</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>2000</width>
+         <height>2000</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>1000</width>
+         <height>1000</height>
+        </size>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="tabletTracking">
+        <bool>false</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+       </property>
+       <widget class="QFrame" name="frame_15">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>40</y>
+          <width>271</width>
+          <height>701</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(58, 196, 255);
+background-color: rgb(83, 130, 171);
+border-radius:20px;
+
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_cin_6">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>60</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:10px;
+</string>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_contact_9">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>330</y>
+           <width>71</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Téléphone</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_contact_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>350</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_prenom_5">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>180</y>
+           <width>63</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Prénom</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_nom_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>130</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+         </property>
+         <property name="maxLength">
+          <number>20</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_prenom_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>200</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_cin_3">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>60</y>
+           <width>51</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+         </property>
+         <property name="text">
+          <string>Valider</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_cin_10">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>40</y>
+           <width>31</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_cin_11">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>110</y>
+           <width>41</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Nom</string>
+         </property>
+        </widget>
+        <widget class="QDateEdit" name="dateEdit_embauche_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>420</y>
+           <width>121</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_embauhe_12">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>400</y>
+           <width>131</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Date de naissance</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>280</y>
+           <width>91</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(83, 130, 171);
+border-color: rgb(255, 255, 255);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>Homme</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_4">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>280</y>
+           <width>91</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>Femme</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_prenom_10">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>260</y>
+           <width>63</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Sexe</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_ANNULER_6">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>670</y>
+           <width>61</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+         </property>
+         <property name="text">
+          <string>Annuler</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_AJOUTER_6">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>640</y>
+           <width>61</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+
+</string>
+         </property>
+         <property name="text">
+          <string>Ajouter</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_18">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>20</y>
+          <width>211</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(100, 157, 206);
+border: 3px solid #040457;
+border-radius:20px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_embauhe_13">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>10</y>
+           <width>161</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(100, 157, 206);
+border: 2px solid #649dce;
+</string>
+         </property>
+         <property name="text">
+          <string>Ajouter un apprenant</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_19">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>40</y>
+          <width>931</width>
+          <height>681</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 3px solid #040457;
+border-radius:20px;
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QTableWidget" name="tableau_liste_2">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>330</y>
+           <width>841</width>
+           <height>291</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;
+</string>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Sunken</enum>
+         </property>
+         <property name="lineWidth">
+          <number>-7</number>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="rowCount">
+          <number>0</number>
+         </property>
+         <property name="columnCount">
+          <number>6</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Nom</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Prenom</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Sexe</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Email</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date de naissance</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_RECHERCHE_2">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>250</y>
+           <width>321</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+         </property>
+         <property name="text">
+          <string>    Rechercher un apprenant à partir de son ID</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_17">
+         <property name="geometry">
+          <rect>
+           <x>760</x>
+           <y>290</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Modifier</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_18">
+         <property name="geometry">
+          <rect>
+           <x>850</x>
+           <y>290</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/poubelle.png</normaloff>:/img/poubelle.png</iconset>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_19">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>300</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>  Trier</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>97</number>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_20">
+         <property name="geometry">
+          <rect>
+           <x>850</x>
+           <y>630</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_stat_5">
+         <property name="geometry">
+          <rect>
+           <x>660</x>
+           <y>290</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string> Rapport</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/money.png</normaloff>:/img/money.png</iconset>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>50</y>
+           <width>331</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(106, 166, 218);
+color: rgb(83, 130, 171);
+color: rgb(157, 235, 255);
+border: none;
+font: 30pt &quot;Rockwell&quot;;</string>
+         </property>
+         <property name="text">
+          <string>APPRENANT</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_stat_6">
+         <property name="geometry">
+          <rect>
+           <x>540</x>
+           <y>290</y>
+           <width>111</width>
+           <height>29</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string> Statistiques</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_apprenant">
+     <widget class="QWidget" name="Formateur_5" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1271</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_service">
+     <widget class="QWidget" name="Formateur_6" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1271</width>
+        <height>751</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2000</width>
+        <height>2000</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>1000</width>
+        <height>1000</height>
+       </size>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+      </property>
+      <widget class="QWidget" name="Formateur_12" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1271</width>
+         <height>751</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>2000</width>
+         <height>2000</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>1000</width>
+         <height>1000</height>
+        </size>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="tabletTracking">
+        <bool>false</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(106, 166, 218);
+
+border-radius:30px;</string>
+       </property>
+       <widget class="QFrame" name="frame_41">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>40</y>
+          <width>1001</width>
+          <height>681</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 3px solid #040457;
+border-radius:20px;
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QTableWidget" name="tableau_liste_14">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>340</y>
+           <width>841</width>
+           <height>291</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;
+border-radius: 20px;
+</string>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Sunken</enum>
+         </property>
+         <property name="lineWidth">
+          <number>-7</number>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="rowCount">
+          <number>0</number>
+         </property>
+         <property name="columnCount">
+          <number>8</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>nom service</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>monatnt</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>horaire</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>capacite</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>status service</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>type service</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string/>
+          </property>
+         </column>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_RECHERCHE_14">
+         <property name="geometry">
+          <rect>
+           <x>520</x>
+           <y>250</y>
+           <width>321</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>      Rechercher un service à partir de son ID</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_85">
+         <property name="geometry">
+          <rect>
+           <x>820</x>
+           <y>300</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>afficher</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_86">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>300</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>  Trier</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
+         </property>
+         <property name="autoRepeatInterval">
+          <number>97</number>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_87">
+         <property name="geometry">
+          <rect>
+           <x>860</x>
+           <y>640</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>50</y>
+           <width>331</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(106, 166, 218);
+color: rgb(83, 130, 171);
+color: rgb(157, 235, 255);
+border: none;
+font: 30pt &quot;Rockwell&quot;;</string>
+         </property>
+         <property name="text">
+          <string>SERVICE</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_stat_13">
+         <property name="geometry">
+          <rect>
+           <x>670</x>
+           <y>300</y>
+           <width>141</width>
+           <height>29</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string> Statistiques</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_89">
+         <property name="geometry">
+          <rect>
+           <x>850</x>
+           <y>250</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>chercher</string>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/img/glass.png</normaloff>:/img/glass.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_90">
+         <property name="geometry">
+          <rect>
+           <x>470</x>
+           <y>300</y>
+           <width>191</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Planifier automatiquement</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_8">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>40</y>
+          <width>211</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(100, 157, 206);
+border: 3px solid #040457;
+border-radius:20px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_embauhe_29">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>10</y>
+           <width>121</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(100, 157, 206);
+border: 2px solid #649dce;
+</string>
+         </property>
+         <property name="text">
+          <string>Ajouter un service</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_7">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>60</y>
+          <width>271</width>
+          <height>571</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+background-color: rgb(83, 130, 171);
+border-radius:20px;
+
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_cin_3">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>60</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_prenom_27">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>180</y>
+           <width>63</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>montant</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_cin_26">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>40</y>
+           <width>31</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>id </string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_cin_27">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>110</y>
+           <width>111</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>nom service</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_embauhe_5">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>400</y>
+           <width>131</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_contact_35">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>240</y>
+           <width>191</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>horaire</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_contact_36">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>310</y>
+           <width>191</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>capacite</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_ANNULER_3">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>530</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+</string>
+         </property>
+         <property name="text">
+          <string>Annuler</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_AJOUTER_3">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>490</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+color: rgb(162, 162, 162);
+border-radius:10px;
+border:2px solid rgb(4, 4, 87) ;
+}
+QPushButton:hover{
+	background-color: rgb(162, 162, 162);
+	color: rgb(255, 255, 255);
+}
+
+
+
+
+</string>
+         </property>
+         <property name="text">
+          <string>Ajouter</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_contact_37">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>370</y>
+           <width>191</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>status service</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_contact_38">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>430</y>
+           <width>191</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>type service</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>450</y>
+           <width>151</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-radius:5px ;
+border:solid 2px ;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>-------------</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>service de  sante</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>service de transporte</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>service de resturation</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>service de sport</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_cin_18">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>140</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_cin_19">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>210</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_cin_20">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>340</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_cin_21">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>400</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_cin_22">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>270</y>
+           <width>113</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+color:black;
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="maxLength">
+          <number>8</number>
+         </property>
+        </widget>
+       </widget>
+       <zorder>frame_41</zorder>
+       <zorder>frame_7</zorder>
+       <zorder>frame_8</zorder>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>40</x>
       <y>140</y>
       <width>161</width>
       <height>451</height>
@@ -37,29 +3947,7 @@ border-radius:10px;</string>
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_15">
-     <property name="geometry">
-      <rect>
-       <x>-10</x>
-       <y>90</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 2px solid #fff957;
-	color: rgb(4, 4, 87);
-	font: 700 8pt &quot;Rockwell&quot;;
-
-</string>
-     </property>
-     <property name="text">
-      <string>Formateurs</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_21">
+    <widget class="QPushButton" name="pushButton_formation">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -87,11 +3975,11 @@ QPushButton:hover{
       <string>Formations</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_23">
+    <widget class="QPushButton" name="pushButton_equipement">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>220</y>
+       <y>280</y>
        <width>101</width>
        <height>29</height>
       </rect>
@@ -115,7 +4003,7 @@ QPushButton:hover{
       <string>Equipement</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_24">
+    <widget class="QPushButton" name="pushButton_service">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -143,11 +4031,11 @@ QPushButton:hover{
       <string>Services</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_25">
+    <widget class="QPushButton" name="pushButton_apprenant">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>280</y>
+       <y>220</y>
        <width>101</width>
        <height>29</height>
       </rect>
@@ -171,11 +4059,11 @@ QPushButton:hover{
       <string>Apprenant</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_26">
+    <widget class="QPushButton" name="pushButton_employe">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>30</y>
+       <y>40</y>
        <width>101</width>
        <height>29</height>
       </rect>
@@ -200,17 +4088,18 @@ QPushButton:hover{
       <string>Employé</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_retour_2">
+    <widget class="QPushButton" name="pushButton_formateur">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>420</y>
-       <width>31</width>
-       <height>20</height>
+       <x>30</x>
+       <y>100</y>
+       <width>101</width>
+       <height>29</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton{
+
 	font: 700 9pt &quot;Rockwell&quot;;
 background-color: rgb(255, 255, 255);
 	color: rgb(4, 4, 87);
@@ -218,873 +4107,52 @@ background-color: rgb(255, 255, 255);
 	font: 700 8pt &quot;Rockwell&quot;;
 }
 QPushButton:hover{
-	background-color: rgb(236, 236, 236);
+	background-color: rgb(233, 233, 233);
 	color: #000000;
 	border: 1px solid #ffffff;
 	border-radius:5px;
 }</string>
      </property>
      <property name="text">
-      <string>Services</string>
+      <string>Formateur</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>20</y>
-      <width>111</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border : none;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../MALEK/MALEK/MALEK/ressource.qrc">:/img/image.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QWidget" name="Formateur" native="true">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>10</y>
-      <width>1271</width>
-      <height>751</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>2000</width>
-      <height>2000</height>
-     </size>
-    </property>
-    <property name="baseSize">
-     <size>
-      <width>1000</width>
-      <height>1000</height>
-     </size>
-    </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="tabletTracking">
-     <bool>false</bool>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(106, 166, 218);
-
-border-radius:30px;</string>
-    </property>
-    <widget class="QFrame" name="frame_9">
+    <widget class="QPushButton" name="pushButton_retour_menu">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>40</y>
-       <width>271</width>
-       <height>701</height>
+       <x>0</x>
+       <y>421</y>
+       <width>41</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(58, 196, 255);
-background-color: rgb(83, 130, 171);
-border-radius:20px;
+      <string notr="true">background-color: rgb(240, 195, 0);
+color: rgb(0, 0, 0);
+
+
 
 </string>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
+     <property name="text">
+      <string/>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
+     <property name="icon">
+      <iconset resource="image.qrc">
+       <normaloff>:/img/retour.png</normaloff>:/img/retour.png</iconset>
      </property>
-     <widget class="QLabel" name="label_specialite_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>470</y>
-        <width>111</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(4, 4, 87);</string>
-      </property>
-      <property name="text">
-       <string>Spécialité</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_cin_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>60</y>
-        <width>113</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;
-</string>
-      </property>
-      <property name="maxLength">
-       <number>8</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_contact_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>330</y>
-        <width>63</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Contact</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_contact_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>350</y>
-        <width>113</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_prenom_6">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>180</y>
-        <width>63</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Prénom</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_nom_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>130</y>
-        <width>113</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-      </property>
-      <property name="maxLength">
-       <number>20</number>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_prenom_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>200</y>
-        <width>113</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_cin_4">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>60</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-color: rgb(162, 162, 162);
-border-radius:10px;
-}
-QPushButton:hover{
-	background-color: rgb(162, 162, 162);
-	color: rgb(255, 255, 255);
-}
-
-
-
-</string>
-      </property>
-      <property name="text">
-       <string>Valider</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_cin_6">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>40</y>
-        <width>31</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CIN</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_cin_7">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>110</y>
-        <width>41</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Nom</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBox_heureprevue_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>560</y>
-        <width>121</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;
-</string>
-      </property>
-     </widget>
-     <widget class="QDateEdit" name="dateEdit_embauche_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>420</y>
-        <width>121</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_embauhe_6">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>400</y>
-        <width>131</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Date d'embauche</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_contact_8">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>540</y>
-        <width>191</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Nombre d'heures prévues / mois</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_remuneration_4">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>630</y>
-        <width>121</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_contact_9">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>610</y>
-        <width>191</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Salaire</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_5">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>280</y>
-        <width>91</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(83, 130, 171);
-border-color: rgb(255, 255, 255);
-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>Homme</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_6">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>280</y>
-        <width>91</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>Femme</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_prenom_7">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>260</y>
-        <width>63</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Sexe</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_ANNULER_4">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>670</y>
-        <width>61</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-color: rgb(162, 162, 162);
-border-radius:10px;
-}
-QPushButton:hover{
-	background-color: rgb(162, 162, 162);
-	color: rgb(255, 255, 255);
-}
-
-
-
-</string>
-      </property>
-      <property name="text">
-       <string>Annuler</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_AJOUTER_4">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>640</y>
-        <width>61</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-color: rgb(162, 162, 162);
-border-radius:10px;
-}
-QPushButton:hover{
-	background-color: rgb(162, 162, 162);
-	color: rgb(255, 255, 255);
-}
-
-
-
-
-</string>
-      </property>
-      <property name="text">
-       <string>Ajouter</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox_2">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>490</y>
-        <width>121</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>Français</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Anglais</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Science</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Physique</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Arabe</string>
-       </property>
-      </item>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="frame_10">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>20</y>
-       <width>211</width>
-       <height>41</height>
-      </rect>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(100, 157, 206);
-border: 3px solid #040457;
-border-radius:20px;</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
-     </property>
-     <widget class="QLabel" name="label_embauhe_7">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>161</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(100, 157, 206);
-border: 2px solid #649dce;
-</string>
-      </property>
-      <property name="text">
-       <string>Ajouter un formateur</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="frame_11">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>40</y>
-       <width>1001</width>
-       <height>681</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border: 3px solid #040457;
-border-radius:20px;
-</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
-     </property>
-     <widget class="QTableWidget" name="tableau_liste_3">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>330</y>
-        <width>841</width>
-        <height>291</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(121, 192, 239);
-color: rgb(255, 255, 255);
-border: 3px solid #6aa6da;
-border-radius: 20px;
-</string>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Shadow::Sunken</enum>
-      </property>
-      <property name="lineWidth">
-       <number>-7</number>
-      </property>
-      <property name="alternatingRowColors">
-       <bool>false</bool>
-      </property>
-      <property name="rowCount">
-       <number>0</number>
-      </property>
-      <property name="columnCount">
-       <number>9</number>
-      </property>
-      <column>
-       <property name="text">
-        <string>CIN</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Nom</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Prenom</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Sexe</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Contact</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Date d'embauche</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Spécialité</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>heures prevues</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string/>
-       </property>
-      </column>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_RECHERCHE_3">
-      <property name="geometry">
-       <rect>
-        <x>570</x>
-        <y>250</y>
-        <width>321</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-color: rgb(162, 162, 162);</string>
-      </property>
-      <property name="text">
-       <string>      Rechercher un formateur à partir de son ID</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_27">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>290</y>
-        <width>81</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string>Modifier</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_28">
-      <property name="geometry">
-       <rect>
-        <x>850</x>
-        <y>290</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/poubelle.png</normaloff>:/img/poubelle.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_29">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>300</y>
-        <width>81</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string>  Trier</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/trie.png</normaloff>:/img/trie.png</iconset>
-      </property>
-      <property name="autoRepeatInterval">
-       <number>97</number>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_30">
-      <property name="geometry">
-       <rect>
-        <x>850</x>
-        <y>630</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_rapport_2">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>290</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string> Rapport</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/money.png</normaloff>:/img/money.png</iconset>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>50</y>
-        <width>331</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(106, 166, 218);
-color: rgb(83, 130, 171);
-color: rgb(157, 235, 255);
-border: none;
-font: 30pt &quot;Rockwell&quot;;</string>
-      </property>
-      <property name="text">
-       <string>FORMATEURS</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_stat_2">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>290</y>
-        <width>111</width>
-        <height>29</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton{
-background-color: rgb(255, 255, 255);
-border-radius:10px;
-border: 3px solid #ffffff;
-}
-QPushButton:hover{
-	background-color: rgb(220, 220, 220);
-	color: rgb(90, 90, 90);
-
-	border-radius:10px;
-}
-</string>
-      </property>
-      <property name="text">
-       <string> Statistiques</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_31">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>250</y>
-        <width>51</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border:none;
-background-color: rgb(255, 255, 255);
-border-radius : 10px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="../MALEK/MALEK/MALEK/ressource.qrc">
-        <normaloff>:/img/loupe.png</normaloff>:/img/loupe.png</iconset>
-      </property>
-     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_5">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>130</y>
       <width>181</width>
       <height>471</height>
@@ -1104,10 +4172,32 @@ background-color: rgb(4, 4, 87);</string>
      <enum>QFrame::Shadow::Raised</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>20</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border : none;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="image.qrc">:/img/image.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>frame_5</zorder>
+   <zorder>stackedWidget</zorder>
    <zorder>frame</zorder>
    <zorder>label</zorder>
-   <zorder>Formateur</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1115,14 +4205,14 @@ background-color: rgb(4, 4, 87);</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="../MALEK/MALEK/MALEK/ressource.qrc"/>
+  <include location="image.qrc"/>
  </resources>
  <connections/>
 </ui>
