@@ -1,8 +1,9 @@
 #ifndef INTERFACE_FORMATEUR_H
 #define INTERFACE_FORMATEUR_H
-
-
 #include <QMainWindow>
+#include "formateurs.h"
+
+
 
 class MainWindow;  // déclaration avant
 
@@ -10,7 +11,7 @@ namespace Ui {
 class interface_formateur;
 }
 
-class interface_formateur : public QMainWindow
+class interface_formateur : public QMainWindow //interface PRINCIPALE
 {
     Q_OBJECT
 
@@ -40,9 +41,19 @@ private slots:
 
     void on_pushButton_equipement_clicked();
 
+    void on_pushButton_AJOUTER_5_clicked(); // Bouton ajout FORMATEUR
+
+ //   void on_pushButton_SupprimerFormateur(); // Bouton supprimer FORMATEUR
+
+  //  void on_pushButton_AFFICHER_FORMATEUR_clicked(); // Bouton afficher FORMATEUR
+
+
 private:
     Ui::interface_formateur *ui;
     MainWindow *menuPrincipal;     // pointeur vers le menu principal
+   //30.10
+    Formateur F; // POINTEUR ???
+
 };
 
 #endif // INTERFACE_FORMATEUR_H

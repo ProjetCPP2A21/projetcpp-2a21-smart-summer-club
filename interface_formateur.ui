@@ -30,7 +30,7 @@
      <string notr="true">border: none;</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page_employe">
      <widget class="QWidget" name="Formateur" native="true">
@@ -857,7 +857,7 @@ border-radius:20px;
          <string>Spécialité</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_cin_5">
+       <widget class="QLineEdit" name="lineEdit_IdFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -888,7 +888,7 @@ border-radius:10px;
          <string>Contact</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_contact_5">
+       <widget class="QLineEdit" name="lineEdit_contactFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -915,7 +915,7 @@ border-radius:10px;</string>
          <string>Prénom</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_nom_5">
+       <widget class="QLineEdit" name="lineEdit_NomFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -932,7 +932,7 @@ border-radius:10px;</string>
          <number>20</number>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_prenom_5">
+       <widget class="QLineEdit" name="lineEdit_PrenomFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -984,7 +984,7 @@ QPushButton:hover{
          </rect>
         </property>
         <property name="text">
-         <string>CIN</string>
+         <string>ID</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_cin_9">
@@ -1000,7 +1000,7 @@ QPushButton:hover{
          <string>Nom</string>
         </property>
        </widget>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_heureprevue_5">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_heureprevueFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1015,7 +1015,7 @@ border-radius:10px;
 </string>
         </property>
        </widget>
-       <widget class="QDateEdit" name="dateEdit_embauche_5">
+       <widget class="QDateEdit" name="dateEdit_embaucheFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1055,7 +1055,7 @@ border-radius:10px;</string>
          <string>Nombre d'heures prévues / mois</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_remuneration_5">
+       <widget class="QLineEdit" name="lineEdit_salaireFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1086,7 +1086,7 @@ border-radius:10px;
          <string>Salaire</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="checkBox_7">
+       <widget class="QCheckBox" name="checkBox_hommeFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1104,7 +1104,7 @@ color: rgb(255, 255, 255);</string>
          <string>Homme</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="checkBox_8">
+       <widget class="QCheckBox" name="checkBox_femmeFormateur">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -1190,7 +1190,7 @@ QPushButton:hover{
          <string>Ajouter</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="comboBox_specialiteFormateur">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -1301,7 +1301,7 @@ border-radius:20px;
        <property name="frameShadow">
         <enum>QFrame::Shadow::Raised</enum>
        </property>
-       <widget class="QTableWidget" name="tableau_liste_4">
+       <widget class="QTableWidget" name="tableau_FORMATEUR">
         <property name="geometry">
          <rect>
           <x>60</x>
@@ -1334,7 +1334,7 @@ border-radius: 20px;
         </property>
         <column>
          <property name="text">
-          <string>CIN</string>
+          <string>ID</string>
          </property>
         </column>
         <column>
@@ -1400,9 +1400,9 @@ color: rgb(162, 162, 162);</string>
        <widget class="QPushButton" name="pushButton_33">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>750</x>
           <y>300</y>
-          <width>111</width>
+          <width>91</width>
           <height>31</height>
          </rect>
         </property>
@@ -1421,10 +1421,10 @@ QPushButton:hover{
 </string>
         </property>
         <property name="text">
-         <string>    Modifier</string>
+         <string>Modifier</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_34">
+       <widget class="QPushButton" name="pushButton_SupprimerFormateur">
         <property name="geometry">
          <rect>
           <x>850</x>
@@ -1543,7 +1543,7 @@ font: 30pt &quot;Rockwell&quot;;</string>
        <widget class="QPushButton" name="pushButton_stat_3">
         <property name="geometry">
          <rect>
-          <x>610</x>
+          <x>630</x>
           <y>300</y>
           <width>111</width>
           <height>29</height>
@@ -1617,6 +1617,33 @@ QPushButton:hover{
         </property>
         <property name="text">
          <string>  Analyse prédictive </string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_AFFICHER_FORMATEUR">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>260</y>
+          <width>71</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+}
+QPushButton:hover{
+	background-color: rgb(220, 220, 220);
+	color: rgb(90, 90, 90);
+
+	border-radius:10px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Afficher</string>
         </property>
        </widget>
       </widget>
@@ -1701,9 +1728,9 @@ border: 2px solid #649dce;
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>60</y>
-         <width>1001</width>
-         <height>681</height>
+         <y>40</y>
+         <width>941</width>
+         <height>701</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -4205,7 +4232,7 @@ background-color: rgb(4, 4, 87);</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

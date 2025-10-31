@@ -21,8 +21,8 @@ background-color: rgb(255, 255, 255);</string>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>110</y>
+      <x>100</x>
+      <y>40</y>
       <width>1341</width>
       <height>721</height>
      </rect>
@@ -299,7 +299,7 @@ QPushButton:hover{
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

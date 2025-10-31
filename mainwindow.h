@@ -4,6 +4,8 @@
 #include "interface_formateur.h"
 
 
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -22,11 +24,8 @@ public:
 private slots:
     void on_pushButton_clicked();  // bouton qui ouvre interface formateur
     void on_pushButton_gestionemploye_clicked(); // bouton qui ouvre interface employe
-
     void on_pushButton_gestionformation_clicked();
-
     void on_pushButton_gestionapprenant_clicked();
-
     void on_pushButton_gestionservice_clicked();
 
 private:
