@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>glass.png</file>
+        <file>image.png</file>
+        <file>retour.png</file>
+        <file>stat.png</file>
+        <file>trie.png</file>
+    </qresource>
+</RCC>
