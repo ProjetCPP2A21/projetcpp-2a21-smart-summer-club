@@ -53,11 +53,13 @@ public:
     void setHeuresPrevuesFormateur(float heures);
     void setSalaireFormateur(float salaire);
 
-//30.10
+
     // --- Fonctionnalités ---
     bool ajouter();
-//    QSqlQueryModel * afficher();
+    QSqlQueryModel * afficher();
     bool supprimer(int id);
+    bool recherche(int id);
+    bool modifier();//06.11
 
 };
 

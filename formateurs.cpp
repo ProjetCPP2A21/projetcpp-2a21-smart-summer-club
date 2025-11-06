@@ -75,41 +75,85 @@ Formateur :: Formateur(int id, const QString &nom, const QString &prenom,
         query.bindValue(":HeuresPrevues",HeuresPrevuesFormateur);
         query.bindValue(":Salaire",SalaireFormateur);
         return query.exec();
+
     }
 
 
 
-/*
+
     QSqlQueryModel * Formateur :: afficher()
     {
-        QSqlQuery * model=new QSqlQueryModel();
-        model ->setQuery("SELECT * FROM Formateur");
-        model -> setHeaderData(0,Qt::Horizental,QObject::tr(":Id"));
-        model -> setHeaderData(1,Qt::Horizental,QObject::tr(":Nom"));
-        model -> setHeaderData(2,Qt::Horizental,QObject::tr(":Prenom"));
-        model -> setHeaderData(3,Qt::Horizental,QObject::tr(":Sexe"));
-        model -> setHeaderData(4,Qt::Horizental,QObject::tr(":Contact"));
-        model -> setHeaderData(5,Qt::Horizental,QObject::tr(":Date"));
-        model -> setHeaderData(6,Qt::Horizental,QObject::tr(":Specialite"));
-        model -> setHeaderData(7,Qt::Horizental,QObject::tr(":HeuresPrevues"));
-        model -> setHeaderData(8,Qt::Horizental,QObject::tr(":Salaire"));
+        QSqlQueryModel * model=new QSqlQueryModel();
+        model ->setQuery("SELECT * FROM FORMATEURS");
+
+        model -> setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
+        model -> setHeaderData(1,Qt::Horizontal,QObject::tr("NOM"));
+        model -> setHeaderData(2,Qt::Horizontal,QObject::tr("PRENOM"));
+        model -> setHeaderData(3,Qt::Horizontal,QObject::tr("SEXE"));
+        model -> setHeaderData(4,Qt::Horizontal,QObject::tr("CONTACT"));
+        model -> setHeaderData(5,Qt::Horizontal,QObject::tr("DATE"));
+        model -> setHeaderData(6,Qt::Horizontal,QObject::tr("SPECIALITE"));
+        model -> setHeaderData(7,Qt::Horizontal,QObject::tr("HEURES_PREVUES"));
+        model -> setHeaderData(8,Qt::Horizontal,QObject::tr("SALAIRE"));
 
         return model;
     }
-*/
 
 
-/*
+    // NE FONCTIONNE PAS CORRECTEMENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     bool Formateur :: supprimer(int id){
         QSqlQuery query;
         QString IdF = QString :: number(id);
-        query.prepare("DELETE FROM FORMATEUR WHERE IDFORMATEUR = :id");
+        query.prepare("DELETE FROM FORMATEURS WHERE IDFORMATEUR = :id;");
         query.bindValue(":id",IdF);
         return query.exec();
     }
-*/
 
 
 
-// manque fonction SELECTIONNER ==> recuperation de l id pour suppression
-// mehtode modifier un formateur ??
+bool Formateur :: recherche(int id){
+        QSqlQuery query;
+        QString IdF = QString :: number(id);
+        query.prepare("SELECT * FROM FORMATEURS WHERE IDFORMATEUR = :id");
+        query.bindValue(":id",IdF);
+        if (query.exec()) {
+            if (query.next()) { // formateur trouvé
+                this->NomFormateur = query.value("NOM").toString();
+                this->PrenomFormateur = query.value("PRENOM").toString();
+                this->SexeFormateur = query.value("SEXE").toString();
+                this->ContactFormateur = query.value("CONTACT").toString();
+                this->SpecialiteFormateur = query.value("SPECIALITE").toString();
+                //float salaire = query.value("SALAIRE").toFloat();
+                //date = query.value("DATE_EMBAUCHE");
+                //heures = query.value("NB_HEURES_PREVUES");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool Formateur::modifier(){
+        QSqlQuery query;
+        QString IdF = QString ::number(IdFormateur);
+        query.prepare("UPDATE FORMATEURS SET "
+                      "NOM= :Nom, "
+                      "PRENOM= :Prenom, "
+                      "SEXE= :Sexe, "
+                      "CONTACT= :Contact, "
+                      "DATE_EMBAUCHE= :Date, "
+                      "SPECIALITE= :Specialite, "
+                      "NB_HEURES_PREVUES= :HeuresPrevues, "
+                      "SALAIRE= :Salaire "
+                      "WHERE IDFORMATEUR = :Id");
+        query.bindValue(":Id",IdF);
+        query.bindValue(":Nom",NomFormateur);
+        query.bindValue(":Prenom",PrenomFormateur);
+        query.bindValue(":Sexe",SexeFormateur);
+        query.bindValue(":Contact",ContactFormateur);
+        query.bindValue(":Date",DateEmbauche);
+        query.bindValue(":Specialite",SpecialiteFormateur);
+        query.bindValue(":HeuresPrevues",HeuresPrevuesFormateur);
+        query.bindValue(":Salaire",SalaireFormateur);
+
+        return query.exec();
+    }

@@ -23,11 +23,11 @@ bool Connection::createconnect()
     db.setUserName("Malek");//inserer nom de l'utilisateur
     db.setPassword("loka");//inserer mot de passe de cet utilisateur
 
-    if (db.open()){
+     if (db.open()){
         test=true;
-        qDebug() << "Connexion réussie à la base de données.";
+        //qDebug() << "Connexion réussie à la base de données.";
     } else {
-        qDebug() << "Échec de la connexion :" << db.lastError().text();
+       // qDebug() << "Échec de la connexion :" << db.lastError().text();
     }
     return  test;
 }

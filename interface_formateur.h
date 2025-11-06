@@ -43,16 +43,26 @@ private slots:
 
     void on_pushButton_AJOUTER_5_clicked(); // Bouton ajout FORMATEUR
 
- //   void on_pushButton_SupprimerFormateur(); // Bouton supprimer FORMATEUR
+    //void on_pushButton_AFFICHER_FORMATEUR_clicked(); // Bouton Afficher FOORMATEUR
 
-  //  void on_pushButton_AFFICHER_FORMATEUR_clicked(); // Bouton afficher FORMATEUR
+    //SELECTION DU TABLEAU FORMATEUR
+    void onTableSelectionChanged();//const QItemSelection &selected,const QItemSelection &deselected);
 
+    void on_pushButton_SupprimerFormateur_clicked(); // Bouton supprimer FORMATEUR
+
+    void on_pushButton_RechercheFormateur_clicked();
+
+    void on_pushButton_AjouterFormateur_clicked();
+
+    void on_pushButton_ANNULER_5_clicked();
+
+    void on_pushButton_modifierFormateur_clicked();
 
 private:
     Ui::interface_formateur *ui;
     MainWindow *menuPrincipal;     // pointeur vers le menu principal
-   //30.10
     Formateur F; // POINTEUR ???
+    int IDselection= -2;
 
 };
 
