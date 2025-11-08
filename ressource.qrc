@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>34e0dfa3-771e-477d-9d87-357bb95400d1-removebg-preview.png</file>
+    </qresource>
+    <qresource prefix="/trier">
+        <file>Trier.jpg</file>
+    </qresource>
+    <qresource prefix="/stat">
+        <file>stat.jpg</file>
+    </qresource>
+    <qresource prefix="/supp">
+        <file>supp.jpg</file>
+    </qresource>
+    <qresource prefix="/telech">
+        <file>telech.jpg</file>
+    </qresource>
+    <qresource prefix="/mail">
+        <file>mail-message-envelope-icon-sign-symbol-button-blue-speech-bubble-white-background-3d-rendering.jpg</file>
+    </qresource>
+    <qresource prefix="/calendrier">
+        <file>d47c1ced-b41a-49dd-b864-317382d52708.jpg</file>
+    </qresource>
+</RCC>
