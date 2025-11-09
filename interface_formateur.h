@@ -2,7 +2,7 @@
 #define INTERFACE_FORMATEUR_H
 #include <QMainWindow>
 #include "formateurs.h"
-
+#include "service.h"
 
 
 class MainWindow;  // déclaration avant
@@ -58,12 +58,31 @@ private slots:
 
     void on_pushButton_modifierFormateur_clicked();
 
+//selection tableau service//
+    //ajouteet afficher//
+    void on_pushButton_AJOUTER_3_clicked();
+//supprimer  service //
+    void on_pushButton_92_clicked();
+//recherche//
+    void on_pushButton_89_clicked();
+    //charger donner //
+    void on_pushButton_90_clicked();
+    //modification//
+    void on_pushButton_ANNULER_7_clicked();
+    //statistique//
+    void on_pushButton_stat_13_clicked();
+    void on_pushButton_ANNULER_3_clicked();
+/***********************************************/
 private:
     Ui::interface_formateur *ui;
     MainWindow *menuPrincipal;     // pointeur vers le menu principal
     Formateur F; // POINTEUR ???
     int IDselection= -2;
-
+    /****service***/
+    service s;
+    bool verife();
+    bool cleardonner();
+    //************//
 };
 
 #endif // INTERFACE_FORMATEUR_H

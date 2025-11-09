@@ -16,6 +16,7 @@ SOURCES += \
     interface_formateur.cpp \
     main.cpp \
     mainwindow.cpp \
+    service.cpp \
     statisticsdialog.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     formateurs.h \
     interface_formateur.h \
     mainwindow.h \
+    service.h \
     statisticsdialog.h
 
 FORMS += \

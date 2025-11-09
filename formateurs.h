@@ -27,7 +27,7 @@ public:
 
     // Constructeur paramétré
     Formateur(int id, const QString &nom, const QString &prenom,
-              const QString &contact, const QString &sexe,
+              const QString &sexe, const QString &contact,
               const QString &dateEmbauche, const QString &specialite,
               float heuresPrevues, float salaire);
 
