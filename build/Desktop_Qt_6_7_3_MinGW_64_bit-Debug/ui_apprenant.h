@@ -19,7 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +56,6 @@ public:
     QFrame *frame_7;
     QLabel *label_embauhe_5;
     QFrame *frame_8;
-    QTableWidget *tableau_liste_2;
     QLineEdit *lineEdit_RECHERCHE_2;
     QPushButton *pushButton_17;
     QPushButton *pushButton_18;
@@ -65,6 +64,7 @@ public:
     QPushButton *pushButton_stat_2;
     QLabel *label_2;
     QPushButton *pushButton_stat;
+    QTableView *tableView;
     QLabel *label;
 
     void setupUi(QWidget *apprenant)
@@ -214,6 +214,7 @@ public:
         lineEdit_cin_3->setGeometry(QRect(30, 60, 113, 26));
         lineEdit_cin_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);\n"
+"color: rgb(0, 0, 0);\n"
 "border-radius:10px;\n"
 ""));
         lineEdit_cin_3->setMaxLength(8);
@@ -224,6 +225,7 @@ public:
         lineEdit_contact_3->setObjectName("lineEdit_contact_3");
         lineEdit_contact_3->setGeometry(QRect(30, 350, 113, 26));
         lineEdit_contact_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
 "border-radius:10px;"));
         label_prenom_4 = new QLabel(frame_6);
         label_prenom_4->setObjectName("label_prenom_4");
@@ -232,12 +234,14 @@ public:
         lineEdit_nom_3->setObjectName("lineEdit_nom_3");
         lineEdit_nom_3->setGeometry(QRect(30, 130, 113, 26));
         lineEdit_nom_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
 "border-radius:10px;"));
         lineEdit_nom_3->setMaxLength(20);
         lineEdit_prenom_3 = new QLineEdit(frame_6);
         lineEdit_prenom_3->setObjectName("lineEdit_prenom_3");
         lineEdit_prenom_3->setGeometry(QRect(30, 200, 113, 26));
         lineEdit_prenom_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
 "border-radius:10px;"));
         pushButton_cin_3 = new QPushButton(frame_6);
         pushButton_cin_3->setObjectName("pushButton_cin_3");
@@ -265,6 +269,7 @@ public:
         dateEdit_embauche_3->setObjectName("dateEdit_embauche_3");
         dateEdit_embauche_3->setGeometry(QRect(30, 420, 121, 21));
         dateEdit_embauche_3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
 "border-radius:10px;"));
         label_embauhe_4 = new QLabel(frame_6);
         label_embauhe_4->setObjectName("label_embauhe_4");
@@ -337,32 +342,6 @@ public:
 ""));
         frame_8->setFrameShape(QFrame::Shape::StyledPanel);
         frame_8->setFrameShadow(QFrame::Shadow::Raised);
-        tableau_liste_2 = new QTableWidget(frame_8);
-        if (tableau_liste_2->columnCount() < 6)
-            tableau_liste_2->setColumnCount(6);
-        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(0, __qtablewidgetitem);
-        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(2, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(4, __qtablewidgetitem4);
-        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        tableau_liste_2->setHorizontalHeaderItem(5, __qtablewidgetitem5);
-        tableau_liste_2->setObjectName("tableau_liste_2");
-        tableau_liste_2->setGeometry(QRect(60, 330, 841, 291));
-        tableau_liste_2->setStyleSheet(QString::fromUtf8("background-color: rgb(121, 192, 239);\n"
-"color: rgb(255, 255, 255);\n"
-"border: 3px solid #6aa6da;\n"
-""));
-        tableau_liste_2->setFrameShadow(QFrame::Shadow::Sunken);
-        tableau_liste_2->setLineWidth(-7);
-        tableau_liste_2->setAlternatingRowColors(false);
-        tableau_liste_2->setRowCount(0);
-        tableau_liste_2->setColumnCount(6);
         lineEdit_RECHERCHE_2 = new QLineEdit(frame_8);
         lineEdit_RECHERCHE_2->setObjectName("lineEdit_RECHERCHE_2");
         lineEdit_RECHERCHE_2->setGeometry(QRect(570, 250, 321, 31));
@@ -426,7 +405,7 @@ public:
         pushButton_19->setAutoRepeatInterval(97);
         pushButton_20 = new QPushButton(frame_8);
         pushButton_20->setObjectName("pushButton_20");
-        pushButton_20->setGeometry(QRect(850, 630, 41, 31));
+        pushButton_20->setGeometry(QRect(850, 640, 41, 31));
         pushButton_20->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;\n"
@@ -487,6 +466,13 @@ public:
         QIcon icon4;
         icon4.addFile(QString::fromUtf8(":/img/stat.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_stat->setIcon(icon4);
+        tableView = new QTableView(frame_8);
+        tableView->setObjectName("tableView");
+        tableView->setGeometry(QRect(60, 340, 841, 291));
+        tableView->setStyleSheet(QString::fromUtf8("background-color: rgb(121, 192, 239);\n"
+"color: rgb(0, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"border: 3px solid #6aa6da;"));
         label = new QLabel(apprenant);
         label->setObjectName("label");
         label->setGeometry(QRect(50, 100, 111, 101));
@@ -507,7 +493,7 @@ public:
         pushButton_24->setText(QCoreApplication::translate("apprenant", "Formateurs", nullptr));
         pushButton_25->setText(QCoreApplication::translate("apprenant", "Employ\303\251", nullptr));
         pushButton_15->setText(QCoreApplication::translate("apprenant", "Apprenants", nullptr));
-        label_contact_3->setText(QCoreApplication::translate("apprenant", "T\303\251l\303\251phone", nullptr));
+        label_contact_3->setText(QCoreApplication::translate("apprenant", "Email", nullptr));
         label_prenom_4->setText(QCoreApplication::translate("apprenant", "Pr\303\251nom", nullptr));
         pushButton_cin_3->setText(QCoreApplication::translate("apprenant", "Valider", nullptr));
         label_cin_4->setText(QCoreApplication::translate("apprenant", "ID", nullptr));
@@ -519,19 +505,7 @@ public:
         pushButton_ANNULER_3->setText(QCoreApplication::translate("apprenant", "Annuler", nullptr));
         pushButton_AJOUTER_3->setText(QCoreApplication::translate("apprenant", "Ajouter", nullptr));
         label_embauhe_5->setText(QCoreApplication::translate("apprenant", "Ajouter un apprenant", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableau_liste_2->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("apprenant", "ID", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableau_liste_2->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("apprenant", "Nom", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableau_liste_2->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("apprenant", "Prenom", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = tableau_liste_2->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("apprenant", "Sexe", nullptr));
-        QTableWidgetItem *___qtablewidgetitem4 = tableau_liste_2->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QCoreApplication::translate("apprenant", "Email", nullptr));
-        QTableWidgetItem *___qtablewidgetitem5 = tableau_liste_2->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QCoreApplication::translate("apprenant", "Date de naissance", nullptr));
-        lineEdit_RECHERCHE_2->setText(QCoreApplication::translate("apprenant", "    Rechercher un apprenant \303\240 partir de son ID", nullptr));
+        lineEdit_RECHERCHE_2->setText(QString());
         pushButton_17->setText(QCoreApplication::translate("apprenant", "Modifier", nullptr));
         pushButton_18->setText(QString());
         pushButton_19->setText(QCoreApplication::translate("apprenant", "  Trier", nullptr));

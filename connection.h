@@ -1,0 +1,24 @@
+#ifndef CONNECTION_H
+#define CONNECTION_H
+#include <QSqlDatabase>  // Fixed include
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QDebug>
+
+class Connection
+{
+public:
+    static Connection& createInstance();
+    bool createconnect();
+
+private:
+    QSqlDatabase db;
+
+    Connection();
+    ~Connection();
+
+    Connection(const Connection&) = delete;
+    Connection& operator=(const Connection&) = delete;
+};
+
+#endif // CONNECTION_H

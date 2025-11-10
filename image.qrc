@@ -11,4 +11,5 @@
         <file>stat.png</file>
         <file>trie.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

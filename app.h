@@ -28,5 +28,7 @@ private:
     apprenant *apprenant;  // pointeur vers la 4e fenêtre
 
 
+
+
 };
 #endif // MAINWINDOW_H

@@ -1,8 +1,11 @@
 QT       += core gui
+QT       += sql
+QT       += core gui sql charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+CONFIG += console
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,12 +13,14 @@ CONFIG += c++17
 
 SOURCES += \
     apprenant.cpp \
+    connection.cpp \
     main.cpp \
     app.cpp
 
 HEADERS += \
     app.h \
-    apprenant.h
+    apprenant.h \
+    connection.h
 
 FORMS += \
     app.ui \

@@ -298,6 +298,7 @@ border-radius:20px;
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);
+color: rgb(0, 0, 0);
 border-radius:10px;
 </string>
      </property>
@@ -315,7 +316,7 @@ border-radius:10px;
       </rect>
      </property>
      <property name="text">
-      <string>Téléphone</string>
+      <string>Email</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_contact_3">
@@ -329,6 +330,7 @@ border-radius:10px;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius:10px;</string>
      </property>
     </widget>
@@ -356,6 +358,7 @@ border-radius:10px;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius:10px;</string>
      </property>
      <property name="maxLength">
@@ -373,6 +376,7 @@ border-radius:10px;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius:10px;</string>
      </property>
     </widget>
@@ -441,6 +445,7 @@ QPushButton:hover{
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius:10px;</string>
      </property>
     </widget>
@@ -621,67 +626,6 @@ border-radius:20px;
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QTableWidget" name="tableau_liste_2">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>330</y>
-       <width>841</width>
-       <height>291</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(121, 192, 239);
-color: rgb(255, 255, 255);
-border: 3px solid #6aa6da;
-</string>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>-7</number>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>false</bool>
-     </property>
-     <property name="rowCount">
-      <number>0</number>
-     </property>
-     <property name="columnCount">
-      <number>6</number>
-     </property>
-     <column>
-      <property name="text">
-       <string>ID</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Nom</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Prenom</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Sexe</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Email</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date de naissance</string>
-      </property>
-     </column>
-    </widget>
     <widget class="QLineEdit" name="lineEdit_RECHERCHE_2">
      <property name="geometry">
       <rect>
@@ -698,7 +642,7 @@ border: 3px solid #ffffff;
 color: rgb(162, 162, 162);</string>
      </property>
      <property name="text">
-      <string>    Rechercher un apprenant à partir de son ID</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_17">
@@ -799,7 +743,7 @@ QPushButton:hover{
      <property name="geometry">
       <rect>
        <x>850</x>
-       <y>630</y>
+       <y>640</y>
        <width>41</width>
        <height>31</height>
       </rect>
@@ -907,6 +851,22 @@ QPushButton:hover{
      <property name="icon">
       <iconset resource="image.qrc">
        <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tableView">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>340</y>
+       <width>841</width>
+       <height>291</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(121, 192, 239);
+color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+border: 3px solid #6aa6da;</string>
      </property>
     </widget>
    </widget>
