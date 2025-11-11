@@ -19,15 +19,15 @@ bool Connection::createconnect()
 {
     bool test=false;
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
-    db.setDatabaseName("source_projet2A");//inserer le nom de la source de données
-    db.setUserName("Malek");//inserer nom de l'utilisateur
-    db.setPassword("loka");//inserer mot de passe de cet utilisateur
+    db.setDatabaseName("app_educamp");//inserer le nom de la source de données
+    db.setUserName("smartclub");//inserer nom de l'utilisateur
+    db.setPassword("educamp");//inserer mot de passe de cet utilisateur
 
      if (db.open()){
         test=true;
-        //qDebug() << "Connexion réussie à la base de données.";
+        qDebug() << "Connexion réussie à la base de données.";
     } else {
-       // qDebug() << "Échec de la connexion :" << db.lastError().text();
+        qDebug() << "Échec de la connexion :" << db.lastError().text();
     }
     return  test;
 }

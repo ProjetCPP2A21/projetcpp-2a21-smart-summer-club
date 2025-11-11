@@ -3,7 +3,7 @@
 #include <QSqlQueryModel>
 #include <QObject>
 #include <QTableView>
-
+#include <QSqlError>
 
     // Constructeur par défaut
 Formateur :: Formateur(){
@@ -64,7 +64,7 @@ Formateur :: Formateur(int id, const QString &nom, const QString &prenom,
     {
         QSqlQuery query;
         QString IdF = QString ::number(IdFormateur);
-        query.prepare("INSERT INTO FORMATEURS(IDFORMATEUR,NOM,PRENOM,SEXE,CONTACT,DATE_EMBAUCHE,SPECIALITE,NB_HEURES_PREVUES,SALAIRE)" "VALUES(:Id,:Nom,:Prenom,:Sexe,:Contact,:Date,:Specialite,:HeuresPrevues,:Salaire)");
+        query.prepare("INSERT INTO FORMATEUR(IDFORMATEUR,NOM,PRENOM,SEXE,CONTACT,DATE_EMBAUCHE,SPECIALITE,NB_HEURES_PREVUES,SALAIRE)" "VALUES(:Id,:Nom,:Prenom,:Sexe,:Contact,:Date,:Specialite,:HeuresPrevues,:Salaire)");
         query.bindValue(":Id",IdF);
         query.bindValue(":Nom",NomFormateur);
         query.bindValue(":Prenom",PrenomFormateur);
@@ -74,17 +74,21 @@ Formateur :: Formateur(int id, const QString &nom, const QString &prenom,
         query.bindValue(":Specialite",SpecialiteFormateur);
         query.bindValue(":HeuresPrevues",HeuresPrevuesFormateur);
         query.bindValue(":Salaire",SalaireFormateur);
-        return query.exec();
-
+        //return query.exec();
+        if (!query.exec()) {
+            qDebug() << "Erreur SQL:" << query.lastError().text();
+            return false;
+        }
+        return true;
     }
 
 
 
 
-    QSqlQueryModel * Formateur :: afficher()
+QSqlQueryModel * Formateur :: afficher()
     {
         QSqlQueryModel * model=new QSqlQueryModel();
-        model ->setQuery("SELECT * FROM FORMATEURS");
+        model ->setQuery("SELECT * FROM FORMATEUR");
 
         model -> setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
         model -> setHeaderData(1,Qt::Horizontal,QObject::tr("NOM"));
@@ -104,7 +108,7 @@ Formateur :: Formateur(int id, const QString &nom, const QString &prenom,
     bool Formateur :: supprimer(int id){
         QSqlQuery query;
         QString IdF = QString :: number(id);
-        query.prepare("DELETE FROM FORMATEURS WHERE IDFORMATEUR = :id;");
+        query.prepare("DELETE FROM FORMATEUR WHERE IDFORMATEUR = :id;");
         query.bindValue(":id",IdF);
         return query.exec();
     }
@@ -114,7 +118,7 @@ Formateur :: Formateur(int id, const QString &nom, const QString &prenom,
 bool Formateur :: recherche(int id){
         QSqlQuery query;
         QString IdF = QString :: number(id);
-        query.prepare("SELECT * FROM FORMATEURS WHERE IDFORMATEUR = :id");
+        query.prepare("SELECT * FROM FORMATEUR WHERE IDFORMATEUR = :id");
         query.bindValue(":id",IdF);
         if (query.exec()) {
             if (query.next()) { // formateur trouvé
@@ -135,7 +139,7 @@ bool Formateur :: recherche(int id){
     bool Formateur::modifier(){
         QSqlQuery query;
         QString IdF = QString ::number(IdFormateur);
-        query.prepare("UPDATE FORMATEURS SET "
+        query.prepare("UPDATE FORMATEUR SET "
                       "NOM= :Nom, "
                       "PRENOM= :Prenom, "
                       "SEXE= :Sexe, "

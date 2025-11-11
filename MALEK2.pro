@@ -13,16 +13,20 @@ CONFIG += c++17
 SOURCES += \
     connection.cpp \
     formateurs.cpp \
+    formation2.cpp \
     interface_formateur.cpp \
     main.cpp \
     mainwindow.cpp \
+    service.cpp \
     statisticsdialog.cpp
 
 HEADERS += \
     connection.h \
     formateurs.h \
+    formation2.h \
     interface_formateur.h \
     mainwindow.h \
+    service.h \
     statisticsdialog.h
 
 FORMS += \
