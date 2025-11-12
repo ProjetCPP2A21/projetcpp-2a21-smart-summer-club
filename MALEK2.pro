@@ -1,5 +1,6 @@
 QT       += core gui sql
 QT += sql
+QT += core gui sql charts
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -11,18 +12,28 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    apprenant.cpp \
     connection.cpp \
+    employe.cpp \
+    equipement.cpp \
     formateurs.cpp \
+    formation2.cpp \
     interface_formateur.cpp \
     main.cpp \
     mainwindow.cpp \
+    service.cpp \
     statisticsdialog.cpp
 
 HEADERS += \
+    apprenant.h \
     connection.h \
+    employe.h \
+    equipement.h \
     formateurs.h \
+    formation2.h \
     interface_formateur.h \
     mainwindow.h \
+    service.h \
     statisticsdialog.h
 
 FORMS += \

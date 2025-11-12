@@ -27,6 +27,7 @@ private slots:
     void on_pushButton_gestionformation_clicked();
     void on_pushButton_gestionapprenant_clicked();
     void on_pushButton_gestionservice_clicked();
+    void on_pushButton_gestionequipement_clicked();
 
 private:
     Ui::MainWindow *ui;

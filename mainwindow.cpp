@@ -59,4 +59,10 @@ void MainWindow::on_pushButton_gestionapprenant_clicked()
     inter->show();
     this->hide();
 }
-
+void MainWindow::on_pushButton_gestionequipement_clicked()
+{
+    interface_formateur *inter = new interface_formateur(this);
+    inter->setPage(4); //forcer l'affichage dans la page apprenant
+    inter->show();
+    this->hide();
+}
