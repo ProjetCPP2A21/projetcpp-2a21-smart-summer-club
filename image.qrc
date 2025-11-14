@@ -1,1 +1,18 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/img">
+        <file>download.png</file>
+        <file>image.png</file>
+        <file>loupe.png</file>
+        <file>money.png</file>
+        <file>reglag3.png</file>
+        <file>reglage.png</file>
+        <file>retourr.png</file>
+        <file>stat.png</file>
+        <file>trie.png</file>
+        <file>Untitled-1.png</file>
+        <file>poubelle.png</file>
+        <file>retour.png</file>
+        <file>glass.png</file>
+        <file>formateur.png</file>
+    </qresource>
+</RCC>

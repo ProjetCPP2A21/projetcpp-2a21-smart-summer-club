@@ -1,30 +1,1512 @@
 #include "interface_formateur.h"
 #include "ui_interface_formateur.h"
+#include "statisticsdialog.h"
+#include "mainwindow.h"
+#include "formateurs.h"
 #include <QMessageBox>
+#include <QTableView>
+#include "service.h"
+#include "formation2.h"
+#include <QSqlError>
+#include "employe.h"  // assure-toi que le chemin est correct
+#include <QSortFilterProxyModel>
 
-interface_formateur::interface_formateur(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::interface_formateur)
+
+interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
+    : QMainWindow(parent),
+    ui(new Ui::interface_formateur),
+    menuPrincipal(menu)   // on initialise avec le menu passé en paramètre
 {
     ui->setupUi(this);
+
+//--------------------DEBUT_FORMATEUR----------------------------------------------------------------------------------------------------------
+    ui->lineEdit_IdFormateur->setValidator(new QIntValidator(1, 99999999, this));
+    ui->lineEdit_contactFormateur->setValidator(new QIntValidator(1, 99999999, this));
+    ui->lineEdit_salaireFormateur->setValidator(new QIntValidator(1, 99999999, this));
+    QRegularExpression regex("^[A-Za-z]+$"); // uniquement lettres
+    ui->lineEdit_NomFormateur->setValidator(new QRegularExpressionValidator(regex, this));
+    ui->lineEdit_PrenomFormateur->setValidator(new QRegularExpressionValidator(regex, this));
+
+    ui->Tab_Formateur->setModel(F.afficher());
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    connect(ui->checkBox_hommeFormateur, &QCheckBox::toggled, [=](bool checked) {
+        if (checked) ui->checkBox_femmeFormateur->setChecked(false);
+    });
+    connect(ui->checkBox_femmeFormateur, &QCheckBox::toggled, [=](bool checked) {
+        if (checked) ui->checkBox_hommeFormateur->setChecked(false);
+    });
+
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+    ui->table->setModel(s.affiche());
+
+    ui->doubleSpinBox_heureprevueFormateur->setMinimum(0.0);  // modif
+    ui->doubleSpinBox_heureprevueFormateur->setMaximum(50.0); // modif
+    ui->doubleSpinBox_heureprevueFormateur->setSingleStep(0.25); // modif
+//--------------------FIN_FORMATEUR----------------------------------------------------------------------------------------------------------
+
+    //FORMATION//
+
+    // Connecte le signal quand l'utilisateur finit de saisir l'ID
+    connect(ui->lineEditId, &QLineEdit::editingFinished,
+            this, &interface_formateur::on_lineEditId_editingFinished);
+    formation2 F;
+    ui->tableFormation->setModel(ftmp.afficher());
+    QIntValidator *validator = new QIntValidator(0, 999999, this);
+    ui->lineEditId->setValidator(validator);
+    ui->lineEdit_D->setValidator(validator);
+    ui->lineEdit_Ca->setValidator(validator);
+    ui->lineEdit_Ta->setValidator(validator);
+    //ui->lineEdit_id2->setValidator(validator);
+
+
+    // ---- INPUT VALIDATORS (set once at start) ----
+    QIntValidator *intVal = new QIntValidator(this);
+    ui->lineEdit_ID->setValidator(intVal);
+    ui->lineEdit_cin->setValidator(intVal);
+    ui->lineEdit_num->setValidator(new QIntValidator(10000000, 99999999, this)); // 8 digits
+
+    // letters + space + hyphen for name fields
+    QRegularExpression nameRx("^[A-Za-zÀ-ÖØ-öø-ÿ\\-\\s]+$");
+    QRegularExpressionValidator *nameVal = new QRegularExpressionValidator(nameRx, this);
+    ui->lineEdit_nom->setValidator(nameVal);
+    ui->lineEdit_prenom->setValidator(nameVal);
+
+    // email validator
+    QRegularExpression emailRx(R"(^[\w\.\-]+\@[\w\-]+\.[a-zA-Z]{2,}$)");
+    ui->lineEdit_email->setValidator(new QRegularExpressionValidator(emailRx, this));
+
+    // Display the list at startup
+    ui->tableView->setModel(etmp.afficher());
+    // ========== APPRENANT VALIDATION ==========
+    // Contrôle de saisie pour l'ID (chiffres seulement)
+    ui->lineEdit_cin_6->setValidator(new QIntValidator(0, 99999999, this));
+
+    // Contrôle de saisie Nom et Prénom (lettres et espaces)
+    QRegularExpression regexLettres("^[A-Za-z ÀÂÄÉÈÊËÎÏÔÖÙÛÜÇàâäéèêëîïôöùûüç]+$");
+    ui->lineEdit_nom_3->setValidator(new QRegularExpressionValidator(regexLettres, this));
+    ui->lineEdit_prenom_3->setValidator(new QRegularExpressionValidator(regexLettres, this));
+
+    // Contrôle de saisie pour la date de naissance (max 17 ans)
+    QDate aujourdhui = QDate::currentDate();
+    QDate dateMin = QDate(1900, 1, 1);        // Date minimum
+    QDate dateMax = aujourdhui.addYears(0);   // Au moins 17 ans (max 17 ans)
+    ui->dateEdit_embauche_3->setDateRange(dateMin, dateMax);
+    ui->dateEdit_embauche_3->setDate(aujourdhui.addYears(-17)); // Valeur par défaut: 17 ans
+
+    // Contrôle de saisie pour Email
+    QRegularExpressionValidator *emailValidator = new QRegularExpressionValidator(emailRx, this);
+    ui->lineEdit_contact_3->setValidator(emailValidator);
+
+    // Set the apprenant table model
+    ui->tableView_2->setModel(a.afficher());
+
+    // Apprenant button connections
+    connect(ui->pushButton_AJOUTER_6, &QPushButton::clicked, this, &interface_formateur::on_pushButton_AJOUTER_6_clicked);
+    connect(ui->pushButton_ANNULER_6, &QPushButton::clicked, this, &interface_formateur::on_pushButton_ANNULER_6_clicked);
+    connect(ui->pushButton_19, &QPushButton::clicked, this, &interface_formateur::on_pushButton_19_clicked);
+    connect(ui->pushButton_17, &QPushButton::clicked, this, &interface_formateur::on_pushButton_17_clicked);
+    connect(ui->pushButton_18, &QPushButton::clicked, this, &interface_formateur::on_pushButton_18_clicked);
+    connect(ui->pushButton_20, &QPushButton::clicked, this, &interface_formateur::on_pushButton_20_clicked);
+    connect(ui->pushButton_stat_6, &QPushButton::clicked, this, &interface_formateur::on_pushButton_stat_6_clicked);
+    connect(ui->lineEdit_RECHERCHE_2, &QLineEdit::textChanged, this, &interface_formateur::on_lineEdit_RECHERCHE_2_textChanged);
+    // Recherche quand on appuie sur Entrée (au cas où)
+    connect(ui->lineEdit_RECHERCHE_2, &QLineEdit::returnPressed, this, &interface_formateur::on_lineEdit_RECHERCHE_2_returnPressed);
+    connect(ui->tableView_2->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &interface_formateur::onApprenantTableSelectionChanged);
+
 }
+
 
 interface_formateur::~interface_formateur()
 {
     delete ui;
 }
 
-void interface_formateur::on_pushButton_stat_clicked()
+void interface_formateur::setPage(int index)
 {
-    stat = new statistique(this);  // création de l'interface_formateur
-    stat->show();
-    // this->hide();
+    ui->stackedWidget->setCurrentIndex(index);
 }
+
 
 void interface_formateur::on_pushButton_clicked()
 {
     QMessageBox::information(this, "Formateur", "Bouton Formateur cliqué !");
 }
+
+void interface_formateur::on_pushButton_retour_menu_clicked()
+{
+    this->hide();                // cacher la fenêtre
+    menuPrincipal->show();       // réafficher le menu principal
+}
+
+void interface_formateur::on_pushButton_employe_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void interface_formateur::on_pushButton_formateur_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void interface_formateur::on_pushButton_formation_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+
+void interface_formateur::on_pushButton_stat_4_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+}
+
+
+void interface_formateur::on_pushButton_stat_2_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+}
+
+void interface_formateur::on_pushButton_stat_6_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+}
+
+/*service*/
+void interface_formateur::on_pushButton_service_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+
+void interface_formateur::on_pushButton_apprenant_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+
+void interface_formateur::on_pushButton_equipement_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------DEBUT_FORMATEUR_CRUD-------------------------------------------------------------------------------------------------------------------------------------------------
+
+// AJOUT
+void interface_formateur::on_pushButton_AJOUTER_5_clicked()
+{
+    // Récupertaion des informations
+    QString idText = ui->lineEdit_IdFormateur->text().trimmed();
+    if (idText.isEmpty()) {
+        QMessageBox::warning(nullptr, "Erreur", "L'ID du formateur ne peut pas être vide !");
+        return;
+    }
+    int id = idText.toInt();
+
+    QString contact = ui->lineEdit_contactFormateur->text().trimmed();
+    QRegularExpression regex("^\\d{8}$");
+    if (!regex.match(contact).hasMatch()) {
+        QMessageBox::warning(nullptr, "Erreur", "Le contact doit contenir exactement 8 chiffres !");
+        return;
+    }
+    QString nom =ui->lineEdit_NomFormateur->text();
+    QString prenom =ui->lineEdit_PrenomFormateur->text();
+    //QString contact =ui->lineEdit_contactFormateur->text();
+    float salaire= ui->lineEdit_salaireFormateur->text().toFloat();
+    QString specialite =ui->comboBox_specialiteFormateur->currentText();
+    float heuresPrevues= ui->doubleSpinBox_heureprevueFormateur->value();
+    QDate dateEmbauche = ui->dateEdit_embaucheFormateur->date();//modif
+    //QString dateStr = dateEmbauche.toString("yyyy-MM-dd");//modif
+    QString sexe;
+
+    if(ui->checkBox_hommeFormateur->isChecked()){
+        sexe = "Homme";
+    }else if(ui->checkBox_femmeFormateur->isChecked()){
+        sexe ="Femme";
+    }else{
+        sexe ="";
+    }
+
+
+    Formateur F(id,nom,prenom,contact,sexe,dateEmbauche,specialite,heuresPrevues,salaire);
+    bool test= F.ajouter();
+
+    if(test){
+        ui->Tab_Formateur->setModel(F.afficher());
+        QMessageBox :: information(nullptr,QObject :: tr("OK"),
+                                  QObject::tr("Ajout effectué\n"
+                                              "Click cancel to exit"), QMessageBox :: Cancel);
+    }else{
+        QMessageBox :: critical(nullptr,QObject :: tr("not OK"),
+                               QObject::tr("Ajout non effectué\n"
+                                           "Click cancel to exit"), QMessageBox :: Cancel);
+    }
+
+    ui->lineEdit_IdFormateur->clear();
+    ui->lineEdit_NomFormateur->clear();
+    ui->lineEdit_PrenomFormateur->clear();
+    ui->lineEdit_contactFormateur->clear();
+    ui->lineEdit_salaireFormateur->clear();
+    ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+    ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+    ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+    ui->checkBox_hommeFormateur->setChecked(false);
+    ui->checkBox_femmeFormateur->setChecked(false);
+
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);}
+
+
+// INIT
+void interface_formateur::on_pushButton_AjouterFormateur_clicked()
+{
+    ui->lineEdit_IdFormateur->clear();
+    ui->lineEdit_NomFormateur->clear();
+    ui->lineEdit_PrenomFormateur->clear();
+    ui->lineEdit_contactFormateur->clear();
+    ui->lineEdit_salaireFormateur->clear();
+    ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+    ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+    ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+    ui->checkBox_hommeFormateur->setChecked(false);
+    ui->checkBox_femmeFormateur->setChecked(false);
+
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+}
+
+
+void interface_formateur::on_pushButton_ANNULER_5_clicked()
+{
+    ui->lineEdit_IdFormateur->clear();
+    ui->lineEdit_NomFormateur->clear();
+    ui->lineEdit_PrenomFormateur->clear();
+    ui->lineEdit_contactFormateur->clear();
+    ui->lineEdit_salaireFormateur->clear();
+    ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+    ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+    ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+    ui->checkBox_hommeFormateur->setChecked(false);
+    ui->checkBox_femmeFormateur->setChecked(false);
+
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+}
+
+
+void interface_formateur::on_pushButton_modifierFormateur_clicked()
+{
+    QString idText = ui->lineEdit_IdFormateur->text().trimmed();
+    if (idText.isEmpty()) {
+        QMessageBox::warning(nullptr, "Erreur", "L'ID du formateur ne peut pas être vide !");
+        return;
+    }
+    int id = idText.toInt();
+
+    QString contact = ui->lineEdit_contactFormateur->text().trimmed();
+    QRegularExpression regex("^\\d{8}$");
+    if (!regex.match(contact).hasMatch()) {
+        QMessageBox::warning(nullptr, "Erreur", "Le contact doit contenir exactement 8 chiffres !");
+        return;
+    }
+
+    //int id= ui->lineEdit_IdFormateur->text().toInt();
+    QString nom =ui->lineEdit_NomFormateur->text();
+    QString prenom =ui->lineEdit_PrenomFormateur->text();
+    //QString contact =ui->lineEdit_contactFormateur->text();
+    float salaire= ui->lineEdit_salaireFormateur->text().toFloat();
+    QString specialite =ui->comboBox_specialiteFormateur->currentText();
+    float heuresPrevues= ui->doubleSpinBox_heureprevueFormateur->value();
+    QDate dateEmbauche =ui->dateEdit_embaucheFormateur->date();//modif
+    QString sexe;
+
+    if(ui->checkBox_hommeFormateur->isChecked()){
+        sexe = "Homme";
+    }else if(ui->checkBox_femmeFormateur->isChecked()){
+        sexe ="Femme";
+    }else{
+        sexe ="";
+    }
+
+    Formateur F(id,nom,prenom,contact,sexe,dateEmbauche,specialite,heuresPrevues,salaire);
+    bool test= F.modifier();
+    if(test){
+        ui->Tab_Formateur->setModel(F.afficher());
+        QMessageBox :: information(nullptr,QObject :: tr("OK"),
+                                  QObject::tr("Modification effectuée\n"
+                                              "Click cancel to exit"), QMessageBox :: Cancel);
+    }else{
+        QMessageBox :: critical(nullptr,QObject :: tr("not OK"),
+                               QObject::tr("Modification non effectuée\n"
+                                           "Click cancel to exit"), QMessageBox :: Cancel);
+    }
+
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+}
+
+
+void interface_formateur::on_pushButton_SupprimerFormateur_clicked()
+{
+    //int id=ui->lineEdit_IdFormateur->text().toInt();
+    if(IDselection == -1){
+        QMessageBox::information(this, tr("Aucune selection"),tr("Veuillez selectionner un formateur à supprimer."));
+        return;
+    }
+
+    int reply = QMessageBox::question(this, tr("Confirmation"),
+                                      tr("Voulez-vous supprimer ce formateur ?"),
+                                      QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::No)
+        return;
+
+    bool test= F.supprimer(IDselection);
+    if(test){
+        QMessageBox::information(this, tr("Succès"),
+                                 tr("Le formateur a été supprimé avec succès."));
+
+        ui->Tab_Formateur->setModel(F.afficher());
+        IDselection = -2;
+        ui->lineEdit_IdFormateur->clear();
+        ui->lineEdit_NomFormateur->clear();
+        ui->lineEdit_PrenomFormateur->clear();
+        ui->lineEdit_contactFormateur->clear();
+        ui->lineEdit_salaireFormateur->clear();
+        ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+        ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+        ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+        ui->checkBox_hommeFormateur->setChecked(false);
+        ui->checkBox_femmeFormateur->setChecked(false);
+
+        ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+        ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+        disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+        connect(ui->Tab_Formateur->selectionModel(),
+                &QItemSelectionModel::selectionChanged,
+                this,
+                &interface_formateur::onTableSelectionChanged);
+
+    }else
+        QMessageBox :: critical(nullptr,QObject :: tr("not OK"),
+                               QObject::tr("Suppression non effectuée\n"
+                                           "Click cancel to exit"), QMessageBox :: Cancel);
+}
+
+
+void interface_formateur::on_pushButton_listeformateur_clicked()
+{
+    ui->lineEdit_IdFormateur->clear();
+    ui->lineEdit_NomFormateur->clear();
+    ui->lineEdit_PrenomFormateur->clear();
+    ui->lineEdit_contactFormateur->clear();
+    ui->lineEdit_salaireFormateur->clear();
+    ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+    ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+    ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+    ui->checkBox_hommeFormateur->setChecked(false);
+    ui->checkBox_femmeFormateur->setChecked(false);
+
+
+    ui->Tab_Formateur->setModel(F.afficher());
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    connect(ui->checkBox_hommeFormateur, &QCheckBox::toggled, [=](bool checked) {
+        if (checked) ui->checkBox_femmeFormateur->setChecked(false);
+    });
+    connect(ui->checkBox_femmeFormateur, &QCheckBox::toggled, [=](bool checked) {
+        if (checked) ui->checkBox_hommeFormateur->setChecked(false);
+    });
+
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+    ui->table->setModel(s.affiche());
+
+    ui->doubleSpinBox_heureprevueFormateur->setMinimum(0.0);  // modif
+    ui->doubleSpinBox_heureprevueFormateur->setMaximum(50.0); // modif
+    ui->doubleSpinBox_heureprevueFormateur->setSingleStep(0.25); // modif
+}
+
+
+void interface_formateur::onTableSelectionChanged()
+{
+
+    QModelIndexList indexes = ui->Tab_Formateur->selectionModel()->selectedRows();
+    if (!indexes.isEmpty()) {
+        int row = indexes.first().row();
+
+        IDselection = ui->Tab_Formateur->model()->index(row, 0).data().toInt();
+        QString nom = ui->Tab_Formateur->model()->index(row, 1).data().toString();
+        QString prenom = ui->Tab_Formateur->model()->index(row, 2).data().toString();
+        QString contact = ui->Tab_Formateur->model()->index(row, 3).data().toString();
+        QString sexe = ui->Tab_Formateur->model()->index(row, 4).data().toString();//MODIF
+        QString specialite = ui->Tab_Formateur->model()->index(row, 6).data().toString();//modif
+        float heuresPrevues = ui->Tab_Formateur->model()->index(row, 7).data().toFloat();//modif
+        float salaire= ui->Tab_Formateur->model()->index(row, 8).data().toFloat();
+
+
+        ui->lineEdit_IdFormateur->setText(QString::number(IDselection));
+        ui->lineEdit_NomFormateur->setText(nom);
+        ui->lineEdit_PrenomFormateur->setText(prenom);
+        ui->lineEdit_contactFormateur->setText(contact);
+        if(sexe =="Femme"){
+            ui->checkBox_hommeFormateur->setChecked(false);
+            ui->checkBox_femmeFormateur->setChecked(true);
+        }else{
+            ui->checkBox_hommeFormateur->setChecked(true);
+            ui->checkBox_femmeFormateur->setChecked(false);
+        }
+        ui->lineEdit_salaireFormateur->setText(QString::number(salaire));
+
+        QModelIndex index = ui->Tab_Formateur->model()->index(row, 5);
+        QDate date = index.data().toDate(); // récupère la date directement
+
+        if (date.isValid()) {
+            ui->dateEdit_embaucheFormateur->setDate(date);
+        }
+        ui->doubleSpinBox_heureprevueFormateur->setValue(heuresPrevues);
+        if(specialite =="Français"){
+            ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+        }else if(specialite =="Anglais"){
+            ui->comboBox_specialiteFormateur->setCurrentIndex(1);
+        }else if(specialite =="Science"){
+            ui->comboBox_specialiteFormateur->setCurrentIndex(2);
+        }else if(specialite =="Physique"){
+            ui->comboBox_specialiteFormateur->setCurrentIndex(3);
+        }else if(specialite =="Arabe"){
+            ui->comboBox_specialiteFormateur->setCurrentIndex(4);
+        }
+    }
+}
+
+
+void interface_formateur::on_pushButton_RechercheFormateur_clicked()
+{
+    QString id_formateurchercher = ui->lineEdit_RechercheFormateur->text();
+
+    if (id_formateurchercher.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID");
+        return;
+    }
+
+    int id = id_formateurchercher.toInt();
+    Formateur F1;
+    bool test=F1.recherche(id);
+    if (test) {
+        ui->lineEdit_IdFormateur->setText(QString::number(id));
+        ui->lineEdit_NomFormateur->setText(F1.getNomFormateur());
+        ui->lineEdit_PrenomFormateur->setText(F1.getPrenomFormateur());
+        if (F.getSexeFormateur() == "Homme") {
+            ui->checkBox_hommeFormateur->setChecked(true);
+        } else {
+            ui->checkBox_hommeFormateur->setChecked(false);
+        }
+        ui->lineEdit_contactFormateur->setText(F1.getContactFormateur());
+        ui->comboBox_specialiteFormateur->setCurrentText(F1.getSpecialiteFormateur());
+        ui->lineEdit_salaireFormateur->setText(QString::number(F1.getSalaireFormateur(), 'f', 2));
+        ui->dateEdit_embaucheFormateur->setDate(F1.getDateEmbauche());
+        ui->doubleSpinBox_heureprevueFormateur->setValue(F1.getHeuresPrevuesFormateur());
+        ui->lineEdit_RechercheFormateur->clear();
+
+        ui->Tab_Formateur->setModel(F1.Afficher_recherche(id));
+    } else {
+        QMessageBox::critical(this, "Erreur", "Aucun formateur trouvé avec cet ID.");
+        ui->Tab_Formateur->setModel(nullptr);
+        ui->lineEdit_IdFormateur->clear();
+        ui->lineEdit_NomFormateur->clear();
+        ui->lineEdit_PrenomFormateur->clear();
+        ui->lineEdit_contactFormateur->clear();
+        ui->lineEdit_salaireFormateur->clear();
+        ui->comboBox_specialiteFormateur->setCurrentIndex(0);
+        ui->doubleSpinBox_heureprevueFormateur->setValue(0);
+        ui->dateEdit_embaucheFormateur->setDate(QDate::currentDate());
+        ui->checkBox_hommeFormateur->setChecked(false);
+        ui->checkBox_femmeFormateur->setChecked(false);
+        ui->lineEdit_RechercheFormateur->clear();
+
+        ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+        ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+        disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+        connect(ui->Tab_Formateur->selectionModel(),
+                &QItemSelectionModel::selectionChanged,
+                this,
+                &interface_formateur::onTableSelectionChanged);
+    }
+}
+
+
+void interface_formateur::on_pushButton_TRIER_FORMATEUR_clicked()
+{
+    Formateur F;
+    ui->Tab_Formateur->setModel(F.trierDateEmbauche());
+    ui->Tab_Formateur->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->Tab_Formateur->setSelectionMode(QAbstractItemView::SingleSelection);
+    disconnect(ui->Tab_Formateur->selectionModel(), nullptr, this, nullptr);
+    connect(ui->Tab_Formateur->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &interface_formateur::onTableSelectionChanged);
+}
+
+
+void interface_formateur::on_pushButton_PDF_formateur_clicked()
+{
+    Formateur f;
+    f.exporterPDF();
+}
+
+
+void interface_formateur::on_on_pushButton_stat_formateur_clicked()
+{
+    StatisticsDialog d(this);
+    d.exec();
+}
+//-------------------------FIN_FORMATEUR_CRUD-------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------GESTION_SERVICE_CRUD----------------------------------
+bool interface_formateur::verife()
+{
+    QString id_text = ui->id_line->text();
+    QString nom = ui->nom_line->text();
+    QString montant_text = ui->montant_line->text();
+    QString horaire = ui->horaire_line->text();
+    QString capacite_text = ui->capacite_line->text();
+    QString status = ui->status_line->text();
+    QString type = ui->type_combo->currentText();
+    int id = id_text.toInt();
+    double montant = montant_text.toDouble();
+    int capacite = capacite_text.toInt();
+
+    if(id_text.isEmpty() || id<=0)
+    {
+        QMessageBox::critical(this, "erreur", "verfier voter id stp!!");
+        return false;
+    }
+    if(nom.isEmpty())
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter nom de service stp!!");
+        return false;
+    }
+    if(montant_text.isEmpty() || montant<=0)
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter monatnt  de service stp!!");
+        return false;
+    }
+    if(horaire.isEmpty())
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter horaire de service stp!!");
+        return false;
+    }
+    if(capacite_text.isEmpty() || capacite<=0)
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter capacite de service stp!!");
+        return false;
+    }
+    if(status.isEmpty() )
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter status service stp!!");
+        return false;
+    }
+    if(type.isEmpty() ||  ui->type_combo->currentIndex() == 0)
+    {
+        QMessageBox::critical(this, "erreur", "verifier  voter type  de service stp!!");
+        return false;
+    }
+
+    return true;
+}
+
+
+
+void interface_formateur::on_pushButton_AJOUTER_3_clicked()
+{
+    if(verife()){
+        int id_service = ui->id_line->text().toInt();
+        QString nom_service = ui->nom_line->text();
+        double montant = ui->montant_line->text().toDouble();
+        QString horaire = ui->horaire_line->text();
+        int capacite = ui->capacite_line->text().toInt();
+        QString status_service = ui->status_line->text();
+        QString type_service = ui->type_combo->currentText();
+
+
+        service s(id_service, nom_service, montant, horaire,capacite, status_service,type_service);
+        bool test=s.ajoute_service();
+
+        if (test) {
+            ui->table->setModel(s.affiche());
+            QMessageBox::information(this, "Succès", "Service ajouté avec succès !");
+        } else {
+            QMessageBox::critical(this, "Erreur", "Échec de l'ajout du service.");
+        }
+        if (test)
+        {
+            ui->id_line->clear();
+            ui->nom_line->clear();
+            ui->montant_line->clear();
+            ui->horaire_line->clear();
+            ui->capacite_line->clear();
+            ui->status_line->clear();
+            ui->type_combo->setCurrentIndex(0);
+
+        }
+
+    }
+}
+
+
+
+void interface_formateur::on_pushButton_92_clicked()
+{
+    QString id_supprimer = ui->id2->text();
+
+    if (id_supprimer.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID service tu va supprimer  !");
+        return;
+    }
+
+    int id = id_supprimer.toInt();
+    service s;
+    bool  test=s.recherch_id(id);
+    if(test)
+    {
+        s.supprime_service(id);
+        QMessageBox::information(this, "Champ vide", "supprision avec succe  !");
+        ui->table->setModel(s.affiche());
+    }
+    else
+    {
+        QMessageBox::warning(this, "Champ vide", "supprision avec echoue  !");
+    }
+
+}
+
+
+void interface_formateur::on_pushButton_89_clicked()
+{
+    QString id_chercher = ui->id2->text();
+
+    if (id_chercher.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID !");
+        return;
+    }
+
+    int id = id_chercher.toInt();
+    service s;
+    bool test=s.recherch_id(id);
+    if (test) {
+        QMessageBox::information(this, "valide", "service trouve.");
+        ui->table->setModel(s.affiche_id(id));
+    } else {
+        QMessageBox::critical(this, "Erreur", "Aucun service trouvé avec cet ID.");
+        ui->table->setModel(nullptr);
+
+    }
+}
+
+
+void interface_formateur::on_pushButton_90_clicked()
+{
+    service s;
+    QString idText = ui->id2->text();
+    if (idText.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID service tu va supprimer  !");
+        return;
+    }
+    int id = idText.toInt();
+
+    if (s.charge_donner(id)) {
+        ui->id_line->setText(QString::number(s.getid()));
+        ui->id_line->setDisabled(true);
+        ui->nom_line->setText(s.getnom_service());
+        ui->montant_line->setText(QString::number(s.getmontant()));
+        ui->horaire_line->setText(s.gethoraire());
+        ui->capacite_line->setText(QString::number(s.getcapacite()));
+        ui->status_line->setText(s.getstatus());
+        ui->type_combo->setCurrentText(s.gettype_service());
+
+    } else {
+        QMessageBox::critical(this, "Erreur", "Service introuvable.");
+
+    }
+}
+
+
+void interface_formateur::on_pushButton_ANNULER_7_clicked()
+{
+    service s;
+    QString id_modi = ui->id2->text();
+    if (id_modi.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID service tu va modifier  !");
+        return;
+    }
+    int id = id_modi.toInt();
+    s.setid(ui->id_line->text().toInt());
+    s.setnom(ui->nom_line->text());
+    s.setmontant(ui->montant_line->text().toDouble());
+    s.sethoraire(ui->horaire_line->text());
+    s.setcapacite(ui->capacite_line->text().toInt());
+    s.setstatus(ui->status_line->text());
+    s.settype(ui->type_combo->currentText());
+    bool rechercher_id=s.recherch_id(id);
+    if (rechercher_id) {
+        s.update_service(id);
+        QMessageBox::information(this, "Succès", "Service modifié avec succès.");
+        ui->table->setModel(s.affiche());
+    }
+    if(s.update_service(id))
+    {
+        ui->id_line->setDisabled(false);
+        ui->id_line->clear();
+        ui->nom_line->clear();
+        ui->montant_line->clear();
+        ui->horaire_line->clear();
+        ui->capacite_line->clear();
+        ui->status_line->clear();
+        ui->type_combo->setCurrentIndex(0);
+        ui->id2->clear();
+    }
+}
+
+
+
+
+
+void interface_formateur::on_pushButton_stat_13_clicked()
+{
+    StatisticsDialog d(this); // création de la dialog
+    d.exec();
+}
+
+
+void interface_formateur::on_pushButton_ANNULER_3_clicked()
+{
+
+    ui->id_line->clear();
+    ui->nom_line->clear();
+    ui->montant_line->clear();
+    ui->horaire_line->clear();
+    ui->capacite_line->clear();
+    ui->status_line->clear();
+    ui->type_combo->setCurrentIndex(0);
+
+}
+//GSETION DES FORMATIONs//
+void interface_formateur::on_pushButtonAjouter_clicked()
+{
+    //Récuperation des formations saisies dans les 8 champs
+    int id=ui->lineEditId->text().toInt();
+    QString nom=ui->lineEdit_Nom->text();
+    QString type=ui->lineEdit_type->currentText();
+    QString horaire = ui->lineEdit_h->time().toString("HH:mm");
+    int duree=ui->lineEdit_D->text() .toInt();
+    QString lieu=ui->lineEdit_lieu->text();
+    int capacite=ui->lineEdit_Ca->text() .toInt();
+    int tarif=ui->lineEdit_Ta->text() .toInt();
+    int id_formateur=ui->lineEdit_id2->text() .toInt();
+
+    //instancier un objet de la classe formation2 en utilisant les informations dans l'interface
+    formation2 F (id, nom, type, horaire, duree, lieu, capacite, tarif , id_formateur );
+    //inserer l'objet fprmation instancié dans la table formation et recuperer la valeur de reour de query.exec()
+    bool test=F.ajouter();
+
+    if(test) //si requete executé==> QmessageBox::information
+    {
+        //Refresh (Actualiser)
+        ui->tableFormation->setModel(ftmp.afficher());
+
+        QMessageBox::information(nullptr, QMessageBox::tr("ok"),QObject::tr("Ajout effecutué\n""Click Cancel to exist."),QMessageBox::Cancel);
+    }
+    else //si requete non executé ==>QMessagebox::critical
+        QMessageBox::critical(nullptr, QObject::tr(" not ok"),QObject::tr("Ajout non effecutué\n""Click Cancel to exist."),QMessageBox::Cancel);
+    ui->lineEditId->clear();
+    ui->lineEdit_Nom->clear();
+    ui->lineEdit_type->setCurrentIndex(0);
+    ui->lineEdit_h->clear();
+    ui->lineEdit_D->clear();
+    ui->lineEdit_lieu->clear();
+    ui->lineEdit_Ca->clear();
+    ui->lineEdit_Ta->clear();
+    ui->lineEdit_id2->clear();
+
+
+
+}
+
+
+
+void interface_formateur::on_pushButtonsupprimer_clicked()
+{
+    int id = ui->lineEditId->text().toInt();
+    qDebug() << "ID à supprimer =" << id;
+
+    bool test = ftmp.supprimer(id);
+
+    if (test)
+    {
+        ui->tableFormation->setModel(ftmp.afficher());
+        QMessageBox::information(nullptr, "OK", "Suppression effectuée ");
+        ui->tableFormation->setModel(ftmp.afficher()); // Actualiser la table
+    } else {
+        QMessageBox::critical(nullptr, "Erreur", "Suppression non effectuée ");
+    }
+    ui->lineEditId->clear();
+    ui->lineEdit_Nom->clear();
+    ui->lineEdit_type->setCurrentIndex(0);
+    ui->lineEdit_h->clear();
+    ui->lineEdit_D->clear();
+    ui->lineEdit_lieu->clear();
+    ui->lineEdit_Ca->clear();
+    ui->lineEdit_Ta->clear();
+    ui->lineEdit_id2->clear();
+}
+/*
+void formation::onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    if (!selected.indexes().isEmpty())
+    {
+        QModelIndex index = selected.indexes().first();
+        int row = index.row();
+
+        QAbstractItemModel *model = ui->tableFormation->model();
+
+        int id = model->index(row, 0).data().toInt();
+        QString nom = model->index(row, 1).data().toString();
+        QString type = model->index(row, 2).data().toString();
+        int horaire = model->index(row, 3).data().toInt();
+        int duree = model->index(row, 4).data().toInt();
+        QString lieu = model->index(row, 5).data().toString();
+        int capacite = model->index(row, 6).data().toInt();
+        int tarif  = model->index(row, 7).data().toInt();
+        //int id_formateur  = model->index(row, 8).data().toInt();
+
+
+
+        QTime h(horaire, 0);
+
+        ui->lineEditId->setText(QString::number(id));
+        ui->lineEdit_Nom->setText(nom);
+        ui->lineEdit_type->setCurrentText(type);
+        ui->lineEdit_h->setTime(h);
+        ui->lineEdit_D->setText(QString::number(duree));
+        ui->lineEdit_lieu->setText(lieu);
+        ui->lineEdit_Ca->setText(QString::number(capacite));
+        ui->lineEdit_Ta->setText(QString::number(tarif));
+        //ui->lineEdit_id2->setText(QString::number(id_formateur));
+
+
+    }
+}
+*/
+
+
+
+void interface_formateur::on_pushButtonModifier_clicked()
+{
+
+    int id=ui->lineEditId->text().toInt();
+    QString nom=ui->lineEdit_Nom->text();
+    QString type=ui->lineEdit_type->currentText();
+    QString horaire = ui->lineEdit_h->time().toString("HH:mm");
+    int duree=ui->lineEdit_D->text() .toInt();
+    QString lieu=ui->lineEdit_lieu->text();
+    int capacite=ui->lineEdit_Ca->text() .toInt();
+    int tarif=ui->lineEdit_Ta->text() .toInt();
+    int id_formateur=ui->lineEdit_id2->text() .toInt();
+
+
+    bool test = ftmp.modifier(id,nom,type,horaire,duree,lieu,capacite,tarif,id_formateur);
+
+    if (test)
+    {
+        ui->tableFormation->setModel(ftmp.afficher());
+        QMessageBox::information(nullptr, QObject::tr("Modification réussie"),
+                                 QObject::tr("Les informations ont été modifiées avec succès.\n"), QMessageBox::Ok);
+        ui->tableFormation->setModel(ftmp.afficher()); // 🔄 Actualiser le tableau
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, QObject::tr("Erreur"),
+                              QObject::tr("La modification a échoué.\n"), QMessageBox::Cancel);
+    }
+    ui->lineEditId->clear();
+    ui->lineEdit_Nom->clear();
+    ui->lineEdit_type->setCurrentIndex(0);
+    ui->lineEdit_h->clear();
+    ui->lineEdit_D->clear();
+    ui->lineEdit_lieu->clear();
+    ui->lineEdit_Ca->clear();
+    ui->lineEdit_Ta->clear();
+    ui->lineEdit_id2->clear();
+
+
+}
+void interface_formateur::on_lineEditId_editingFinished()
+{
+    QString id = ui->lineEditId->text().trimmed();
+
+    if (id.isEmpty()) return;
+
+    QSqlQuery query;
+    query.prepare("SELECT NOM, TYPE_FORMATION,HORAIRE,DUREE,LIEU,CAPACITE,TARIF,IDFORMATEUR  FROM FORMATION WHERE ID_FORMATION = :id");
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        QMessageBox::critical(this, "Erreur SQL", query.lastError().text());
+        return;
+    }
+    if (query.next()) {
+
+        // Remplir les autres champs
+        ui->lineEdit_Nom->setText(query.value(0).toString());
+        ui->lineEdit_type->setCurrentText(query.value(1).toString());
+        ui->lineEdit_h->setTime(QTime::fromString(query.value(2).toString(), "hh:mm"));
+        ui->lineEdit_D->setText(query.value(3).toString());
+        ui->lineEdit_lieu->setText(query.value(4).toString());;
+        ui->lineEdit_Ca->setText(query.value(5).toString());
+        ui->lineEdit_Ta->setText(query.value(6).toString());
+        ui->lineEdit_id2->setText(query.value(7).toString());
+
+    } else {
+
+    }
+
+}
+
+
+
+//gestion employeeee
+
+
+/* ------------------------------------------------------------------ */
+/*                         INPUT VALIDATION                           */
+/* ------------------------------------------------------------------ */
+QString interface_formateur::validateFields(bool forAdd, bool forModify, bool forDelete) const
+{
+    // ---- ID -------------------------------------------------------
+    bool ok;
+    int id = ui->lineEdit_ID->text().toInt(&ok);
+    if (!ok || id <= 0) {
+        return tr("L'ID doit être un nombre positif.");
+    }
+
+    // ---- CIN -------------------------------------------------------
+    if (ui->lineEdit_cin->text().isEmpty()) {
+        return tr("Le CIN est obligatoire.");
+    }
+    // (already forced to digits by validator)
+
+    // ---- NOM / PRENOM -----------------------------------------------
+    if (ui->lineEdit_nom->text().trimmed().isEmpty()) {
+        return tr("Le nom est obligatoire.");
+    }
+    if (ui->lineEdit_prenom->text().trimmed().isEmpty()) {
+        return tr("Le prénom est obligatoire.");
+    }
+
+    // ---- POSTE ------------------------------------------------------
+    if (ui->lineEdit_poste->text().trimmed().isEmpty()) {
+        return tr("Le poste est obligatoire.");
+    }
+
+    // ---- NUM (8 digits) ---------------------------------------------
+    QString numStr = ui->lineEdit_num->text();
+    if (numStr.length() != 8 || !numStr[0].isDigit()) {
+        return tr("Le numéro de téléphone doit contenir exactement 8 chiffres.");
+    }
+
+    // ---- EMAIL -------------------------------------------------------
+    if (ui->lineEdit_email->text().trimmed().isEmpty()) {
+        return tr("L'e-mail est obligatoire.");
+    }
+    // (validator already checks format, but we double-check)
+    QRegularExpression emailRx(R"(^[\w\.\-]+\@[\w\-]+\.[a-zA-Z]{2,}$)");
+    if (!emailRx.match(ui->lineEdit_email->text()).hasMatch()) {
+        return tr("Veuillez saisir une adresse e-mail valide.");
+    }
+
+    // ---- MDP ---------------------------------------------------------
+    if (ui->lineEdit_mdp->text().isEmpty()) {
+        return tr("Le mot de passe est obligatoire.");
+    }
+
+    // ---- DATE (QDateEdit already guarantees a valid date) -----------
+
+    return QString();   // no error
+}
+
+/* ------------------------------------------------------------------ */
+/*                         CLEAR FIELDS                               */
+/* ------------------------------------------------------------------ */
+void interface_formateur::clearFields()
+{
+    ui->lineEdit_ID->clear();
+    ui->lineEdit_nom->clear();
+    ui->lineEdit_prenom->clear();
+    ui->lineEdit_poste->clear();
+    ui->lineEdit_cin->clear();
+    ui->lineEdit_num->clear();
+    ui->lineEdit_email->clear();
+    ui->lineEdit_mdp->clear();
+    ui->dateEdit->setDate(QDate::currentDate());
+}
+
+/* ==================== AJOUTER ==================== */
+void interface_formateur::on_btajouter_clicked()
+{
+    QString err = validateFields(true, false, false);
+    if (!err.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur de saisie"), err);
+        return;
+    }
+
+    int     id          = ui->lineEdit_ID->text().toInt();
+    QString nom         = ui->lineEdit_nom->text();
+    QString prenom      = ui->lineEdit_prenom->text();
+    QString poste       = ui->lineEdit_poste->text();
+    int     cin         = ui->lineEdit_cin->text().toInt();
+    int     num         = ui->lineEdit_num->text().toInt();
+    QString email       = ui->lineEdit_email->text();
+    QString mdp         = ui->lineEdit_mdp->text();
+    QDate   dateembauche= ui->dateEdit->date();
+
+    employe e(id, nom, prenom, poste, cin, num, dateembauche, email, mdp);
+    if (e.ajouter()) {
+        QMessageBox::information(this, tr("Succès"), tr("Ajout effectué !"));
+        ui->tableView->setModel(e.afficher());
+        clearFields();
+    } else {
+        QMessageBox::critical(this, tr("Erreur"), tr("Échec de l'ajout !"));
+    }
+}
+
+/* ==================== SUPPRIMER ==================== */
+void interface_formateur::on_btsupprimer_clicked()
+{
+    QString err = validateFields(false, false, true);
+    if (!err.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur de saisie"), err);
+        return;
+    }
+
+    int id = ui->lineEdit_ID->text().toInt();
+
+    if (etmp.supprimer(id)) {
+        QMessageBox::information(this, tr("Succès"), tr("Suppression effectuée !"));
+        ui->tableView->setModel(etmp.afficher());
+        clearFields();
+    } else {
+        QMessageBox::critical(this, tr("Erreur"), tr("Suppression non effectuée !"));
+    }
+}
+
+/* ==================== MODIFIER ==================== */
+void interface_formateur::on_bmodifier_clicked()
+{
+    QString err = validateFields(false, true, false);
+    if (!err.isEmpty()) {
+        QMessageBox::warning(this, tr("Erreur de saisie"), err);
+        return;
+    }
+
+    int     id          = ui->lineEdit_ID->text().toInt();
+    QString nom         = ui->lineEdit_nom->text();
+    QString prenom      = ui->lineEdit_prenom->text();
+    QString poste       = ui->lineEdit_poste->text();
+    int     cin         = ui->lineEdit_cin->text().toInt();
+    int     num         = ui->lineEdit_num->text().toInt();
+    QString email       = ui->lineEdit_email->text();
+    QString mdp         = ui->lineEdit_mdp->text();
+    QDate   dateembauche= ui->dateEdit->date();
+
+    etmp = employe(id, nom, prenom, poste, cin, num, dateembauche, email, mdp);
+    if (etmp.modifier(id)) {
+        QMessageBox::information(this, tr("Succès"), tr("Modification effectuée !"));
+        ui->tableView->setModel(etmp.afficher());
+        clearFields();
+    } else {
+        QMessageBox::critical(this, tr("Erreur"), tr("Échec de la modification !"));
+    }
+}
+
+#include <QSqlRecord>
+/* ==================== RECHERCHER (fill) ==================== */
+void interface_formateur::on_pushButton_cin_3_clicked()
+{
+    bool ok;
+    int id = ui->lineEdit_ID->text().toInt(&ok);
+    if (!ok || id <= 0) {
+        QMessageBox::warning(this, tr("Input error"),
+                             tr("Veuillez entrer un ID numérique valide."));
+        return;
+    }
+
+    QSqlQueryModel *model = etmp.fill(id);
+    if (!model) {
+        QMessageBox::critical(this, tr("Database error"),
+                              tr("Échec de l'exécution de la requête."));
+        return;
+    }
+
+    if (model->rowCount() == 0) {
+        QMessageBox::warning(this, tr("Introuvable"),
+                             tr("Aucun employé avec l'ID %1").arg(id));
+        clearFields();
+        delete model;
+        return;
+    }
+
+    QSqlRecord r = model->record(0);
+    ui->lineEdit_nom->setText   (r.value("NOM").toString());
+    ui->lineEdit_prenom->setText(r.value("PRENOM").toString());
+    ui->lineEdit_poste->setText (r.value("POSTE").toString());
+    ui->lineEdit_cin->setText   (r.value("CIN").toString());
+    ui->lineEdit_num->setText   (r.value("NUM").toString());
+    ui->lineEdit_email->setText (r.value("EMAIL").toString());
+    ui->lineEdit_mdp->setText   (r.value("MDP").toString());
+
+    QDate d = r.value("DATEEMBAUCHE").toDate();
+    if (d.isValid())
+        ui->dateEdit->setDate(d);
+    else
+        ui->dateEdit->clear();
+
+    QMessageBox::information(this, tr("Succès"), tr("Données chargées."));
+    delete model;
+}
+//ajouter equipement
+void interface_formateur::on_pushButton_AjouterEquipement_clicked()
+{
+    qDebug() << "✅ Bouton Ajouter cliqué !";
+    int id = ui->idEquipement->text().toInt();
+    QString nom = ui->nomEquipement->text();
+    QString type = ui->typeEquipemrnt->text();
+    double prix = ui->prixEquipement->text().toDouble();
+    int quantite = ui->ajouterEquipement->text().toInt();
+    QString etat = ui->etatEquipement->currentText();
+
+    Equipement E(id, nom, type, prix, quantite, etat);
+
+    if (E.ajouter()) {
+        QMessageBox::information(this, "Succès", "Équipement ajouté avec succès !");
+        ui->tableEquipement->setModel(E.afficher());
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de l’ajout de l’équipement !");
+    }
+
+    ui->idEquipement->clear();
+    ui->nomEquipement->clear();
+    ui->typeEquipemrnt->clear();
+    ui->prixEquipement->clear();
+    ui->etatEquipement->clear();
+    ui->etatEquipement->setCurrentIndex(0);
+}
+//supprimer equipement
+void interface_formateur::on_pushButton_SupprimerEquipement_clicked()
+{
+    int id = ui->idEquipement->text().toInt();
+
+    if (id == 0) {
+        QMessageBox::warning(this, "Erreur", "Veuillez saisir un ID valide !");
+        return;
+    }
+
+    Equipement E;
+    if (E.supprimer(id)) {
+        QMessageBox::information(this, "Succès", "Équipement supprimé !");
+        ui->tableEquipement->setModel(E.afficher());
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de la suppression !");
+    }
+}
+
+
+//rechercher equipement
+void interface_formateur::on_pushButton_rechercherEquipement()
+{
+    QString id_chercher = ui->RechercheEquipement->text(); // ton champ de saisie
+
+    if (id_chercher.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID !");
+        return;
+    }
+
+    int id = id_chercher.toInt();
+    Equipement E;
+
+    // Appel de la fonction de recherche (bool) dans la classe Equipement
+    bool test = E.recherche_id(id);  // tu vas la créer ci-dessous
+
+    if (test) {
+        QMessageBox::information(this, "Valide", "Équipement trouvé !");
+        ui->tableEquipement->setModel(E.afficher()); // méthode qui affiche un seul équipement
+    } else {
+        QMessageBox::critical(this, "Erreur", "Aucun équipement trouvé avec cet ID.");
+        ui->tableEquipement->setModel(nullptr);
+    }
+}
+//modifier equipement
+void interface_formateur::on_pushButton_modifierEquipement_clicked()
+{
+    Equipement E;
+
+    QString id_modi = ui->RechercheEquipement->text();
+    if (id_modi.isEmpty()) {
+        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID d’équipement à modifier !");
+        return;
+    }
+
+    int id = id_modi.toInt();
+
+    // 🔹 On récupère les valeurs de l'interface
+    E.setIdE(ui->idEquipement->text().toInt());
+    E.setNom(ui->nomEquipement->text());
+    E.setType(ui->typeEquipemrnt->text());
+    E.setEtat(ui->etatEquipement->currentText());
+    E.setPrix(ui->prixEquipement->text().toDouble());
+
+    // 🔹 Vérification si l'équipement existe
+    if (E.recherche_id(id)) {
+        if (E.modifier()) {
+            QMessageBox::information(this, "Succès", "Équipement modifié avec succès !");
+            ui->tableEquipement->setModel(E.afficher());
+        } else {
+            QMessageBox::critical(this, "Erreur", "La mise à jour de l’équipement a échoué !");
+        }
+    } else {
+        QMessageBox::critical(this, "Erreur", "Aucun équipement trouvé avec cet ID !");
+        return;
+    }
+
+    // 🔄 Nettoyage des champs
+    ui->idEquipement->setDisabled(false);
+    ui->idEquipement->clear();
+    ui->nomEquipement->clear();
+    ui->typeEquipemrnt->clear();
+    ui->etatEquipement->setCurrentIndex(0);
+    ui->prixEquipement->clear();
+    ui->RechercheEquipement->clear();
+}
+
+// ========== APPRENANT SLOT IMPLEMENTATIONS ==========
+
+void interface_formateur::on_pushButton_AJOUTER_6_clicked()
+{
+    // Récupération des données
+    int id_apprenant = ui->lineEdit_cin_6->text().toInt();
+    QString nom = ui->lineEdit_nom_3->text();
+    QString prenom = ui->lineEdit_prenom_3->text();
+    QDate date_naiss = ui->dateEdit_embauche_3->date();
+    QString email = ui->lineEdit_contact_3->text();
+
+    // Validation
+    if (nom.isEmpty() || prenom.isEmpty()) {
+        QMessageBox::warning(this, "Champs manquants", "Le nom et le prénom sont obligatoires !");
+        return;
+    }
+
+    if (email.isEmpty()) {
+        QMessageBox::warning(this, "Email manquant", "L'email est obligatoire !");
+        return;
+    }
+
+    // Ajouter l'apprenant
+    bool test = a.ajouter_apprenant(id_apprenant, nom, prenom, date_naiss, email);
+
+    if (test) {
+        QMessageBox::information(this, "Succès", "Apprenant ajouté avec succès !");
+        on_pushButton_ANNULER_6_clicked(); // Réinitialiser les champs
+        ui->tableView_2->setModel(a.afficher()); // Actualiser le tableau
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de l'ajout de l'apprenant !");
+    }
+}
+
+void interface_formateur::on_pushButton_ANNULER_6_clicked()
+{
+    // Réinitialiser tous les champs apprenant
+    ui->lineEdit_cin_6->clear();
+    ui->lineEdit_nom_3->clear();
+    ui->lineEdit_prenom_3->clear();
+    ui->lineEdit_contact_3->clear();
+
+    QDate aujourdhui = QDate::currentDate();
+    ui->dateEdit_embauche_3->setDate(aujourdhui.addYears(-17)); // Réinitialiser à 17 ans
+}
+
+void interface_formateur::on_pushButton_19_clicked()
+{
+    // Modifier l'apprenant
+    int id_apprenant = ui->lineEdit_cin_6->text().toInt();
+
+    if (id_apprenant <= 0) {
+        QMessageBox::warning(this, "ID manquant", "Veuillez sélectionner ou saisir un apprenant à modifier !");
+        return;
+    }
+
+    QString nom = ui->lineEdit_nom_3->text();
+    QString prenom = ui->lineEdit_prenom_3->text();
+    QDate date_naiss = ui->dateEdit_embauche_3->date();
+    QString email = ui->lineEdit_contact_3->text();
+
+    // Use the existing 'a' object
+    bool test = a.modifier(id_apprenant, nom, prenom, date_naiss, email);
+
+    if (test) {
+        QMessageBox::information(this, "Modification", "Modification de l'apprenant réussie !");
+        ui->tableView_2->setModel(a.afficher());
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de la modification !");
+    }
+}
+
+void interface_formateur::on_pushButton_18_clicked()
+{
+    // Supprimer l'apprenant
+    int id_apprenant = ui->lineEdit_RECHERCHE_2->text().toInt();
+
+    if (id_apprenant <= 0) {
+        QMessageBox::warning(this, "ID manquant", "Veuillez sélectionner ou saisir un apprenant à supprimer !");
+        return;
+    }
+
+    int reply = QMessageBox::question(this, "Confirmation",
+                                      "Voulez-vous vraiment supprimer cet apprenant ?",
+                                      QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        bool test = a.supprimer(id_apprenant);
+        if (test) {
+            QMessageBox::information(this, "Succès", "Apprenant supprimé !");
+            ui->tableView_2->setModel(a.afficher());
+            on_pushButton_ANNULER_6_clicked();
+        } else {
+            QMessageBox::critical(this, "Erreur", "Échec de la suppression !");
+        }
+    }
+}
+
+void interface_formateur::on_pushButton_17_clicked()  // MODIFIER
+{
+    int id_apprenant = ui->lineEdit_cin_6->text().toInt();
+
+    if (id_apprenant <= 0) {
+        QMessageBox::warning(this, "ID manquant", "Veuillez sélectionner ou saisir un apprenant à modifier !");
+        return;
+    }
+
+    QString nom = ui->lineEdit_nom_3->text();
+    QString prenom = ui->lineEdit_prenom_3->text();
+    QDate date_naiss = ui->dateEdit_embauche_3->date();
+    QString email = ui->lineEdit_contact_3->text();
+
+    bool test = a.modifier(id_apprenant, nom, prenom, date_naiss, email);
+
+    if (test) {
+        QMessageBox::information(this, "Modification", "Modification de l'apprenant réussie !");
+        ui->tableView_2->setModel(a.afficher());
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de la modification !");
+    }
+}
+
+void interface_formateur::on_pushButton_20_clicked()
+{
+    // .....
+
+}
+
+void interface_formateur::on_lineEdit_RECHERCHE_2_returnPressed()
+{
+    // Appelle la même fonction que textChanged
+    on_lineEdit_RECHERCHE_2_textChanged(ui->lineEdit_RECHERCHE_2->text());
+}
+
+void interface_formateur::on_lineEdit_RECHERCHE_2_textChanged(const QString &text)
+{
+    QString recherche = text.trimmed();
+
+    if (recherche.isEmpty()) {
+        ui->tableView_2->setModel(a.afficher()); // Afficher tous si recherche vide
+        return;
+    }
+
+    // Solution temporaire - filtre le modèle existant
+    QSqlQueryModel *model = a.afficher();
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    proxyModel->setFilterKeyColumn(0); // Colonne ID
+    proxyModel->setFilterFixedString(recherche);
+    ui->tableView_2->setModel(proxyModel);
+}
+void interface_formateur::onApprenantTableSelectionChanged()
+{
+    QModelIndexList indexes = ui->tableView_2->selectionModel()->selectedRows();
+    if (!indexes.isEmpty()) {
+        int row = indexes.first().row();
+        QAbstractItemModel *model = ui->tableView_2->model();
+
+        int id = model->index(row, 0).data().toInt();
+        QString nom = model->index(row, 1).data().toString();
+        QString prenom = model->index(row, 2).data().toString();
+        QDate date_naiss = model->index(row, 3).data().toDate();
+        QString email = model->index(row, 4).data().toString();
+
+        // Remplir les champs
+        ui->lineEdit_cin_6->setText(QString::number(id));
+        ui->lineEdit_nom_3->setText(nom);
+        ui->lineEdit_prenom_3->setText(prenom);
+        ui->dateEdit_embauche_3->setDate(date_naiss);
+        ui->lineEdit_contact_3->setText(email);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
