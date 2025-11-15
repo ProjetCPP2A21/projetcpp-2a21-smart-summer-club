@@ -63,7 +63,7 @@ private slots:
 //-----------------FIN_BOUTONS_FORMATEUR------------------------------
 
 
-    //selection tableau service//
+    //gestion  service//
     //ajouteet afficher//
     void on_pushButton_AJOUTER_3_clicked();
     //supprimer  service //
@@ -124,6 +124,10 @@ private slots:
 
     void on_rechercherEquipement_clicked();
 
+    void on_pushButton_86_clicked();
+
+    void on_pushButton_87_clicked();
+
 private:
     Ui::interface_formateur *ui;
     // pointeur vers menu principal
@@ -141,6 +145,7 @@ private:
     service s;
     bool verife();
     bool cleardonner();
+/***********************/
 
     //formation//
     formation2 F2;

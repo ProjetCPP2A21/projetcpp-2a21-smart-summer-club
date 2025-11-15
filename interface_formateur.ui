@@ -30,7 +30,7 @@
      <string notr="true">border: none;</string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="page_employe">
      <widget class="QWidget" name="Formateur" native="true">
@@ -3868,14 +3868,10 @@ QPushButton:hover{
          <property name="geometry">
           <rect>
            <x>40</x>
-           <y>340</y>
-           <width>891</width>
-           <height>281</height>
+           <y>350</y>
+           <width>881</width>
+           <height>271</height>
           </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">border:0px ;
-background-color: rgb(12, 47, 85);</string>
          </property>
         </widget>
        </widget>

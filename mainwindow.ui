@@ -231,7 +231,7 @@ QPushButton:hover{
 }</string>
       </property>
       <property name="text">
-       <string>Services</string>
+       <string>gestion des Services</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_gestionformation">

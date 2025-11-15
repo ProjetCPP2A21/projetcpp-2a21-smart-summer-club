@@ -809,12 +809,12 @@ void interface_formateur::on_pushButton_ANNULER_7_clicked()
 
 
 
-
+//stat gestion service//
 
 void interface_formateur::on_pushButton_stat_13_clicked()
 {
-    StatisticsDialog d(this); // création de la dialog
-    d.exec();
+    service s;
+    s.statistic_capacite(ui->table);
 }
 
 
@@ -1611,5 +1611,32 @@ void interface_formateur::on_rechercherEquipement_clicked()
                                  "Équipement chargé avec succès.");
 
         delete model;
+}
+
+
+void interface_formateur::on_pushButton_86_clicked()
+{
+    service s;
+    QSqlQueryModel* model = s.tri_capacite();
+    if(model) {
+        ui->table->setModel(model);
+    } else {
+        QMessageBox::warning(this, "Erreur", "Impossible de trier par capacité.");
+    }
+}
+#include <QStandardPaths>
+#include<QDirIterator>
+
+void interface_formateur::on_pushButton_87_clicked()
+{
+    service s;
+    QString filePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+    + QDir::separator()
+        + "service.pdf";
+
+        s.export_pdf(ui->table,filePath);
+        QMessageBox::information(this, "Export", "PDF généré  service.pdf");
+
+
 }
 

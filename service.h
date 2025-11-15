@@ -3,7 +3,7 @@
 #include <QString>
 #include<QSqlQuery>
 #include<QSqlQueryModel>
-//#include <QTableWidget>
+#include <QTableView>
 class service
 {
 
@@ -46,6 +46,9 @@ public:
     bool supprime_service(int id_service);
     bool charge_donner(int id_service);
     bool update_service(int id_service);
+    QSqlQueryModel* tri_capacite();
+    void export_pdf(QTableView  *view,const QString &filename);
+    void statistic_capacite(QTableView *view);
 
 
 
