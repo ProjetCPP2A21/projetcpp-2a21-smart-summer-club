@@ -1,4 +1,3 @@
-#include "interface_formateur.h"
 #include "ui_interface_formateur.h"
 #include "statisticsdialog.h"
 #include "mainwindow.h"
@@ -10,6 +9,9 @@
 #include <QSqlError>
 #include "employe.h"  // assure-toi que le chemin est correct
 #include <QSortFilterProxyModel>
+#include "equipement.h"
+#include "interface_formateur.h"
+#include <QRegularExpression>
 
 
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
@@ -1211,119 +1213,8 @@ void interface_formateur::on_pushButton_cin_3_clicked()
     QMessageBox::information(this, tr("Succès"), tr("Données chargées."));
     delete model;
 }
-//ajouter equipement
-void interface_formateur::on_pushButton_AjouterEquipement_clicked()
-{
-    qDebug() << "✅ Bouton Ajouter cliqué !";
-    int id = ui->idEquipement->text().toInt();
-    QString nom = ui->nomEquipement->text();
-    QString type = ui->typeEquipemrnt->text();
-    double prix = ui->prixEquipement->text().toDouble();
-    int quantite = ui->ajouterEquipement->text().toInt();
-    QString etat = ui->etatEquipement->currentText();
 
-    Equipement E(id, nom, type, prix, quantite, etat);
-
-    if (E.ajouter()) {
-        QMessageBox::information(this, "Succès", "Équipement ajouté avec succès !");
-        ui->tableEquipement->setModel(E.afficher());
-    } else {
-        QMessageBox::critical(this, "Erreur", "Échec de l’ajout de l’équipement !");
-    }
-
-    ui->idEquipement->clear();
-    ui->nomEquipement->clear();
-    ui->typeEquipemrnt->clear();
-    ui->prixEquipement->clear();
-    ui->etatEquipement->clear();
-    ui->etatEquipement->setCurrentIndex(0);
-}
-//supprimer equipement
-void interface_formateur::on_pushButton_SupprimerEquipement_clicked()
-{
-    int id = ui->idEquipement->text().toInt();
-
-    if (id == 0) {
-        QMessageBox::warning(this, "Erreur", "Veuillez saisir un ID valide !");
-        return;
-    }
-
-    Equipement E;
-    if (E.supprimer(id)) {
-        QMessageBox::information(this, "Succès", "Équipement supprimé !");
-        ui->tableEquipement->setModel(E.afficher());
-    } else {
-        QMessageBox::critical(this, "Erreur", "Échec de la suppression !");
-    }
-}
-
-
-//rechercher equipement
-void interface_formateur::on_pushButton_rechercherEquipement()
-{
-    QString id_chercher = ui->RechercheEquipement->text(); // ton champ de saisie
-
-    if (id_chercher.isEmpty()) {
-        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID !");
-        return;
-    }
-
-    int id = id_chercher.toInt();
-    Equipement E;
-
-    // Appel de la fonction de recherche (bool) dans la classe Equipement
-    bool test = E.recherche_id(id);  // tu vas la créer ci-dessous
-
-    if (test) {
-        QMessageBox::information(this, "Valide", "Équipement trouvé !");
-        ui->tableEquipement->setModel(E.afficher()); // méthode qui affiche un seul équipement
-    } else {
-        QMessageBox::critical(this, "Erreur", "Aucun équipement trouvé avec cet ID.");
-        ui->tableEquipement->setModel(nullptr);
-    }
-}
-//modifier equipement
-void interface_formateur::on_pushButton_modifierEquipement_clicked()
-{
-    Equipement E;
-
-    QString id_modi = ui->RechercheEquipement->text();
-    if (id_modi.isEmpty()) {
-        QMessageBox::warning(this, "Champ vide", "Veuillez saisir un ID d’équipement à modifier !");
-        return;
-    }
-
-    int id = id_modi.toInt();
-
-    // 🔹 On récupère les valeurs de l'interface
-    E.setIdE(ui->idEquipement->text().toInt());
-    E.setNom(ui->nomEquipement->text());
-    E.setType(ui->typeEquipemrnt->text());
-    E.setEtat(ui->etatEquipement->currentText());
-    E.setPrix(ui->prixEquipement->text().toDouble());
-
-    // 🔹 Vérification si l'équipement existe
-    if (E.recherche_id(id)) {
-        if (E.modifier()) {
-            QMessageBox::information(this, "Succès", "Équipement modifié avec succès !");
-            ui->tableEquipement->setModel(E.afficher());
-        } else {
-            QMessageBox::critical(this, "Erreur", "La mise à jour de l’équipement a échoué !");
-        }
-    } else {
-        QMessageBox::critical(this, "Erreur", "Aucun équipement trouvé avec cet ID !");
-        return;
-    }
-
-    // 🔄 Nettoyage des champs
-    ui->idEquipement->setDisabled(false);
-    ui->idEquipement->clear();
-    ui->nomEquipement->clear();
-    ui->typeEquipemrnt->clear();
-    ui->etatEquipement->setCurrentIndex(0);
-    ui->prixEquipement->clear();
-    ui->RechercheEquipement->clear();
-}
+// EQUIPEMENT
 
 // ========== APPRENANT SLOT IMPLEMENTATIONS ==========
 
@@ -1502,11 +1393,223 @@ void interface_formateur::onApprenantTableSelectionChanged()
 
 
 
+//      CRUDDDDDD   EQUIPEMENT *********************************
+
+
+
+void interface_formateur::on_ajouterEquipement_clicked()
+{
+    QString ID = ui->idEquipement->text().trimmed();
+    QString NOM = ui->nomEquipement->text().trimmed();
+    QString PRIX = ui->prixEquipement->text().trimmed();
+    QString TYPE = ui->typeEquipemrnt->text().trimmed();
+    QString ETAT = ui->etatEquipement->currentText().trimmed();
+    QString QUANTITE = ui->quantiteEquipement->text().trimmed();
+
+    // 🔹 Vérifier que les champs ne sont pas vides
+    if (ID.isEmpty() || NOM.isEmpty() || PRIX.isEmpty() ||
+        TYPE.isEmpty() || ETAT.isEmpty() || QUANTITE.isEmpty()) {
+        QMessageBox::warning(this, "Champs manquants",
+                             "Veuillez remplir tous les champs avant d'ajouter un équipement.");
+        return;
+    }
+
+    // 🔹 Vérifier que l'ID contient uniquement des chiffres
+    QRegularExpression regexID("^[0-9]+$");
+    if (!regexID.match(ID).hasMatch()) {
+        QMessageBox::warning(this, "ID invalide",
+                             "L'ID doit contenir uniquement des chiffres (0-9).");
+        return;
+    }
+
+    // 🔹 Vérifier que le prix et la quantité sont valides
+    bool prixOk, quantiteOk;
+    double prix = PRIX.toDouble(&prixOk);
+    int quantite = QUANTITE.toInt(&quantiteOk);
+
+    if (!prixOk || prix <= 0) {
+        QMessageBox::warning(this, "Erreur de saisie",
+                             "Veuillez entrer un prix valide (> 0).");
+        return;
+    }
+
+    if (!quantiteOk || quantite < 0) {
+        QMessageBox::warning(this, "Erreur de saisie",
+                             "Veuillez entrer une quantité valide (nombre entier ≥ 0).");
+        return;
+    }
+
+    // 🔹 Création de l’objet équipement + insertion DB
+    equipement e(ID, NOM, PRIX, TYPE, ETAT, QUANTITE);
+    bool test = e.ajouter_EQUIPEMENT();
+
+    if (test) {
+        QMessageBox::information(this, "Succès", "Ajout effectué avec succès");
+        clearFieldsEquipement();
+        ui->tableEquipement->setModel(e.afficher());
+    } else {
+        QMessageBox::critical(this, "Échec", "Ajout non effectué (ID déjà existant ?)");
+    }
+}
+void interface_formateur::clearFieldsEquipement()
+{
+    ui->idEquipement->clear();
+    ui->nomEquipement->clear();
+    ui->prixEquipement->clear();
+    ui->typeEquipemrnt->clear();
+    ui->etatEquipement->setCurrentIndex(0);
+    ui->quantiteEquipement->clear();
+}
+
+void interface_formateur::on_SupprimerEquipement_clicked()
+{
+    QModelIndex currentIndex = ui->tableEquipement->currentIndex();
+
+    if (!currentIndex.isValid()) {
+        QMessageBox::warning(nullptr, QObject::tr("Erreur"),
+                             QObject::tr("Veuillez sélectionner une ligne à supprimer."), QMessageBox::Ok);
+        return;
+    }
+
+    QString ID = ui->tableEquipement->model()->data(
+                                                      ui->tableEquipement->model()->index(currentIndex.row(), 0)
+                                                      ).toString();
+
+    equipement e;
+    bool test = e.supprimer_EQUIPEMENT(ID);
+
+    if (test) {
+        QMessageBox::information(nullptr, QObject::tr("Succès"),
+                                 QObject::tr("L'équipement a été supprimé avec succès."));
+        // ✅ Actualiser l'affichage après suppression
+        ui->tableEquipement->setModel(e.afficher());
+        clearFieldsEquipement();
+    } else {
+        QMessageBox::critical(nullptr, QObject::tr("Erreur"),
+                              QObject::tr("Échec de la suppression de l'équipement."));
+    }
+}
 
 
 
 
+void interface_formateur::on_ModifierEquipement_clicked()
+{
+    QString ID = ui->RechercheEquipement->text().trimmed();
+
+    if (ID.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Veuillez sélectionner ou entrer un ID valide.");
+        return;
+    }
+
+    QString NOM = ui->nomEquipement->text().trimmed();
+    QString PRIX = ui->prixEquipement->text().trimmed();
+    QString TYPE = ui->typeEquipemrnt->text().trimmed();
+    QString ETAT = ui->etatEquipement->currentText().trimmed();
+    QString QUANTITE = ui->quantiteEquipement->text().trimmed();
+
+    // ✅ Vérifier les champs
+    if (NOM.isEmpty() || PRIX.isEmpty() || TYPE.isEmpty() ||
+        ETAT.isEmpty() || QUANTITE.isEmpty()) {
+        QMessageBox::warning(this, "Champs manquants",
+                             "Veuillez remplir tous les champs avant de modifier un équipement.");
+        return;
+    }
+
+    bool prixOk, quantiteOk;
+    double prix = PRIX.toDouble(&prixOk);
+    int quantite = QUANTITE.toInt(&quantiteOk);
+
+    if (!prixOk || prix <= 0) {
+        QMessageBox::warning(this, "Erreur de saisie",
+                             "Veuillez entrer un prix valide (> 0).");
+        return;
+    }
+
+    if (!quantiteOk || quantite < 0) {
+        QMessageBox::warning(this, "Erreur de saisie",
+                             "Veuillez entrer une quantité valide (nombre entier ≥ 0).");
+        return;
+    }
+
+    equipement e(ID, NOM, PRIX, TYPE, ETAT, QUANTITE);
+
+    if (e.modifier_EQUIPEMENT()) {
+        QMessageBox::information(this, "Succès", "L'équipement a été modifié avec succès.");
+        ui->tableEquipement->setModel(e.afficher());
+        clearFieldsEquipement();
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de la modification (ID inexistant ?)");
+    }
+}
 
 
+void interface_formateur::on_tableEquipement_activated(const QModelIndex &index)
+{
+    int row = index.row();
 
+    QAbstractItemModel *model = ui->tableEquipement->model();
+    if (!model)
+        return;
+
+    QString ID = model->index(row, 0).data().toString();
+    QString NOM = model->index(row, 1).data().toString();
+    QString PRIX = model->index(row, 2).data().toString();
+    QString TYPE = model->index(row, 3).data().toString();
+    QString ETAT = model->index(row, 4).data().toString();
+    QString QUANTITE = model->index(row, 5).data().toString();
+
+    ui->idEquipement->setText(ID);
+    ui->nomEquipement->setText(NOM);
+    ui->prixEquipement->setText(PRIX);
+    ui->typeEquipemrnt->setText(TYPE);
+    ui->etatEquipement->setCurrentText(ETAT);
+    ui->quantiteEquipement->setText(QUANTITE);
+
+    // Pour identifier rapidement l'équipement sélectionné
+    ui->RechercheEquipement->setText(ID);
+}
+
+
+void interface_formateur::on_rechercherEquipement_clicked()
+{
+        QString id = ui->RechercheEquipement->text().trimmed();
+
+        if (id.isEmpty()) {
+            QMessageBox::warning(this, "Erreur",
+                                 "Veuillez entrer un ID d'équipement.");
+            return;
+        }
+
+        // Appel fonction fillEquipement dans la classe equipement
+        QSqlQueryModel *model = e.fillEquipement(id);
+
+        if (!model) {
+            QMessageBox::critical(this, "Erreur BD",
+                                  "Échec d'exécution de la requête.");
+            return;
+        }
+
+        if (model->rowCount() == 0) {
+            QMessageBox::warning(this, "Introuvable",
+                                 "Aucun équipement trouvé avec l'ID : " + id);
+            clearFieldsEquipement();
+            delete model;
+            return;
+        }
+
+        // -------------------- Remplissage des champs --------------------
+        QSqlRecord r = model->record(0);
+
+        ui->nomEquipement->setText(r.value("NOM").toString());
+        ui->prixEquipement->setText(r.value("PRIX").toString());
+        ui->typeEquipemrnt->setText(r.value("TYPE").toString());
+        ui->etatEquipement->setCurrentText(r.value("ETAT").toString());
+        ui->quantiteEquipement->setText(r.value("QUANTITE").toString());
+
+        QMessageBox::information(this, "Succès",
+                                 "Équipement chargé avec succès.");
+
+        delete model;
+}
 

@@ -2,50 +2,45 @@
 #define EQUIPEMENT_H
 
 #include <QString>
-#include <QSqlQuery>
 #include <QSqlQueryModel>
-#include <QObject>
+#include <QSqlQuery>
+#include <QDate>
 
-class Equipement
+class equipement
 {
 private:
-    int id_equipement;
-    QString nom_equipement;
-    QString type_equipement;
-    double prix;
-    int quantite;
-    QString etat; // Exemple : "Disponible", "En maintenance"
+    QString ID, NOM, PRIX, TYPE, ETAT, QUANTITE;
 
 public:
-    // --- Constructeurs ---
-    Equipement();
-    Equipement(int id, const QString &nom, const QString &type,
-               double p, int q, const QString &etat);
-    ~Equipement() {}
+    // Constructeurs
+    equipement();
+    equipement(QString ID, QString NOM, QString PRIX, QString TYPE, QString ETAT, QString QUANTITE);
 
-    // --- Getters ---
-    int getIdE() const;
-    QString getNom() const;
-    QString getType() const;
-    double getPrix() const;
-    int getQuantite() const;
-    QString getEtat() const;
+    // Getters
+    QString getID() { return ID; }
+    QString getNom() { return NOM; }
+    QString getPrix() { return PRIX; }
+    QString getType() { return TYPE; }
+    QString getEtat() { return ETAT; }
+    QString getQuantite() { return QUANTITE; }
 
-    // --- Setters ---
-    void setIdE(int id);
-    void setNom(const QString &nom);
-    void setType(const QString &type);
-    void setPrix(double prix);
-    void setQuantite(int quantite);
-    void setEtat(const QString &etat);
+    // Setters
+    void setID(QString ID_p) { this->ID = ID_p; }
+    void setNom(QString NOM_p) { this->NOM = NOM_p; }
+    void setPrix(QString PRIX_p) { this->PRIX = PRIX_p; }
+    void setType(QString TYPE_p) { this->TYPE = TYPE_p; }
+    void setEtat(QString ETAT_p) { this->ETAT = ETAT_p; }
+    void setQuantite(QString QUANTITE_p) { this->QUANTITE = QUANTITE_p; }
 
-    // --- Méthodes principales ---
-    bool ajouter();
+    // Méthodes CRUD
+    bool ajouter_EQUIPEMENT();
     QSqlQueryModel* afficher();
-    bool supprimer(int id);
-    bool modifier();
-    bool recherche_id(int id);
+    bool modifier_EQUIPEMENT();
+    bool supprimer_EQUIPEMENT(const QString &id);
+    void clearFieldsEquipement();
+    QSqlQueryModel* fillEquipement(QString id);
+
+
 };
 
-#endif // EQUIPEMENT_H
-
+#endif // EQUIPEMENTC_H

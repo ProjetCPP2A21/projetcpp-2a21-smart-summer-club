@@ -31,6 +31,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    interface_formateur *inter_form;  // pointeur vers la 2e fenêtre
+    interface_formateur *inter_forma;  // pointeur vers la 2e fenêtre
 };
 #endif // MAINWINDOW_H

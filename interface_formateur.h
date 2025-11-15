@@ -102,9 +102,10 @@ private slots:
     QString validateFields(bool forAdd, bool forModify, bool forDelete) const;
     //crud equipement
     void on_pushButton_AjouterEquipement_clicked();
-    void on_pushButton_SupprimerEquipement_clicked();
-    void on_pushButton_modifierEquipement_clicked();
-    void on_pushButton_rechercherEquipement();
+    void on_SupprimerEquipement_clicked();
+    void on_ModifierEquipement_clicked();
+    void clearFieldsEquipement();
+    void on_EquipementTable_clicked(const QModelIndex &index);
     // Apprenant buttons
     void on_pushButton_AJOUTER_6_clicked();
     void on_pushButton_ANNULER_6_clicked();
@@ -116,9 +117,12 @@ private slots:
     void onApprenantTableSelectionChanged();
     void on_lineEdit_RECHERCHE_2_textChanged(const QString &text);
 
+
     void on_ajouterEquipement_clicked();
 
+    void on_tableEquipement_activated(const QModelIndex &index);
 
+    void on_rechercherEquipement_clicked();
 
 private:
     Ui::interface_formateur *ui;
@@ -142,7 +146,7 @@ private:
     formation2 F2;
     formation2 ftmp;
     employe etmp; // pointeur ok avec forward declaration
-    Equipement E;
+    equipement e;
     apprenant a;
 };
 
