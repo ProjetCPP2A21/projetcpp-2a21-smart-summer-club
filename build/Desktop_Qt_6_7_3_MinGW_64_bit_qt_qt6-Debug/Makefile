@@ -409,7 +409,9 @@ Makefile: ../../islem2.pro ../../../Qtinsta/6.7.3/mingw_64/mkspecs/features/spec
 		../../islem2.pro \
 		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Widgets.prl \
 		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Gui.prl \
+		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Network.prl \
 		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Sql.prl \
+		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6SerialPort.prl \
 		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Core.prl \
 		../../../Qtinsta/6.7.3/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../Qtinsta/6.7.3/mingw_64/mkspecs/features/build_pass.prf \
@@ -754,7 +756,9 @@ Makefile: ../../islem2.pro ../../../Qtinsta/6.7.3/mingw_64/mkspecs/features/spec
 ../../islem2.pro:
 ../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Widgets.prl:
 ../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Gui.prl:
+../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Network.prl:
 ../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Sql.prl:
+../../../Qtinsta/6.7.3/mingw_64/lib/Qt6SerialPort.prl:
 ../../../Qtinsta/6.7.3/mingw_64/lib/Qt6Core.prl:
 ../../../Qtinsta/6.7.3/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../Qtinsta/6.7.3/mingw_64/mkspecs/features/build_pass.prf:

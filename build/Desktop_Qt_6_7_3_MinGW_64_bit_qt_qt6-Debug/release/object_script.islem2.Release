@@ -1,0 +1,12 @@
+release/arduino.o
+release/connection.o
+release/formation2.o
+release/main.o
+release/formation.o
+release/statistic.o
+release/calendardialog.o
+release/sendgridclient.o
+release/qrc_ressource.o
+release/moc_formation.o
+release/moc_statistic.o
+release/moc_calendardialog.o

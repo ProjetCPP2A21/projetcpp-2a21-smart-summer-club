@@ -13,6 +13,7 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -53,28 +54,29 @@ public:
     QPushButton *pushButtonAjouter;
     QComboBox *lineEdit_type;
     QLabel *label_contact_4;
+    QDateEdit *dateEdit_date;
+    QLabel *label_date;
     QLineEdit *lineEdit_D;
     QTimeEdit *lineEdit_h;
     QLineEdit *lineEdit_lieu;
-    QLineEdit *lineEdit_Ca;
+    QComboBox *comboBox_Ca;
     QLabel *label_embauhe_6;
     QLineEdit *lineEdit_id2;
     QLabel *label_contact_8;
     QFrame *frame_7;
     QLabel *label_embauhe_5;
     QFrame *frame_8;
-    QLineEdit *lineEdit_RECHERCHE_2;
+    QLineEdit *lineEdit_rechercher;
     QPushButton *pushButtonModifier;
     QPushButton *pushButtonsupprimer;
     QPushButton *pushButtonTrier;
-    QPushButton *pushButton_20;
+    QPushButton *pushButton_exporter;
     QLabel *label_2;
     QPushButton *pushButton_stat;
-    QPushButton *pushButton_46;
     QPushButton *pushButton_47;
     QTableView *tableFormation;
+    QPushButton *pushButton_rechercher;
     QLabel *label;
-    QLabel *label_3;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -289,10 +291,18 @@ public:
 "border-radius:10px;"));
         label_contact_4 = new QLabel(frame_6);
         label_contact_4->setObjectName("label_contact_4");
-        label_contact_4->setGeometry(QRect(30, 320, 63, 20));
+        label_contact_4->setGeometry(QRect(30, 350, 63, 20));
+        dateEdit_date = new QDateEdit(frame_6);
+        dateEdit_date->setObjectName("dateEdit_date");
+        dateEdit_date->setGeometry(QRect(30, 320, 121, 26));
+        dateEdit_date->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"border-radius:10px;"));
+        label_date = new QLabel(frame_6);
+        label_date->setObjectName("label_date");
+        label_date->setGeometry(QRect(30, 300, 111, 20));
         lineEdit_D = new QLineEdit(frame_6);
         lineEdit_D->setObjectName("lineEdit_D");
-        lineEdit_D->setGeometry(QRect(30, 340, 113, 26));
+        lineEdit_D->setGeometry(QRect(30, 370, 113, 26));
         lineEdit_D->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;"));
         lineEdit_h = new QTimeEdit(frame_6);
@@ -305,10 +315,14 @@ public:
         lineEdit_lieu->setGeometry(QRect(30, 420, 113, 26));
         lineEdit_lieu->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;"));
-        lineEdit_Ca = new QLineEdit(frame_6);
-        lineEdit_Ca->setObjectName("lineEdit_Ca");
-        lineEdit_Ca->setGeometry(QRect(30, 490, 113, 26));
-        lineEdit_Ca->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+        comboBox_Ca = new QComboBox(frame_6);
+        comboBox_Ca->addItem(QString());
+        comboBox_Ca->addItem(QString());
+        comboBox_Ca->addItem(QString());
+        comboBox_Ca->addItem(QString());
+        comboBox_Ca->setObjectName("comboBox_Ca");
+        comboBox_Ca->setGeometry(QRect(30, 490, 121, 26));
+        comboBox_Ca->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;"));
         label_embauhe_6 = new QLabel(frame_6);
         label_embauhe_6->setObjectName("label_embauhe_6");
@@ -344,10 +358,10 @@ public:
 ""));
         frame_8->setFrameShape(QFrame::Shape::StyledPanel);
         frame_8->setFrameShadow(QFrame::Shadow::Raised);
-        lineEdit_RECHERCHE_2 = new QLineEdit(frame_8);
-        lineEdit_RECHERCHE_2->setObjectName("lineEdit_RECHERCHE_2");
-        lineEdit_RECHERCHE_2->setGeometry(QRect(560, 250, 321, 31));
-        lineEdit_RECHERCHE_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+        lineEdit_rechercher = new QLineEdit(frame_8);
+        lineEdit_rechercher->setObjectName("lineEdit_rechercher");
+        lineEdit_rechercher->setGeometry(QRect(560, 250, 321, 31));
+        lineEdit_rechercher->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;\n"
 "border: 3px solid #ffffff;\n"
 "color: rgb(162, 162, 162);"));
@@ -403,10 +417,10 @@ public:
         icon1.addFile(QString::fromUtf8(":/trier/Trier.jpg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButtonTrier->setIcon(icon1);
         pushButtonTrier->setAutoRepeatInterval(97);
-        pushButton_20 = new QPushButton(frame_8);
-        pushButton_20->setObjectName("pushButton_20");
-        pushButton_20->setGeometry(QRect(850, 630, 41, 31));
-        pushButton_20->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+        pushButton_exporter = new QPushButton(frame_8);
+        pushButton_exporter->setObjectName("pushButton_exporter");
+        pushButton_exporter->setGeometry(QRect(850, 630, 41, 31));
+        pushButton_exporter->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-radius:10px;\n"
 "border: 3px solid #ffffff;\n"
@@ -420,7 +434,7 @@ public:
 ""));
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/telech/telech.jpg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        pushButton_20->setIcon(icon2);
+        pushButton_exporter->setIcon(icon2);
         label_2 = new QLabel(frame_8);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(310, 50, 331, 51));
@@ -447,21 +461,6 @@ public:
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/stat/stat.jpg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_stat->setIcon(icon3);
-        pushButton_46 = new QPushButton(frame_8);
-        pushButton_46->setObjectName("pushButton_46");
-        pushButton_46->setGeometry(QRect(490, 290, 111, 31));
-        pushButton_46->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border: 3px solid #ffffff;\n"
-"}\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(220, 220, 220);\n"
-"	color: rgb(90, 90, 90);\n"
-"\n"
-"	border-radius:10px;\n"
-"}\n"
-""));
         pushButton_47 = new QPushButton(frame_8);
         pushButton_47->setObjectName("pushButton_47");
         pushButton_47->setGeometry(QRect(720, 630, 111, 31));
@@ -483,14 +482,26 @@ public:
         tableFormation = new QTableView(frame_8);
         tableFormation->setObjectName("tableFormation");
         tableFormation->setGeometry(QRect(25, 351, 871, 251));
+        pushButton_rechercher = new QPushButton(frame_8);
+        pushButton_rechercher->setObjectName("pushButton_rechercher");
+        pushButton_rechercher->setGeometry(QRect(770, 250, 111, 31));
+        pushButton_rechercher->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"background-color: rgb(255, 255, 255);\n"
+"border-radius:10px;\n"
+"border: 3px solid #ffffff;\n"
+"}\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(220, 220, 220);\n"
+"	color: rgb(90, 90, 90);\n"
+"\n"
+"	border-radius:10px;\n"
+"}\n"
+""));
         label = new QLabel(centralwidget);
         label->setObjectName("label");
         label->setGeometry(QRect(20, 20, 161, 151));
         label->setPixmap(QPixmap(QString::fromUtf8(":/img/34e0dfa3-771e-477d-9d87-357bb95400d1-removebg-preview.png")));
         label->setScaledContents(true);
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(30, 100, 63, 20));
         formation->setCentralWidget(centralwidget);
         menubar = new QMenuBar(formation);
         menubar->setObjectName("menubar");
@@ -529,21 +540,26 @@ public:
         lineEdit_type->setItemText(4, QCoreApplication::translate("formation", "Arabe", nullptr));
 
         label_contact_4->setText(QCoreApplication::translate("formation", "Duree", nullptr));
+        label_date->setText(QCoreApplication::translate("formation", "Date formation", nullptr));
+        comboBox_Ca->setItemText(0, QCoreApplication::translate("formation", "25", nullptr));
+        comboBox_Ca->setItemText(1, QCoreApplication::translate("formation", "50", nullptr));
+        comboBox_Ca->setItemText(2, QCoreApplication::translate("formation", "75", nullptr));
+        comboBox_Ca->setItemText(3, QCoreApplication::translate("formation", "100", nullptr));
+
         label_embauhe_6->setText(QCoreApplication::translate("formation", "Capacite", nullptr));
         lineEdit_id2->setText(QString());
         label_contact_8->setText(QCoreApplication::translate("formation", "id formateur", nullptr));
         label_embauhe_5->setText(QCoreApplication::translate("formation", "Ajouter une formation", nullptr));
-        lineEdit_RECHERCHE_2->setText(QCoreApplication::translate("formation", "    Rechercher une formation \303\240 partir de son Nom", nullptr));
+        lineEdit_rechercher->setText(QString());
         pushButtonModifier->setText(QCoreApplication::translate("formation", "Modifier", nullptr));
         pushButtonsupprimer->setText(QString());
         pushButtonTrier->setText(QCoreApplication::translate("formation", "  Trier", nullptr));
-        pushButton_20->setText(QString());
+        pushButton_exporter->setText(QString());
         label_2->setText(QCoreApplication::translate("formation", "Formations", nullptr));
         pushButton_stat->setText(QCoreApplication::translate("formation", " Statistiques", nullptr));
-        pushButton_46->setText(QCoreApplication::translate("formation", "Gmail", nullptr));
         pushButton_47->setText(QCoreApplication::translate("formation", "Calendrier", nullptr));
+        pushButton_rechercher->setText(QCoreApplication::translate("formation", "Rechercher", nullptr));
         label->setText(QString());
-        label_3->setText(QCoreApplication::translate("formation", "TextLabel", nullptr));
     } // retranslateUi
 
 };

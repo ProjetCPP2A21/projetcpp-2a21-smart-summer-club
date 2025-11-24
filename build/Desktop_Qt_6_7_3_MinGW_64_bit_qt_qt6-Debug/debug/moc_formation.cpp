@@ -41,7 +41,15 @@ constexpr auto qt_meta_stringdata_CLASSformationENDCLASS = QtMocHelpers::stringD
     "on_pushButtonsupprimer_clicked",
     "on_pushButtonModifier_clicked",
     "on_pushButtonTrier_clicked",
-    "on_lineEditId_editingFinished"
+    "on_lineEditId_editingFinished",
+    "on_pushButton_rechercher_clicked",
+    "on_lineEdit_rechercher_textChanged",
+    "text",
+    "on_pushButton_exporter_clicked",
+    "on_pushButton_stat_clicked",
+    "on_pushButton_47_clicked",
+    "on_arduino_data",
+    "verifierCarte"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -54,7 +62,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSformationENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,11 +70,18 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSformationENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x08,    1 /* Private */,
-       3,    0,   45,    2, 0x08,    2 /* Private */,
-       4,    0,   46,    2, 0x08,    3 /* Private */,
-       5,    0,   47,    2, 0x08,    4 /* Private */,
-       6,    0,   48,    2, 0x08,    5 /* Private */,
+       1,    0,   86,    2, 0x08,    1 /* Private */,
+       3,    0,   87,    2, 0x08,    2 /* Private */,
+       4,    0,   88,    2, 0x08,    3 /* Private */,
+       5,    0,   89,    2, 0x08,    4 /* Private */,
+       6,    0,   90,    2, 0x08,    5 /* Private */,
+       7,    0,   91,    2, 0x08,    6 /* Private */,
+       8,    1,   92,    2, 0x08,    7 /* Private */,
+      10,    0,   95,    2, 0x08,    9 /* Private */,
+      11,    0,   96,    2, 0x08,   10 /* Private */,
+      12,    0,   97,    2, 0x08,   11 /* Private */,
+      13,    0,   98,    2, 0x08,   12 /* Private */,
+      14,    1,   99,    2, 0x08,   13 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -74,6 +89,13 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSformationENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    9,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    2,
 
        0        // eod
 };
@@ -96,7 +118,23 @@ Q_CONSTINIT const QMetaObject formation::staticMetaObject = { {
         // method 'on_pushButtonTrier_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_lineEditId_editingFinished'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_rechercher_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_lineEdit_rechercher_textChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'on_pushButton_exporter_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_stat_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_47_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_arduino_data'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'verifierCarte'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
 } };
@@ -112,10 +150,16 @@ void formation::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 2: _t->on_pushButtonModifier_clicked(); break;
         case 3: _t->on_pushButtonTrier_clicked(); break;
         case 4: _t->on_lineEditId_editingFinished(); break;
+        case 5: _t->on_pushButton_rechercher_clicked(); break;
+        case 6: _t->on_lineEdit_rechercher_textChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 7: _t->on_pushButton_exporter_clicked(); break;
+        case 8: _t->on_pushButton_stat_clicked(); break;
+        case 9: _t->on_pushButton_47_clicked(); break;
+        case 10: _t->on_arduino_data(); break;
+        case 11: _t->verifierCarte((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *formation::metaObject() const
@@ -137,13 +181,13 @@ int formation::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 12;
     }
     return _id;
 }

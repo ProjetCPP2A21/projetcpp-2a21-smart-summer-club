@@ -8,8 +8,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    formation w;
-
     connection* c = connection::instance();
     bool test=c->createconnect();
 

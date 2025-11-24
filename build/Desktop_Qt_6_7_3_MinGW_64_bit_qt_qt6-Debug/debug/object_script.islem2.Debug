@@ -1,0 +1,12 @@
+debug/arduino.o
+debug/connection.o
+debug/formation2.o
+debug/main.o
+debug/formation.o
+debug/statistic.o
+debug/calendardialog.o
+debug/sendgridclient.o
+debug/qrc_ressource.o
+debug/moc_formation.o
+debug/moc_statistic.o
+debug/moc_calendardialog.o
