@@ -23,6 +23,7 @@ public:
     ~interface_formateur();
     void setPage(int index);
 
+
 private slots:
     void on_pushButton_clicked();// bouton formateur menu
     void on_pushButton_retour_menu_clicked(); // bouton retour vers menu
@@ -128,6 +129,9 @@ private slots:
 
     void on_pushButton_87_clicked();
 
+
+    void on_pushButton_91_clicked();
+
 private:
     Ui::interface_formateur *ui;
     // pointeur vers menu principal
@@ -143,8 +147,11 @@ private:
 
     /****service***/
     service s;
+
     bool verife();
     bool cleardonner();
+
+    bool alert_capacite(int id_service);
 /***********************/
 
     //formation//

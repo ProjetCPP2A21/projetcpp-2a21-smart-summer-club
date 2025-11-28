@@ -2,6 +2,7 @@
 #include "statisticsdialog.h"
 #include "mainwindow.h"
 #include "formateurs.h"
+#include "service.h"
 #include <QMessageBox>
 #include <QTableView>
 #include "service.h"
@@ -17,9 +18,11 @@
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::interface_formateur),
-    menuPrincipal(menu)   // on initialise avec le menu passé en paramètre
+    menuPrincipal(menu)// on initialise avec le menu passé en paramètre
 {
     ui->setupUi(this);
+
+
 
 //--------------------DEBUT_FORMATEUR----------------------------------------------------------------------------------------------------------
     ui->lineEdit_IdFormateur->setValidator(new QIntValidator(1, 99999999, this));
@@ -187,6 +190,13 @@ void interface_formateur::on_pushButton_stat_6_clicked()
 void interface_formateur::on_pushButton_service_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
+
+    service s;
+    for (int id_service = 1; id_service <= 105; ++id_service) {
+        s.alert_capacite(id_service);
+    }
+
+
 }
 
 
@@ -1240,14 +1250,27 @@ void interface_formateur::on_pushButton_AJOUTER_6_clicked()
 
     // Ajouter l'apprenant
     bool test = a.ajouter_apprenant(id_apprenant, nom, prenom, date_naiss, email);
+    int id_service = 0;
+    if (id_apprenant >= 1001 && id_apprenant <= 1009) id_service = 101;
+    else if (id_apprenant >= 1010 && id_apprenant <= 1019) id_service = 102;
+    else if (id_apprenant >= 1020 && id_apprenant <= 1029) id_service = 103;
+    else if (id_apprenant >= 1030 && id_apprenant <= 1039) id_service = 104;
+    else if(id_apprenant>=2000) id_service=105;
+    service s;
 
-    if (test) {
+    if (test ) {
         QMessageBox::information(this, "Succès", "Apprenant ajouté avec succès !");
         on_pushButton_ANNULER_6_clicked(); // Réinitialiser les champs
         ui->tableView_2->setModel(a.afficher()); // Actualiser le tableau
+
+        s.inscription(id_service, id_apprenant);
+
+
     } else {
         QMessageBox::critical(this, "Erreur", "Échec de l'ajout de l'apprenant !");
     }
+
+
 }
 
 void interface_formateur::on_pushButton_ANNULER_6_clicked()
@@ -1613,7 +1636,7 @@ void interface_formateur::on_rechercherEquipement_clicked()
         delete model;
 }
 
-
+/****************service************************/
 void interface_formateur::on_pushButton_86_clicked()
 {
     service s;
@@ -1638,5 +1661,13 @@ void interface_formateur::on_pushButton_87_clicked()
         QMessageBox::information(this, "Export", "PDF généré  service.pdf");
 
 
+}
+
+
+void interface_formateur::on_pushButton_91_clicked()
+{
+    service s;
+
+    ui->table->setModel(s.planfication_service());
 }
 

@@ -4,6 +4,9 @@
 #include<QSqlQuery>
 #include<QSqlQueryModel>
 #include <QTableView>
+#include "apprenant.h"
+#include <QSystemTrayIcon>
+#include <QIcon>
 class service
 {
 
@@ -49,9 +52,13 @@ public:
     QSqlQueryModel* tri_capacite();
     void export_pdf(QTableView  *view,const QString &filename);
     void statistic_capacite(QTableView *view);
-
-
-
+    /*************************************************/
+    bool inscription(int id_service,int id_apprenant);
+    bool alert_capacite(int id_service);
+    bool inscription_auto(int id_apprenant);
+    //planfication//
+    QSqlQueryModel *planfication_service();
+     static QSystemTrayIcon trayIcon;
 
 
 

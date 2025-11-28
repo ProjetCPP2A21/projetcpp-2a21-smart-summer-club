@@ -45,6 +45,7 @@ bool apprenant::ajouter()
         return false;
     }
     return true;
+
 }
 
 QSqlQueryModel *apprenant::afficher()

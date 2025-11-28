@@ -17,6 +17,7 @@
 #include <QAbstractItemModel>
 #include <QtCharts/QValueAxis>
 #include <QColorAxis>
+#include "apprenant.h"
 service::service()
 {
 
@@ -204,14 +205,14 @@ void service::export_pdf(QTableView  *view,const QString &filename)
     html += "<h2 style='color:blue;'>Liste des services</h2>";
     html += "<table border='1' cellspacing='0' cellpadding='5'>";
 
-    // En-têtes
+
     html += "<tr>";
     for (int col = 0; col < model->columnCount(); ++col) {
         html += "<th>" + model->headerData(col, Qt::Horizontal).toString() + "</th>";
     }
     html += "</tr>";
 
-    // Lignes
+
     for (int row = 0; row < model->rowCount(); ++row) {
         html += "<tr>";
         for (int col = 0; col < model->columnCount(); ++col) {
@@ -235,52 +236,19 @@ void service::export_pdf(QTableView  *view,const QString &filename)
 void  service::statistic_capacite(QTableView *view)
 {
 
-    /* QAbstractItemModel *model = view->model();
-
-    // Exemple : histogramme de capacité par service
-    QBarSeries *series = new QBarSeries();
-    QBarSet *set = new QBarSet("Capacité");
-
-    QStringList categories;
-    for (int row = 0; row < model->rowCount(); ++row) {
-        QString sante = model->data(model->index(row, 0)).toString(); // nom service
-        bool ok;
-        double capacity = model->data(model->index(row, 1)).toDouble(&ok); // capacité
-        if (ok) {
-            *set << capacity;
-            categories << sante;
-        }
-    }
-    series->append(set);
-
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Statistique de capacité par service");
-    chart->createDefaultAxes();
-
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->setAxisX(axisX, series);
-
-    // Afficher le graphique dans une fenêtre
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(600, 400);
-    chartView->show();*/
 
 
-    // Exemple : histogramme de capacité par service
     QAbstractItemModel *model = view->model();
 
-    // Créer la série et le set
+
     QBarSeries *series = new QBarSeries();
     QBarSet *set = new QBarSet("Capacité");
 
     QStringList categories;
     for (int row = 0; row < model->rowCount(); ++row) {
-        QString serviceName = model->data(model->index(row, 6)).toString(); // nom service
+        QString serviceName = model->data(model->index(row, 6)).toString();
         bool ok;
-        double capacity = model->data(model->index(row, 4)).toDouble(&ok); // capacité (colonne 2)
+        double capacity = model->data(model->index(row, 4)).toDouble(&ok);
         qDebug() << "Service:" << serviceName << "Capacité:" << capacity << "ok:" << ok;
         if (ok) {
             *set << capacity;
@@ -289,33 +257,33 @@ void  service::statistic_capacite(QTableView *view)
     }
 
 
-    // Vérifier s'il y a des données
+
     if (set->count() == 0) {
         qDebug() << "Aucune donnée valide pour le graphique.";
         return;
     }
 
-    // Ajouter le set à la série
+
     series->append(set);
 
-    // Créer le graphique
+
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Statistique de capacité par service");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
-    // Axe X : catégories
+
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
     axisX->setTitleText("Service");
     chart->setAxisX(axisX, series);
 
-    // Axe Y : valeurs
+
     QValueAxis *axisY = new QValueAxis();
     axisY->setTitleText("Capacité");
     chart->setAxisY(axisY, series);
 
-    // Afficher le graphique
+
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setWindowTitle("Statistique de capacité");
@@ -326,6 +294,116 @@ void  service::statistic_capacite(QTableView *view)
 
 
 }
+/*************************************/
+//***********metier avances alert systeme*****************//
+bool service::inscription(int id_service,int id_apprenant)
+{
+
+        QSqlQuery query;
+        query.prepare("INSERT INTO beneficier (id_service, id_apprenant) VALUES (:id_service, :id_apprenant)");
+        query.bindValue(":id_service", id_service);
+        query.bindValue(":id_apprenant", id_apprenant);
+
+        if (!query.exec()) {
+            qDebug() << "Erreur insertion:" << query.lastError().text();
+            return false;
+        }
+
+
+        return alert_capacite( id_service);
+
+
+}
+
+#include <QSystemTrayIcon>
+#include <QIcon>
+
+bool service::alert_capacite(int id_service)
+{
+    QSqlQuery req1;
+    req1.prepare("SELECT capacite FROM service WHERE id_service = :id");
+    req1.bindValue(":id", id_service);
+    if (!req1.exec() || !req1.next()) {
+        qDebug() << "Erreur récupération capacité:" << req1.lastError().text();
+        return false;
+    }
+    int capacite = req1.value(0).toInt();
+
+
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM beneficier WHERE id_service = :id");
+    query.bindValue(":id", id_service);
+    if (!query.exec() || !query.next()) {
+        qDebug() << "Erreur vérification capacité:" << query.lastError().text();
+        return false;
+    }
+    int nbInscrits = query.value(0).toInt();
+    static QSystemTrayIcon trayIcon;
+    if (!trayIcon.isVisible()) {
+        trayIcon.setIcon(QIcon("C:/Users/karim/OneDrive/Desktop/Nouveau dossier (2)/warning.png"));
+        trayIcon.show(); //
+    }
+
+
+    if (nbInscrits == capacite) {
+        trayIcon.showMessage("Service complet",
+                             "Le service d'id " + QString::number(id_service) + " est complet",
+                             QSystemTrayIcon::Information);
+        return false;
+    }
+    if (nbInscrits > capacite) {
+            trayIcon.showMessage("service surecharge", "️ nombre d'inscrit  surcharge verfier  id service : "+QString::number(id_service));
+            return false;
+    } else if (nbInscrits >= capacite/2) {
+        int placesRestantes = capacite - nbInscrits;
+        trayIcon.showMessage( "Service presque complet",
+                                 " Il reste " + QString::number(placesRestantes) +" place dans le service d'id : "+QString::number(id_service)+":");
+    }
+    return true;
+}
+
+bool service::inscription_auto(int id_apprenant)
+{
+    int id_service = 0;
+    if (id_apprenant >= 1001 && id_apprenant <= 1009) id_service = 101;
+    else if (id_apprenant >= 1010 && id_apprenant <= 1019) id_service = 102;
+    else if (id_apprenant >= 1020 && id_apprenant <= 1029) id_service = 103;
+    else if (id_apprenant >= 1030 && id_apprenant <= 1039) id_service = 104;
+    else if (id_apprenant >=2000)  id_service=105;
+
+    return inscription(id_service, id_apprenant);
+}
+
+//*************************************************//
+QSqlQueryModel* service::planfication_service()
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+
+    model->setQuery(
+        "SELECT a.id_apprenant, " " a.nom AS  apprenant, "
+        "       s.id_service, "
+        "       s.nom_service AS service, " "       s.capacite, "
+        "       'surcharge' AS statut "
+        "FROM ( " "    SELECT b.id_service, b.id_apprenant, "
+        "           ROW_NUMBER() OVER (PARTITION BY b.id_service ORDER BY b.id_apprenant) AS rang "
+        "    FROM beneficier b " ") num "
+        "JOIN apprenant a ON num.id_apprenant = a.id_apprenant "
+        "JOIN service s ON num.id_service = s.id_service "
+        "WHERE num.rang > s.capacite"
+        );
+
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id Apprenant"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Apprenant"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Id Service"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Service"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Capacité"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Statut"));
+
+    return model;
+}
+
+
+
 
 
 

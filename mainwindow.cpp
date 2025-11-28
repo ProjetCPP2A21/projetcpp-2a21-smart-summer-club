@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "interface_formateur.h"
+#include "service.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -49,6 +50,13 @@ void MainWindow::on_pushButton_gestionservice_clicked()
     interface_formateur *inter = new interface_formateur(this);
     inter->setPage(5); //forcer l'affichage dans la page employe
     inter->show();
+    service s;
+    s.alert_capacite(101);
+    s.alert_capacite(102);
+    s.alert_capacite(103);
+    s.alert_capacite(104);
+
+
     this->hide();
 }
 

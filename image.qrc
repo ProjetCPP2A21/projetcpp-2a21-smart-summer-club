@@ -14,5 +14,6 @@
         <file>retour.png</file>
         <file>glass.png</file>
         <file>formateur.png</file>
+        <file>warning.png</file>
     </qresource>
 </RCC>
