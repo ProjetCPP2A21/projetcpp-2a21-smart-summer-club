@@ -171,7 +171,7 @@ bool service::update_service(int id_service)
     query.bindValue(":capacite", capacite);
     query.bindValue(":status", status_service);
     query.bindValue(":type", type_service);
-
+    //alert_capacite( id_service);
     return query.exec();
 
 }
@@ -297,7 +297,7 @@ void  service::statistic_capacite(QTableView *view)
 
 
 }
-/*************************************/
+
 //***********metier avances alert systeme*****************//
 bool service::inscription(int id_service,int id_apprenant)
 {
@@ -313,7 +313,7 @@ bool service::inscription(int id_service,int id_apprenant)
         }
 
 
-        return alert_capacite( id_service);
+        return true;
 
 
 }
@@ -343,24 +343,24 @@ bool service::alert_capacite(int id_service)
     int nbInscrits = query.value(0).toInt();
     static QSystemTrayIcon trayIcon;
     if (!trayIcon.isVisible()) {
-        trayIcon.setIcon(QIcon("C:/Users/karim/OneDrive/Desktop/Nouveau dossier (2)/warning.png"));
-        trayIcon.show(); //
+        trayIcon.setIcon(QIcon("C:/Users/karim/OneDrive/Desktop/integration/warning.png"));
+        trayIcon.show();
     }
 
-
-    if (nbInscrits == capacite) {
+     if (nbInscrits > capacite) {
+        trayIcon.showMessage("service surecharge", "️ nombre d'inscrit  surcharge verfier  id service : "+QString::number(id_service),QSystemTrayIcon::Information);
+        return false;
+     }
+    else if (nbInscrits == capacite) {
         trayIcon.showMessage("Service complet",
                              "Le service d'id " + QString::number(id_service) + " est complet",
                              QSystemTrayIcon::Information);
         return false;
-    }
-    if (nbInscrits > capacite) {
-            trayIcon.showMessage("service surecharge", "️ nombre d'inscrit  surcharge verfier  id service : "+QString::number(id_service));
-            return false;
-    } else if (nbInscrits >= capacite/2) {
+     }
+     else if (nbInscrits > capacite/2) {
         int placesRestantes = capacite - nbInscrits;
         trayIcon.showMessage( "Service presque complet",
-                                 " Il reste " + QString::number(placesRestantes) +" place dans le service d'id : "+QString::number(id_service)+":");
+                                 " Il reste " + QString::number(placesRestantes) +" place dans le service d'id : "+QString::number(id_service)+":",QSystemTrayIcon::Information);
     }
     return true;
 }

@@ -88,6 +88,15 @@ bool apprenant::supprimer(int id_apprenant)
         qDebug() << "Delete failed:" << query.lastError().text();
         return false;
     }
+    QSqlQuery req2;
+    req2.prepare("DELETE FROM beneficier WHERE id_apprenant = ?");
+    req2.addBindValue(id_apprenant);
+
+    if (!req2.exec()) {
+        qDebug() << "Delete failed (beneficier):" << req2.lastError().text();
+        return false;
+    }
+
     return true;
 }
 

@@ -203,7 +203,7 @@ void interface_formateur::on_pushButton_service_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
 
-    service s;
+     service s;
     for (int id_service = 1; id_service <= 105; ++id_service) {
         s.alert_capacite(id_service);
     }
@@ -826,7 +826,9 @@ void interface_formateur::on_pushButton_ANNULER_7_clicked()
         ui->status_line->clear();
         ui->type_combo->setCurrentIndex(0);
         ui->id2->clear();
+
     }
+    s.alert_capacite(id);
 }
 
 
@@ -1279,6 +1281,8 @@ void interface_formateur::on_pushButton_AJOUTER_6_clicked()
         ui->tableView_2->setModel(a.afficher()); // Actualiser le tableau
 
         s.inscription(id_service, id_apprenant);
+        s.alert_capacite(id_service);
+
 
 
     } else {
@@ -1331,6 +1335,7 @@ void interface_formateur::on_pushButton_18_clicked()
             QMessageBox::information(this, "Succès", "Apprenant supprimé !");
             ui->tableView_2->setModel(a.afficher());
             on_pushButton_ANNULER_6_clicked();
+
         } else {
             QMessageBox::critical(this, "Erreur", "Échec de la suppression !");
         }
