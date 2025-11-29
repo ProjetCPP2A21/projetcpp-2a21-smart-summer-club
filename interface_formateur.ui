@@ -30,7 +30,7 @@
      <string notr="true">border: none;</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page_employe">
      <widget class="QWidget" name="Formateur" native="true">
@@ -4583,7 +4583,7 @@ background-color: rgb(4, 4, 87);</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

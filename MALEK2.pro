@@ -1,7 +1,7 @@
 QT       += core gui sql
 QT += sql
 QT += core gui sql charts
-
+QT += charts sql
 QT += printsupport
 QT += widgets printsupport
 QT += charts

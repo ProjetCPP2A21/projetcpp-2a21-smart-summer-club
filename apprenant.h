@@ -7,6 +7,16 @@
 #include <QSqlQueryModel>
 #include <QDate>
 #include <QRegularExpression>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFrame>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QScrollBar>
+#include <QComboBox>
+#include <QSpinBox>
+
 
 class apprenant : public QObject
 {
@@ -15,6 +25,16 @@ class apprenant : public QObject
     QString nom, prenom, email;
     QDate date_naiss;
     int id_apprenant;
+
+public slots:
+    // 🆕 CHATBOT SLOTS
+    void on_pushButton_CHATBOT_clicked();
+    void on_pushButton_TOGGLE_CHATBOT_clicked();
+    // 🆕 GROUPES SLOTS
+    void on_pushButton_CREER_GROUPES_clicked();
+    void on_pushButton_AFFICHER_GROUPE_clicked();
+    void on_pushButton_EXPORTER_GROUPES_clicked();
+    void on_pushButton_TOGGLE_GROUPES_clicked();
 
 public:
     // Constructeurs
@@ -44,13 +64,49 @@ public:
     // Méthodes pour les métiers basiques
     QSqlQueryModel *trier_par_date();
     void exporter_vers_word();
-    void statistiques_ages();
+    void statistiques_ages(QWidget *parent);
 
     explicit apprenant(QObject *parent = nullptr);
     ~apprenant();
+    // 🆕 CHATBOT METHODS
+    void creerInterfaceChatbot(QWidget *parent);
+    QString traiterQuestionChatbot(const QString &question);
+    QString getNombreApprenants();
+    QString getServicesDisponibles();
+    QString getApprenantsRecents();
+    QString construireReponseServices(QSqlQuery &query);
+    QString construireReponseApprenants(QSqlQuery &query, const QString &format);
+    void debugTables();
+    // 🆕 GROUPES METHODS
+    void creerInterfaceGroupes(QWidget *parent);
+    QMap<QString, QList<int>> creerGroupesEquilibres(int nombreGroupes);
+    double calculerAgeMoyenGroupe(const QList<int>& idsApprenants);
+    QSqlQueryModel* afficherGroupe(const QList<int>& idsApprenants);
+    void exporterGroupesWord(const QMap<QString, QList<int>>& groupes);
+    QSqlQueryModel* getGroupeModel(const QString& groupeName);
+
+signals:
+    // 🆕 SIGNAL TO REQUEST GROUP DISPLAY
+    void groupeAAfficher(QSqlQueryModel *model);
 
 private:
     static const QRegularExpression EMAIL_REGEX;
+    // 🆕 CHATBOT VARIABLES
+    QTextEdit *textEdit_chat;
+    QLineEdit *lineEdit_question;
+    QPushButton *pushButton_CHATBOT;
+    QPushButton *pushButton_TOGGLE_CHATBOT;
+    QFrame *frameChatbot;
+    // 🆕 GROUPES VARIABLES
+    QMap<QString, QList<int>> groupesActuels;
+    QPushButton *pushButton_CREER_GROUPES;
+    QPushButton *pushButton_AFFICHER_GROUPE;
+    QPushButton *pushButton_EXPORTER_GROUPES;
+    QComboBox *comboBox_GROUPES;
+    QSpinBox *spinBox_NB_GROUPES;
+    QLabel *labelStatutGroupe;
+    QPushButton *pushButton_TOGGLE_GROUPES;
+    QFrame *frameGroupes;
 };
 
 #endif // APPRENANT_H

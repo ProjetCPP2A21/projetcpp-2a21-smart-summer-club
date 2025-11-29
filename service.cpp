@@ -121,7 +121,7 @@ QSqlQueryModel* service::affiche_id(int id_service)
         return nullptr;
     }
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery(query);
+    model->setQuery(std::move(query));
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_service"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom_service"));
@@ -185,7 +185,7 @@ QSqlQueryModel* service:: tri_capacite()
         return nullptr;
     }
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery(query);
+    model->setQuery(std::move(query));
 
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_service"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom_service"));
@@ -276,12 +276,15 @@ void  service::statistic_capacite(QTableView *view)
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
     axisX->setTitleText("Service");
-    chart->setAxisX(axisX, series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
 
 
     QValueAxis *axisY = new QValueAxis();
     axisY->setTitleText("Capacité");
-    chart->setAxisY(axisY, series);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
 
 
     QChartView *chartView = new QChartView(chart);

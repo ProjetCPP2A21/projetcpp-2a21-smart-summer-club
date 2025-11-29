@@ -13,6 +13,13 @@
 #include "equipement.h"
 #include "interface_formateur.h"
 #include <QRegularExpression>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFrame>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QScrollBar>
 
 
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
@@ -21,6 +28,12 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     menuPrincipal(menu)// on initialise avec le menu passé en paramètre
 {
     ui->setupUi(this);
+    // 🆕 CREATE CHATBOT INTERFACE - PASS 'this' AS PARENT
+    a.creerInterfaceChatbot(this);
+    // 🆕 CREATE GROUPES INTERFACE
+    a.creerInterfaceGroupes(this);
+    // 🆕 CONNECT GROUP DISPLAY SIGNAL
+    connect(&a, &apprenant::groupeAAfficher, this, &interface_formateur::onGroupeAAfficher);
 
 
 
@@ -182,8 +195,7 @@ void interface_formateur::on_pushButton_stat_2_clicked()
 
 void interface_formateur::on_pushButton_stat_6_clicked()
 {
-    StatisticsDialog d(this); // création de la dialog
-    d.exec();
+    a.statistiques_ages(this);
 }
 
 /*service*/
@@ -1032,6 +1044,9 @@ void interface_formateur::on_lineEditId_editingFinished()
 /* ------------------------------------------------------------------ */
 QString interface_formateur::validateFields(bool forAdd, bool forModify, bool forDelete) const
 {
+    Q_UNUSED(forAdd);
+    Q_UNUSED(forModify);
+    Q_UNUSED(forDelete);
     // ---- ID -------------------------------------------------------
     bool ok;
     int id = ui->lineEdit_ID->text().toInt(&ok);
@@ -1224,7 +1239,7 @@ void interface_formateur::on_pushButton_cin_3_clicked()
     delete model;
 }
 
-// EQUIPEMENT
+
 
 // ========== APPRENANT SLOT IMPLEMENTATIONS ==========
 
@@ -1287,27 +1302,12 @@ void interface_formateur::on_pushButton_ANNULER_6_clicked()
 
 void interface_formateur::on_pushButton_19_clicked()
 {
-    // Modifier l'apprenant
-    int id_apprenant = ui->lineEdit_cin_6->text().toInt();
-
-    if (id_apprenant <= 0) {
-        QMessageBox::warning(this, "ID manquant", "Veuillez sélectionner ou saisir un apprenant à modifier !");
-        return;
-    }
-
-    QString nom = ui->lineEdit_nom_3->text();
-    QString prenom = ui->lineEdit_prenom_3->text();
-    QDate date_naiss = ui->dateEdit_embauche_3->date();
-    QString email = ui->lineEdit_contact_3->text();
-
-    // Use the existing 'a' object
-    bool test = a.modifier(id_apprenant, nom, prenom, date_naiss, email);
-
-    if (test) {
-        QMessageBox::information(this, "Modification", "Modification de l'apprenant réussie !");
-        ui->tableView_2->setModel(a.afficher());
+    QSqlQueryModel *model = a.trier_par_date();
+    if (model) {
+        ui->tableView_2->setModel(model);
+        QMessageBox::information(this, "Tri Réussi", "Apprenants triés par date de naissance (du plus âgé au plus jeune)");
     } else {
-        QMessageBox::critical(this, "Erreur", "Échec de la modification !");
+        QMessageBox::warning(this, "Erreur", "Échec du tri des apprenants");
     }
 }
 
@@ -1363,7 +1363,7 @@ void interface_formateur::on_pushButton_17_clicked()  // MODIFIER
 
 void interface_formateur::on_pushButton_20_clicked()
 {
-    // .....
+    a.exporter_vers_word();
 
 }
 
@@ -1412,7 +1412,16 @@ void interface_formateur::onApprenantTableSelectionChanged()
     }
 }
 
-
+// 🆕 IMPLEMENT THE SLOT TO DISPLAY IN tableView_2
+void interface_formateur::onGroupeAAfficher(QSqlQueryModel *model)
+{
+    if (model) {
+        ui->tableView_2->setModel(model);  // ✅ Uses tableView_2 (integration table)
+        QMessageBox::information(this, "Succès", "Groupe affiché dans le tableau !");
+    } else {
+        QMessageBox::warning(this, "Erreur", "Impossible d'afficher le groupe");
+    }
+}
 
 
 
@@ -1671,3 +1680,18 @@ void interface_formateur::on_pushButton_91_clicked()
     ui->table->setModel(s.planfication_service());
 }
 
+// Add these implementations at the end of interface_formateur.cpp
+
+void interface_formateur::on_pushButton_AjouterEquipement_clicked()
+{
+    // This function is declared but not implemented
+    // You can either implement it or remove the declaration from the header
+    on_ajouterEquipement_clicked(); // Call the existing function if they do the same thing
+}
+
+void interface_formateur::on_EquipementTable_clicked(const QModelIndex &index)
+{
+    // This function is declared but not implemented
+    // You can either implement it or remove the declaration from the header
+    on_tableEquipement_activated(index); // Call the existing function if they do the same thing
+}

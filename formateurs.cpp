@@ -148,7 +148,7 @@ QSqlQueryModel* Formateur::Afficher_recherche(int id)
         return nullptr;
     }
     QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery(query);
+    model->setQuery(std::move(query));
     model -> setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
     model -> setHeaderData(1,Qt::Horizontal,QObject::tr("NOM"));
     model -> setHeaderData(2,Qt::Horizontal,QObject::tr("PRENOM"));

@@ -7,6 +7,10 @@
 #include "employe.h"
 #include "equipement.h"
 #include "apprenant.h"
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QPushButton>
+
 
 class MainWindow;  // déclaration avant
 
@@ -132,6 +136,11 @@ private slots:
 
     void on_pushButton_91_clicked();
 
+    // 🆕 GROUP DISPLAY SLOT
+    void onGroupeAAfficher(QSqlQueryModel *model);
+
+
+
 private:
     Ui::interface_formateur *ui;
     // pointeur vers menu principal
@@ -160,6 +169,7 @@ private:
     employe etmp; // pointeur ok avec forward declaration
     equipement e;
     apprenant a;
+
 };
 
 #endif // INTERFACE_FORMATEUR_H
