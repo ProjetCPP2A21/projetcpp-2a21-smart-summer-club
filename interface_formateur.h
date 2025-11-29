@@ -10,6 +10,9 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
+#include "sendgridclient.h"
+#include <QSqlQuery>
+#include <QMessageBox>
 
 
 class MainWindow;  // déclaration avant
@@ -85,13 +88,16 @@ private slots:
     //GESTION DES FORMATIONS//
 
     void on_pushButtonAjouter_clicked();
-
-
-
     void on_pushButtonModifier_clicked();
-
     void on_pushButtonsupprimer_clicked();
+    void on_pushButtonTrier_clicked();
     void on_lineEditId_editingFinished();
+    void on_pushButton_rechercher_clicked();
+    void on_lineEdit_rechercher_textChanged(const QString &text);  // Quand on efface
+
+
+
+    void on_pushButton_stat_clicked();
 
 
 
@@ -141,6 +147,10 @@ private slots:
 
 
 
+    void on_pushButton_47_clicked();
+
+    void on_pushButton_42_clicked();
+
 private:
     Ui::interface_formateur *ui;
     // pointeur vers menu principal
@@ -166,6 +176,10 @@ private:
     //formation//
     formation2 F2;
     formation2 ftmp;
+    bool afficherclique = false;
+    void clearInputs();
+    SendGridClient sendgridClient;
+
     employe etmp; // pointeur ok avec forward declaration
     equipement e;
     apprenant a;

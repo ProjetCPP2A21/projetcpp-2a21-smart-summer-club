@@ -21,6 +21,21 @@
 #include <QLabel>
 #include <QScrollBar>
 
+#include <QTableView>
+#include <formation2.h>
+#include <QMessageBox>
+#include <QSqlError>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+#include <statistic.h>
+#include "calendardialog.h"
+#include <QProcessEnvironment>
+#include <QDate>
+#include <QTime>
+#include <QDebug>
+
+
 
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     : QMainWindow(parent),
@@ -78,9 +93,30 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     QIntValidator *validator = new QIntValidator(0, 999999, this);
     ui->lineEditId->setValidator(validator);
     ui->lineEdit_D->setValidator(validator);
-    ui->lineEdit_Ca->setValidator(validator);
     ui->lineEdit_Ta->setValidator(validator);
-    //ui->lineEdit_id2->setValidator(validator);
+    ui->lineEdit_id2->setValidator(validator);
+    ui->comboBox_Ca->setCurrentIndex(0);
+
+    QString sgApiKey = qEnvironmentVariable("SENDGRID_API_KEY");
+    QString sgFromEmail = qEnvironmentVariable("SENDGRID_FROM_EMAIL");
+    QString sgFromName = qEnvironmentVariable("SENDGRID_FROM_NAME");
+    QString recipientsEnv = qEnvironmentVariable("SENDGRID_TO_EMAILS");
+    QStringList recipients;
+    for (const QString &email : recipientsEnv.split(';', Qt::SkipEmptyParts))
+        recipients << email.trimmed();
+    qDebug() << "[SendGrid] API key set:" << !sgApiKey.isEmpty();
+    qDebug() << "[SendGrid] From email:" << sgFromEmail;
+    qDebug() << "[SendGrid] From name:" << sgFromName;
+    qDebug() << "[SendGrid] Recipients:" << recipients;
+
+    sendgridClient.configure(sgApiKey, sgFromEmail, sgFromName, recipients);
+    if (!sendgridClient.isConfigured())
+    {
+        qWarning() << "[SendGrid] Client is not fully configured. Emails will not be sent.";
+    }
+    ui->dateEdit_date->setCalendarPopup(true);
+    ui->dateEdit_date->setDate(QDate::currentDate());
+
 
 
     // ---- INPUT VALIDATORS (set once at start) ----
@@ -182,7 +218,7 @@ void interface_formateur::on_pushButton_formation_clicked()
 
 void interface_formateur::on_pushButton_stat_4_clicked()
 {
-    StatisticsDialog d(this); // création de la dialog
+    Statistic d(this); // création de la dialog
     d.exec();
 }
 
@@ -857,19 +893,36 @@ void interface_formateur::on_pushButton_ANNULER_3_clicked()
 //GSETION DES FORMATIONs//
 void interface_formateur::on_pushButtonAjouter_clicked()
 {
-    //Récuperation des formations saisies dans les 8 champs
-    int id=ui->lineEditId->text().toInt();
-    QString nom=ui->lineEdit_Nom->text();
+    // Validation des champs requis
+    QString idText = ui->lineEditId->text().trimmed();
+    QString nom=ui->lineEdit_Nom->text().trimmed();
+    QString lieu=ui->lineEdit_lieu->text().trimmed();
+    QString idFormateurText = ui->lineEdit_id2->text().trimmed();
+
+    if (idText.isEmpty() || nom.isEmpty() || lieu.isEmpty() || idFormateurText.isEmpty())
+    {
+        QMessageBox::warning(this, tr("Champs manquants"),
+                             tr("Merci de remplir les champs Id, Nom, Lieu et Id formateur."));
+        return;
+    }
+    if (ui->comboBox_Ca->currentIndex() == -1)
+    {
+        QMessageBox::warning(this, tr("Capacité manquante"),
+                             tr("Merci de sélectionner une capacité."));
+        return;
+    }
+
+    int id=idText.toInt();
     QString type=ui->lineEdit_type->currentText();
     QString horaire = ui->lineEdit_h->time().toString("HH:mm");
-    int duree=ui->lineEdit_D->text() .toInt();
-    QString lieu=ui->lineEdit_lieu->text();
-    int capacite=ui->lineEdit_Ca->text() .toInt();
-    int tarif=ui->lineEdit_Ta->text() .toInt();
-    int id_formateur=ui->lineEdit_id2->text() .toInt();
+    int duree=ui->lineEdit_D->text().toInt();
+    int capacite=ui->comboBox_Ca->currentText().toInt();
+    int tarif=ui->lineEdit_Ta->text().toInt();
+    int id_formateur=idFormateurText.toInt();
+    QDate dateformation = ui->dateEdit_date->date();
 
     //instancier un objet de la classe formation2 en utilisant les informations dans l'interface
-    formation2 F (id, nom, type, horaire, duree, lieu, capacite, tarif , id_formateur );
+    formation2 F (id, nom, type, horaire, dateformation, duree, lieu, capacite, tarif ,id_formateur);
     //inserer l'objet fprmation instancié dans la table formation et recuperer la valeur de reour de query.exec()
     bool test=F.ajouter();
 
@@ -878,19 +931,37 @@ void interface_formateur::on_pushButtonAjouter_clicked()
         //Refresh (Actualiser)
         ui->tableFormation->setModel(ftmp.afficher());
 
-        QMessageBox::information(nullptr, QMessageBox::tr("ok"),QObject::tr("Ajout effecutué\n""Click Cancel to exist."),QMessageBox::Cancel);
+        QMessageBox::information(this, tr("Ajout"),
+                                 tr("Ajout effectué avec succès."));
+        if (sendgridClient.isConfigured())
+        {
+            qDebug() << "[SendGrid] Attempting to send email...";
+            if (!sendgridClient.sendFormationCreatedEmail(nom, type, horaire, lieu, dateformation,
+                                                          capacite, tarif, id_formateur, id))
+            {
+                QString err = sendgridClient.lastError();
+                qWarning() << "Erreur envoi email SendGrid:" << err;
+                QMessageBox::warning(this, tr("SendGrid"), err.isEmpty() ? tr("Échec d'envoi via SendGrid.") : err);
+            }
+            else
+            {
+                qDebug() << "[SendGrid] Email sent successfully.";
+            }
+        }
+        else
+        {
+            qWarning() << "[SendGrid] Client not configured. Email skipped.";
+        }
     }
     else //si requete non executé ==>QMessagebox::critical
-        QMessageBox::critical(nullptr, QObject::tr(" not ok"),QObject::tr("Ajout non effecutué\n""Click Cancel to exist."),QMessageBox::Cancel);
-    ui->lineEditId->clear();
-    ui->lineEdit_Nom->clear();
-    ui->lineEdit_type->setCurrentIndex(0);
-    ui->lineEdit_h->clear();
-    ui->lineEdit_D->clear();
-    ui->lineEdit_lieu->clear();
-    ui->lineEdit_Ca->clear();
-    ui->lineEdit_Ta->clear();
-    ui->lineEdit_id2->clear();
+    {
+        QString err = F.lastError();
+        QMessageBox::critical(this, tr("Ajout échoué"),
+                              err.isEmpty() ? tr("Ajout non effectué.") : err);
+        return;
+    }
+    clearInputs();
+    ui->dateEdit_date->setDate(QDate::currentDate());
 
 
 
@@ -900,7 +971,13 @@ void interface_formateur::on_pushButtonAjouter_clicked()
 
 void interface_formateur::on_pushButtonsupprimer_clicked()
 {
-    int id = ui->lineEditId->text().toInt();
+    QString idText = ui->lineEditId->text().trimmed();
+    if (idText.isEmpty())
+    {
+        QMessageBox::warning(this, tr("Id manquant"), tr("Merci de saisir l'identifiant à supprimer."));
+        return;
+    }
+    int id = idText.toInt();
     qDebug() << "ID à supprimer =" << id;
 
     bool test = ftmp.supprimer(id);
@@ -911,17 +988,11 @@ void interface_formateur::on_pushButtonsupprimer_clicked()
         QMessageBox::information(nullptr, "OK", "Suppression effectuée ");
         ui->tableFormation->setModel(ftmp.afficher()); // Actualiser la table
     } else {
-        QMessageBox::critical(nullptr, "Erreur", "Suppression non effectuée ");
+        QString err = ftmp.lastError();
+        QMessageBox::critical(this, "Erreur", err.isEmpty() ? "Suppression non effectuée." : err);
     }
-    ui->lineEditId->clear();
-    ui->lineEdit_Nom->clear();
-    ui->lineEdit_type->setCurrentIndex(0);
-    ui->lineEdit_h->clear();
-    ui->lineEdit_D->clear();
-    ui->lineEdit_lieu->clear();
-    ui->lineEdit_Ca->clear();
-    ui->lineEdit_Ta->clear();
-    ui->lineEdit_id2->clear();
+    clearInputs();
+    ui->dateEdit_date->setDate(QDate::currentDate());
 }
 /*
 void formation::onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -967,18 +1038,41 @@ void formation::onTableSelectionChanged(const QItemSelection &selected, const QI
 void interface_formateur::on_pushButtonModifier_clicked()
 {
 
-    int id=ui->lineEditId->text().toInt();
-    QString nom=ui->lineEdit_Nom->text();
+    QString idText = ui->lineEditId->text().trimmed();
+    QString nom=ui->lineEdit_Nom->text().trimmed();
+    QString lieu=ui->lineEdit_lieu->text().trimmed();
+    QString idFormateurText = ui->lineEdit_id2->text().trimmed();
+
+    if (idText.isEmpty())
+    {
+        QMessageBox::warning(this, tr("Id manquant"),
+                             tr("Merci de saisir l'identifiant de la formation à modifier."));
+        return;
+    }
+    if (nom.isEmpty() || lieu.isEmpty() || idFormateurText.isEmpty())
+    {
+        QMessageBox::warning(this, tr("Champs manquants"),
+                             tr("Merci de remplir les champs Nom, Lieu et Id formateur."));
+        return;
+    }
+    if (ui->comboBox_Ca->currentIndex() == -1)
+    {
+        QMessageBox::warning(this, tr("Capacité manquante"),
+                             tr("Merci de sélectionner une capacité."));
+        return;
+    }
+
+    int id=idText.toInt();
     QString type=ui->lineEdit_type->currentText();
     QString horaire = ui->lineEdit_h->time().toString("HH:mm");
     int duree=ui->lineEdit_D->text() .toInt();
-    QString lieu=ui->lineEdit_lieu->text();
-    int capacite=ui->lineEdit_Ca->text() .toInt();
+    int capacite=ui->comboBox_Ca->currentText().toInt();
     int tarif=ui->lineEdit_Ta->text() .toInt();
-    int id_formateur=ui->lineEdit_id2->text() .toInt();
+    int id_formateur=idFormateurText.toInt();
+    QDate dateformation = ui->dateEdit_date->date();
 
 
-    bool test = ftmp.modifier(id,nom,type,horaire,duree,lieu,capacite,tarif,id_formateur);
+    bool test = ftmp.modifier(id,nom,type,horaire,dateformation,duree,lieu,capacite,tarif,id_formateur);
 
     if (test)
     {
@@ -989,18 +1083,13 @@ void interface_formateur::on_pushButtonModifier_clicked()
     }
     else
     {
-        QMessageBox::critical(nullptr, QObject::tr("Erreur"),
-                              QObject::tr("La modification a échoué.\n"), QMessageBox::Cancel);
+        QString err = ftmp.lastError();
+         QMessageBox::critical(this, QObject::tr("Erreur"),
+                              err.isEmpty() ? QObject::tr("La modification a échoué.\n")
+                                            : err);
     }
-    ui->lineEditId->clear();
-    ui->lineEdit_Nom->clear();
-    ui->lineEdit_type->setCurrentIndex(0);
-    ui->lineEdit_h->clear();
-    ui->lineEdit_D->clear();
-    ui->lineEdit_lieu->clear();
-    ui->lineEdit_Ca->clear();
-    ui->lineEdit_Ta->clear();
-    ui->lineEdit_id2->clear();
+    clearInputs();
+    ui->dateEdit_date->setDate(QDate::currentDate());
 
 
 }
@@ -1011,7 +1100,7 @@ void interface_formateur::on_lineEditId_editingFinished()
     if (id.isEmpty()) return;
 
     QSqlQuery query;
-    query.prepare("SELECT NOM, TYPE_FORMATION,HORAIRE,DUREE,LIEU,CAPACITE,TARIF,IDFORMATEUR  FROM FORMATION WHERE ID_FORMATION = :id");
+    query.prepare("SELECT NOM, TYPE_FORMATION,HORAIRE,DATEFORMATION,DUREE,LIEU,CAPACITE,TARIF,IDFORMATEUR  FROM FORMATION WHERE ID_FORMATION = :id");
     query.bindValue(":id", id);
 
     if (!query.exec()) {
@@ -1024,17 +1113,107 @@ void interface_formateur::on_lineEditId_editingFinished()
         ui->lineEdit_Nom->setText(query.value(0).toString());
         ui->lineEdit_type->setCurrentText(query.value(1).toString());
         ui->lineEdit_h->setTime(QTime::fromString(query.value(2).toString(), "hh:mm"));
-        ui->lineEdit_D->setText(query.value(3).toString());
-        ui->lineEdit_lieu->setText(query.value(4).toString());;
-        ui->lineEdit_Ca->setText(query.value(5).toString());
-        ui->lineEdit_Ta->setText(query.value(6).toString());
-        ui->lineEdit_id2->setText(query.value(7).toString());
+        ui->dateEdit_date->setDate(query.value(3).toDate());
+        ui->lineEdit_D->setText(query.value(4).toString());
+        ui->lineEdit_lieu->setText(query.value(5).toString());;
+        ui->comboBox_Ca->setCurrentText(query.value(6).toString());
+        ui->lineEdit_Ta->setText(query.value(7).toString());
+        ui->lineEdit_id2->setText(query.value(8).toString());
 
     } else {
 
     }
 
 }
+
+void interface_formateur::clearInputs()
+{
+    ui->lineEditId->clear();
+    ui->lineEdit_Nom->clear();
+    ui->lineEdit_type->setCurrentIndex(0);
+    ui->lineEdit_h->setTime(QTime(0,0));
+    ui->lineEdit_D->clear();
+    ui->lineEdit_lieu->clear();
+    ui->comboBox_Ca->setCurrentIndex(0);
+    ui->lineEdit_Ta->clear();
+    ui->lineEdit_id2->clear();
+    ui->dateEdit_date->setDate(QDate::currentDate());
+}
+
+
+//fontion trier
+void interface_formateur::on_pushButtonTrier_clicked()
+{
+    ui->tableFormation->setModel(ftmp.trier_par_horaire());
+}
+
+
+
+
+
+
+
+//fonction rechercher
+void interface_formateur::on_pushButton_rechercher_clicked()
+{
+    QString nom = ui->lineEdit_rechercher->text().trimmed(); // récupère le texte
+
+    formation2 f;
+    QSqlQueryModel *model = f.rechercherParNom(nom);
+    ui->tableFormation->setModel(model);
+
+    // Optionnel : message si rien n’est trouvé
+    if (model->rowCount() == 0 && !nom.isEmpty()) {
+        QMessageBox::information(this, "Résultat", "Aucune formation trouvée avec ce nom.");
+    }
+
+}
+void interface_formateur::on_lineEdit_rechercher_textChanged(const QString &text)
+{
+    // Si on efface le texte → afficher tout
+    if (text.isEmpty()) {
+        formation2 f;
+        QSqlQueryModel *model = f.afficher();
+        ui->tableFormation->setModel(model);
+    }
+}
+//fonction exporter
+void interface_formateur::on_pushButton_42_clicked()
+{
+    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tableFormation->model());
+
+    QString fichier = QFileDialog::getSaveFileName(
+        this,
+        "Exporter en Word",
+        "Liste_Formations.doc",
+        "Document Word (*.doc)");
+
+    if(fichier.isEmpty()) return;
+
+    formation2 f;
+    if(f.exporterDoc(model, fichier))
+        QMessageBox::information(this, "Succès", "Exportation réussie !");
+
+}
+
+
+
+
+
+
+void interface_formateur::on_pushButton_stat_clicked()
+{
+    Statistic S(this); // création de la dialog
+    S.exec();
+}
+
+void interface_formateur::on_pushButton_47_clicked()
+{
+    CalendarDialog dialog(this);
+    dialog.exec();
+}
+
+
 
 
 
@@ -1700,3 +1879,5 @@ void interface_formateur::on_EquipementTable_clicked(const QModelIndex &index)
     // You can either implement it or remove the declaration from the header
     on_tableEquipement_activated(index); // Call the existing function if they do the same thing
 }
+
+

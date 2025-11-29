@@ -13,6 +13,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     Formateur f;
     QMap<QString, int> stats = f.statistiquesSexe();
 

@@ -5,6 +5,7 @@ QT += charts sql
 QT += printsupport
 QT += widgets printsupport
 QT += charts
+QT += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,6 +17,7 @@ CONFIG += c++17
 
 SOURCES += \
     apprenant.cpp \
+    calendardialog.cpp \
     connection.cpp \
     employe.cpp \
     equipement.cpp \
@@ -24,11 +26,14 @@ SOURCES += \
     interface_formateur.cpp \
     main.cpp \
     mainwindow.cpp \
+    sendgridclient.cpp \
     service.cpp \
+    statistic.cpp \
     statisticsdialog.cpp
 
 HEADERS += \
     apprenant.h \
+    calendardialog.h \
     connection.h \
     employe.h \
     equipement.h \
@@ -36,12 +41,15 @@ HEADERS += \
     formation2.h \
     interface_formateur.h \
     mainwindow.h \
+    sendgridclient.h \
     service.h \
+    statistic.h \
     statisticsdialog.h
 
 FORMS += \
     interface_formateur.ui \
     mainwindow.ui \
+    statistic.ui \
     statisticsdialog.ui
 
 # Default rules for deployment.

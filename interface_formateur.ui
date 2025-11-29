@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>20</y>
+      <y>40</y>
       <width>1271</width>
       <height>751</height>
      </rect>
@@ -30,7 +30,7 @@
      <string notr="true">border: none;</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page_employe">
      <widget class="QWidget" name="Formateur" native="true">
@@ -1686,7 +1686,7 @@ border-radius:20px;
        <property name="frameShadow">
         <enum>QFrame::Shadow::Raised</enum>
        </property>
-       <widget class="QLineEdit" name="lineEdit_RECHERCHE_5">
+       <widget class="QLineEdit" name="lineEdit_rechercher">
         <property name="geometry">
          <rect>
           <x>570</x>
@@ -1702,7 +1702,7 @@ border: 3px solid #ffffff;
 color: rgb(162, 162, 162);</string>
         </property>
         <property name="text">
-         <string>      Rechercher une formation son nom</string>
+         <string/>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButtonModifier">
@@ -1879,34 +1879,21 @@ QPushButton:hover{
           <normaloff>:/img/stat.png</normaloff>:/img/stat.png</iconset>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_43">
+       <widget class="QTableView" name="tableFormation">
         <property name="geometry">
          <rect>
-          <x>540</x>
-          <y>260</y>
-          <width>51</width>
-          <height>31</height>
+          <x>40</x>
+          <y>351</y>
+          <width>861</width>
+          <height>261</height>
          </rect>
         </property>
-        <property name="styleSheet">
-         <string notr="true">border:none;
-background-color: rgb(255, 255, 255);
-border-radius : 10px;
-</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="image.qrc">
-          <normaloff>:/img/loupe.png</normaloff>:/img/loupe.png</iconset>
-        </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_44">
+       <widget class="QPushButton" name="pushButton_rechercher">
         <property name="geometry">
          <rect>
-          <x>480</x>
-          <y>300</y>
+          <x>770</x>
+          <y>260</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -1926,10 +1913,10 @@ QPushButton:hover{
 </string>
         </property>
         <property name="text">
-         <string>Gmail</string>
+         <string>Rechercher</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_45">
+       <widget class="QPushButton" name="pushButton_47">
         <property name="geometry">
          <rect>
           <x>720</x>
@@ -1955,15 +1942,9 @@ QPushButton:hover{
         <property name="text">
          <string>Calendrier</string>
         </property>
-       </widget>
-       <widget class="QTableView" name="tableFormation">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>351</y>
-          <width>861</width>
-          <height>261</height>
-         </rect>
+        <property name="icon">
+         <iconset resource="../../../Desktop/islem2/ressource.qrc">
+          <normaloff>:/calendrier/d47c1ced-b41a-49dd-b864-317382d52708.jpg</normaloff>:/calendrier/d47c1ced-b41a-49dd-b864-317382d52708.jpg</iconset>
         </property>
        </widget>
       </widget>
@@ -1971,7 +1952,7 @@ QPushButton:hover{
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>40</y>
+         <y>50</y>
          <width>271</width>
          <height>701</height>
         </rect>
@@ -2080,7 +2061,7 @@ border-radius:10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>400</y>
+          <y>430</y>
           <width>131</width>
           <height>20</height>
          </rect>
@@ -2192,7 +2173,7 @@ border-radius:10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>320</y>
+          <y>380</y>
           <width>63</width>
           <height>20</height>
          </rect>
@@ -2205,7 +2186,7 @@ border-radius:10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>340</y>
+          <y>400</y>
           <width>113</width>
           <height>26</height>
          </rect>
@@ -2233,21 +2214,7 @@ border-radius:10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>420</y>
-          <width>113</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_Ca">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>490</y>
+          <y>460</y>
           <width>113</width>
           <height>26</height>
          </rect>
@@ -2261,7 +2228,7 @@ border-radius:10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>470</y>
+          <y>490</y>
           <width>131</width>
           <height>20</height>
          </rect>
@@ -2300,6 +2267,67 @@ border-radius:10px;
         <property name="text">
          <string>id formateur</string>
         </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_date">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>340</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_date">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>320</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Date formation</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_Ca">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>510</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>25</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>50</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>75</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100</string>
+         </property>
+        </item>
        </widget>
       </widget>
       <zorder>frame_6</zorder>
@@ -4583,7 +4611,7 @@ background-color: rgb(4, 4, 87);</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -4591,6 +4619,7 @@ background-color: rgb(4, 4, 87);</string>
  </widget>
  <resources>
   <include location="image.qrc"/>
+  <include location="../../../Desktop/islem2/ressource.qrc"/>
  </resources>
  <connections/>
 </ui>

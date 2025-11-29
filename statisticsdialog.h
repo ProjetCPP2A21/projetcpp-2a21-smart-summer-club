@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+
 namespace Ui {
 class StatisticsDialog;
 }
@@ -15,8 +16,12 @@ public:
     explicit StatisticsDialog(QWidget *parent = nullptr);
     ~StatisticsDialog();
 
+
+
 private:
     Ui::StatisticsDialog *ui;
+
 };
+
 
 #endif // STATISTICSDIALOG_H
