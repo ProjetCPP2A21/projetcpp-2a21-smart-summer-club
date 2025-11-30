@@ -1,0 +1,67 @@
+#ifndef SERVICE_H
+#define SERVICE_H
+#include <QString>
+#include<QSqlQuery>
+#include<QSqlQueryModel>
+#include <QTableView>
+#include "apprenant.h"
+#include <QSystemTrayIcon>
+#include <QIcon>
+class service
+{
+
+private:
+    int id_service;
+    QString nom_service;
+    double montant;
+    QString horaire;
+    int capacite;
+    QString status_service;
+    QString type_service;
+
+public:
+    service();
+    service(int id ,QString n,double m,QString h,int ca,QString s,QString ts);
+    ~service(){};
+
+    //getters//
+    int getid()  {return id_service;}
+    QString getnom_service(){return nom_service;}
+    double getmontant(){return montant;}
+    QString gethoraire(){return horaire;}
+    int getcapacite(){return capacite;}
+    QString getstatus(){return status_service;}
+    QString gettype_service(){return type_service;}
+    //setters//
+    void setid(int id){id_service=id;}
+    void setnom(QString n){nom_service=n;}
+    void settype(QString ts){type_service=ts;}
+    void setcapacite(int ca){capacite=ca;}
+    void sethoraire(QString  h){horaire=h;}
+    void setstatus (QString s){status_service=s;}
+    void setmontant(double m){montant=m;}
+
+    //les methode//
+    bool ajoute_service();
+    QSqlQueryModel* affiche();
+    bool recherch_id(int id_service);
+    QSqlQueryModel* affiche_id(int id_service);
+    bool supprime_service(int id_service);
+    bool charge_donner(int id_service);
+    bool update_service(int id_service);
+    QSqlQueryModel* tri_capacite();
+    void export_pdf(QTableView  *view,const QString &filename);
+    void statistic_capacite(QTableView *view);
+    /*************************************************/
+    bool inscription(int id_service,int id_apprenant);
+    bool alert_capacite(int id_service);
+    bool inscription_auto(int id_apprenant);
+    //planfication//
+    QSqlQueryModel *planfication_service();
+     static QSystemTrayIcon trayIcon;
+
+
+
+};
+
+#endif
