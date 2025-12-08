@@ -13,12 +13,14 @@
 #include <QDate>
 #include <QPrinter>
 #include <QFocusEvent>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , colorModel(new ColorSqlModel(this))
     , recherchePlaceholderActive(true)
+    , arduino(new Arduino(this))
 {
     ui->setupUi(this);
 
@@ -59,40 +61,242 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->tableView_Equipement, &QTableView::clicked, this, &MainWindow::on_EquipementTable_clicked);
+
+    // Connecter le signal textChanged pour verifmoteur
+    connect(ui->verifmoteur, &QLineEdit::textChanged, this, &MainWindow::on_verifmoteur_textChanged);
+
+    // Connecter le signal returnPressed pour verifmoteur (optionnel)
+    connect(ui->verifmoteur, &QLineEdit::returnPressed, this, [this]() {
+        QString id = ui->verifmoteur->text().trimmed();
+        if (!id.isEmpty()) {
+            // Envoyer la commande à Arduino
+            arduino->verifierID(id);
+
+            // Afficher un message de confirmation
+            QMessageBox::information(this, "Commande envoyée",
+                                     QString("Commande envoyée à Arduino:\nSTART %1").arg(id));
+        }
+    });
+
+    // Connecter les signaux d'Arduino
+    connect(arduino, &Arduino::etatChanged, this, &MainWindow::onArduinoEtatChanged);
+    connect(arduino, &Arduino::messageInfo, this, &MainWindow::onArduinoMessageInfo);
+
+    // Définir un placeholder pour verifmoteur
+    ui->verifmoteur->setPlaceholderText("Entrez un ID et appuyez sur Entrée...");
+
+    // Initialiser le label d'état Arduino
+    ui->labelEtatArduino->setText("🔄 Recherche Arduino...");
+    ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                        "color: #0c5460; "
+                                        "font-weight: bold; "
+                                        "padding: 10px; "
+                                        "background-color: #d1ecf1; "
+                                        "border: 2px solid #bee5eb; "
+                                        "border-radius: 8px; "
+                                        "}");
+
+    // Style initial pour verifmoteur
+    ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                   "background-color: white; "
+                                   "border: 2px solid #cccccc; "
+                                   "border-radius: 5px; "
+                                   "padding: 8px; "
+                                   "font-size: 14px; "
+                                   "}");
+
+    // Essayer de connecter Arduino après un délai
+    QTimer::singleShot(1500, this, [this]() {
+        qDebug() << "Tentative de connexion Arduino...";
+        if (arduino->connecterArduino()) {
+            ui->labelEtatArduino->setText("✅ Arduino connecté et prêt");
+            ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                                "color: #155724; "
+                                                "font-weight: bold; "
+                                                "padding: 10px; "
+                                                "background-color: #d4edda; "
+                                                "border: 2px solid #c3e6cb; "
+                                                "border-radius: 8px; "
+                                                "}");
+
+            // Tester la communication
+            QTimer::singleShot(500, [this]() {
+                // Simplement afficher un message de debug
+                qDebug() << "Arduino connecté avec succès";
+                qDebug() << "Prêt à recevoir des commandes START [ID]";
+            });
+        } else {
+            ui->labelEtatArduino->setText("⚠️ Mode simulation - Arduino non détecté");
+            ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                                "color: #856404; "
+                                                "font-weight: bold; "
+                                                "padding: 10px; "
+                                                "background-color: #fff3cd; "
+                                                "border: 2px solid #ffeaa7; "
+                                                "border-radius: 8px; "
+                                                "}");
+        }
+    });
 }
 
 MainWindow::~MainWindow()
 {
+    // Arrêter le moteur Arduino avant de quitter
+    arduino->arreterMoteur();
     delete ui;
 }
 
-// Fonction de recherche améliorée
-void MainWindow::on_RechercheEquipement_textChanged(const QString &text)
+void MainWindow::on_verifmoteur_textChanged(const QString &text)
 {
-    if (text.isEmpty() && !recherchePlaceholderActive) {
-        // Si le champ est vide et que ce n'est pas le placeholder, afficher tous les équipements
-        colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT");
-    } else if (!text.isEmpty() && !recherchePlaceholderActive) {
-        // Rechercher l'équipement par ID seulement si ce n'est pas le placeholder
-        QString recherche = text.trimmed();
+    // Si le champ est vide, réinitialiser l'état
+    if (text.trimmed().isEmpty()) {
+        ui->labelEtatArduino->setText("🔄 Entrez un ID pour vérifier...");
+        ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                            "color: #0c5460; "
+                                            "font-weight: bold; "
+                                            "padding: 10px; "
+                                            "background-color: #d1ecf1; "
+                                            "border: 2px solid #bee5eb; "
+                                            "border-radius: 8px; "
+                                            "}");
 
-        // Vérifier si c'est un nombre (recherche par ID)
-        bool ok;
-        recherche.toInt(&ok);
+        ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                       "background-color: white; "
+                                       "border: 2px solid #cccccc; "
+                                       "border-radius: 5px; "
+                                       "padding: 8px; "
+                                       "font-size: 14px; "
+                                       "}");
+        return;
+    }
 
-        if (ok) {
-            // Recherche par ID
-            QString queryStr = "SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT WHERE ID = '" + recherche + "'";
-            colorModel->setQuery(queryStr);
+    // Si l'utilisateur tape, on peut afficher un message
+    ui->labelEtatArduino->setText("🔍 Vérification en cours...");
+    ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                        "color: #856404; "
+                                        "font-weight: bold; "
+                                        "padding: 10px; "
+                                        "background-color: #fff3cd; "
+                                        "border: 2px solid #ffeaa7; "
+                                        "border-radius: 8px; "
+                                        "}");
 
-            if (colorModel->lastError().isValid()) {
-                qDebug() << "Erreur de recherche:" << colorModel->lastError().text();
+    // La vérification réelle se fait quand on appuie sur Entrée
+    // ou via un timer pour vérification automatique
+}
+
+void MainWindow::onArduinoEtatChanged(bool moteurActif, const QString &message)
+{
+    // Mettre à jour l'interface avec l'état d'Arduino
+    updateArduinoUI(moteurActif, message);
+}
+
+void MainWindow::onArduinoMessageInfo(const QString &message)
+{
+    qDebug() << "[ARDUINO MSG]" << message;
+
+    // Vous pouvez ajouter un log des messages Arduino si vous voulez
+    // Par exemple dans un QTextEdit dédié
+}
+
+void MainWindow::updateArduinoUI(bool moteurActif, const QString &message)
+{
+    // Mettre à jour le label avec le message
+    ui->labelEtatArduino->setText(message);
+
+    // Appliquer le style en fonction de l'état
+    if (moteurActif) {
+        // ID valide - Moteur tourne
+        ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                            "color: #155724; "
+                                            "font-weight: bold; "
+                                            "padding: 10px; "
+                                            "background-color: #d4edda; "
+                                            "border: 2px solid #c3e6cb; "
+                                            "border-radius: 8px; "
+                                            "}");
+
+        // Style pour le champ de texte
+        ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                       "background-color: #d4edda; "
+                                       "border: 2px solid #28a745; "
+                                       "border-radius: 5px; "
+                                       "padding: 8px; "
+                                       "font-size: 14px; "
+                                       "font-weight: bold; "
+                                       "color: #155724; "
+                                       "}");
+
+        // Animation ou effet visuel (optionnel)
+        QTimer::singleShot(3000, this, [this]() {
+            if (arduino->moteurEnMarche()) {
+                QMessageBox::information(this, "Rotation terminée",
+                                         "✅ La rotation du moteur est terminée!\n"
+                                         "Le moteur a effectué un tour complet de 360°.");
             }
-        } else {
-            // Recherche par nom (si vous voulez aussi rechercher par nom)
-            QString queryStr = "SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT WHERE NOM LIKE '%" + recherche + "%'";
-            colorModel->setQuery(queryStr);
-        }
+        });
+
+    } else if (message.contains("❌") || message.contains("ERREUR") || message.contains("invalide")) {
+        // Erreur détectée
+        ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                            "color: #721c24; "
+                                            "font-weight: bold; "
+                                            "padding: 10px; "
+                                            "background-color: #f8d7da; "
+                                            "border: 2px solid #f5c6cb; "
+                                            "border-radius: 8px; "
+                                            "}");
+
+        ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                       "background-color: #f8d7da; "
+                                       "border: 2px solid #dc3545; "
+                                       "border-radius: 5px; "
+                                       "padding: 8px; "
+                                       "font-size: 14px; "
+                                       "font-weight: bold; "
+                                       "color: #721c24; "
+                                       "}");
+
+        // Bip sonore ou notification (simulé)
+        QApplication::beep();
+
+    } else if (message.contains("✅") || message.contains("SUCCES")) {
+        // Succès (mais moteur pas nécessairement actif)
+        ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                            "color: #155724; "
+                                            "font-weight: bold; "
+                                            "padding: 10px; "
+                                            "background-color: #d4edda; "
+                                            "border: 2px solid #c3e6cb; "
+                                            "border-radius: 8px; "
+                                            "}");
+
+        ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                       "background-color: #d4edda; "
+                                       "border: 2px solid #28a745; "
+                                       "border-radius: 5px; "
+                                       "padding: 8px; "
+                                       "font-size: 14px; "
+                                       "}");
+
+    } else {
+        // État neutre / informatif
+        ui->labelEtatArduino->setStyleSheet("QLabel { "
+                                            "color: #0c5460; "
+                                            "font-weight: bold; "
+                                            "padding: 10px; "
+                                            "background-color: #d1ecf1; "
+                                            "border: 2px solid #bee5eb; "
+                                            "border-radius: 8px; "
+                                            "}");
+
+        ui->verifmoteur->setStyleSheet("QLineEdit { "
+                                       "background-color: white; "
+                                       "border: 2px solid #cccccc; "
+                                       "border-radius: 5px; "
+                                       "padding: 8px; "
+                                       "font-size: 14px; "
+                                       "}");
     }
 }
 
@@ -104,7 +308,7 @@ void MainWindow::on_ajouterEquipement_clicked()
     QString TYPE = ui->typeEquipement->text().trimmed();
     QString ETAT = ui->etatEquipement->currentText().trimmed();
     QString QUANTITE = ui->quantiteEquipement->text().trimmed();
-    QDate DATE_ACHAT = ui->datEquipement->date(); // Récupérer la date du DateEdit
+    QDate DATE_ACHAT = ui->datEquipement->date();
 
     // Contrôle de saisie - Champs vides
     if (ID.isEmpty() || NOM.isEmpty() || PRIX.isEmpty() ||
@@ -160,7 +364,6 @@ void MainWindow::on_ajouterEquipement_clicked()
         clearFieldsEquipement();
         // Actualiser le modèle coloré
         colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT");
-        // NE PAS réinitialiser le placeholder de recherche ici
     } else {
         QMessageBox::critical(this, "Échec", "Ajout non effectué (ID déjà existant ?)");
     }
@@ -174,7 +377,7 @@ void MainWindow::clearFieldsEquipement()
     ui->typeEquipement->clear();
     ui->etatEquipement->setCurrentIndex(0);
     ui->quantiteEquipement->clear();
-    ui->datEquipement->setDate(QDate::currentDate()); // Réinitialiser à la date actuelle
+    ui->datEquipement->setDate(QDate::currentDate());
 }
 
 void MainWindow::on_SupprimerEquipement_clicked()
@@ -199,7 +402,6 @@ void MainWindow::on_SupprimerEquipement_clicked()
                                  QObject::tr("L'équipement a été supprimé avec succès."));
         // Actualiser le modèle coloré
         colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT");
-        // NE PAS réinitialiser le placeholder de recherche ici
     } else {
         QMessageBox::critical(nullptr, QObject::tr("Erreur"),
                               QObject::tr("Échec de la suppression de l'équipement."));
@@ -275,14 +477,13 @@ void MainWindow::on_ModifierEquipement_clicked()
     e.setEtat(ETAT);
     e.setQuantite(QUANTITE);
     e.setDateAchat(DATE_ACHAT);
-    e.setDureeVie(5); // Valeur par défaut
+    e.setDureeVie(5);
 
     if (e.modifier_EQUIPEMENT()) {
         QMessageBox::information(this, "Succès", "L'équipement a été modifié avec succès.");
         // Actualiser le modèle coloré
         colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT");
         clearFieldsEquipement();
-        // NE PAS réinitialiser le placeholder de recherche ici
     } else {
         QMessageBox::critical(this, "Erreur", "Échec de la modification (ID inexistant ?)");
     }
@@ -307,7 +508,7 @@ void MainWindow::on_EquipementTable_clicked(const QModelIndex &index)
     equipementC e_temp;
     QSqlQueryModel *fullModel = e_temp.fillEquipement(ID);
 
-    QDate DATE_ACHAT = QDate::currentDate(); // Valeur par défaut
+    QDate DATE_ACHAT = QDate::currentDate();
     if (fullModel && fullModel->rowCount() > 0) {
         QSqlRecord record = fullModel->record(0);
         DATE_ACHAT = record.value("DATE_ACHAT").toDate();
@@ -326,13 +527,22 @@ void MainWindow::on_EquipementTable_clicked(const QModelIndex &index)
     ui->RechercheEquipement->setText(ID);
     recherchePlaceholderActive = false;
     ui->RechercheEquipement->setStyleSheet("background-color: rgb(255, 255, 255); border-radius:10px; border: 3px solid #ffffff; color: rgb(0, 0, 0);");
+
+    // SUPPRIMÉ: Ne pas copier automatiquement dans verifmoteur
+    // ui->verifmoteur->setText(ID);  // Cette ligne a été supprimée
+
+    // Option: Vérification automatique de l'ID sélectionné (désactivée)
+    // QTimer::singleShot(500, [this, ID]() {
+    //     if (!ID.isEmpty()) {
+    //         arduino->verifierID(ID);
+    //     }
+    // });
 }
 
 void MainWindow::on_pushButton_23_clicked()
 {
     // TRI avec modèle coloré
     colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT ORDER BY TYPE");
-    // NE PAS réinitialiser le placeholder de recherche ici
 }
 
 void MainWindow::on_pushButton_stat_8_clicked()
@@ -341,46 +551,38 @@ void MainWindow::on_pushButton_stat_8_clicked()
     e.statistic_taux_utilisation(ui->tableView_Equipement);
 }
 
-// Ancienne fonction de recherche (maintenant remplacée par la recherche en temps réel)
 void MainWindow::on_rechercherEquipement_clicked()
 {
     QString id = ui->RechercheEquipement->text().trimmed();
 
-    // Si c'est le placeholder, on ne fait rien
     if (id.isEmpty() || recherchePlaceholderActive) {
         return;
     }
 
-    // La recherche se fait maintenant automatiquement via on_RechercheEquipement_textChanged
-    // Cette fonction peut être utilisée pour forcer une recherche si nécessaire
     on_RechercheEquipement_textChanged(id);
 }
 
 void MainWindow::on_pushButton_stat_7_clicked()
 {
     try {
-        // Récupérer le nom du fichier
         QString filename = QFileDialog::getSaveFileName(this,
                                                         "Exporter en PDF",
                                                         QDir::homePath() + "/export_equipements_" + QDate::currentDate().toString("yyyyMMdd") + ".pdf",
                                                         "Fichiers PDF (*.pdf)");
 
         if (filename.isEmpty()) {
-            return; // Annulation
+            return;
         }
 
-        // Vérifier l'extension .pdf
         if (!filename.endsWith(".pdf", Qt::CaseInsensitive)) {
             filename += ".pdf";
         }
 
-        // Vérifier que le tableView existe et a des données
         if (!ui->tableView_Equipement || !ui->tableView_Equipement->model()) {
             QMessageBox::warning(this, "Erreur", "Aucune donnée à exporter !");
             return;
         }
 
-        // Appeler la fonction d'export
         equipementC e;
         e.export_pdf(ui->tableView_Equipement, filename);
 
@@ -393,7 +595,6 @@ void MainWindow::on_pushButton_stat_7_clicked()
 
 void MainWindow::on_ficheTechnique_clicked()
 {
-    // Vérifier qu'un équipement est sélectionné
     QModelIndex currentIndex = ui->tableView_Equipement->currentIndex();
 
     if (!currentIndex.isValid()) {
@@ -402,11 +603,9 @@ void MainWindow::on_ficheTechnique_clicked()
         return;
     }
 
-    // Récupérer l'ID de l'équipement sélectionné
     QString ID = ui->tableView_Equipement->model()->data(
                                                       ui->tableView_Equipement->model()->index(currentIndex.row(), 0)).toString();
 
-    // Charger les données de l'équipement
     equipementC e_temp;
     QSqlQueryModel *model = e_temp.fillEquipement(ID);
 
@@ -415,7 +614,6 @@ void MainWindow::on_ficheTechnique_clicked()
         return;
     }
 
-    // Créer l'objet equipementC avec toutes les données
     QSqlRecord record = model->record(0);
     equipementC e(
         record.value("ID").toString(),
@@ -428,34 +626,29 @@ void MainWindow::on_ficheTechnique_clicked()
         record.value("DUREE_VIE").toInt()
         );
 
-    // Générer la fiche technique
     QString fiche = e.genererFicheTechnique();
 
-    // Créer une boîte de dialogue simple et efficace
     QDialog *ficheDialog = new QDialog(this);
     ficheDialog->setWindowTitle("📋 Fiche Technique - " + e.getNom());
     ficheDialog->resize(1000, 800);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(ficheDialog);
 
-    // Créer un QTextBrowser pour afficher le HTML
     QTextBrowser *textBrowser = new QTextBrowser();
     textBrowser->setHtml(fiche);
     textBrowser->setOpenExternalLinks(false);
 
-    // Boutons
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     QPushButton *btnSave = new QPushButton("💾 Sauvegarder PDF");
     QPushButton *btnClose = new QPushButton("✕ Fermer");
 
     buttonLayout->addWidget(btnSave);
-    buttonLayout->addStretch(); // Espace flexible
+    buttonLayout->addStretch();
     buttonLayout->addWidget(btnClose);
 
     mainLayout->addWidget(textBrowser);
     mainLayout->addLayout(buttonLayout);
 
-    // Connexions des boutons - Version ultra-simplifiée
     connect(btnSave, &QPushButton::clicked, [this, &e, fiche]() {
         QString fileName = QFileDialog::getSaveFileName(
             this,
@@ -465,7 +658,6 @@ void MainWindow::on_ficheTechnique_clicked()
             );
 
         if (!fileName.isEmpty()) {
-            // Méthode simple et fiable pour PDF
             QPrinter printer;
             printer.setOutputFormat(QPrinter::PdfFormat);
             printer.setOutputFileName(fileName);
@@ -491,7 +683,30 @@ void MainWindow::on_ficheTechnique_clicked()
     delete model;
 }
 
-// Gestion du focus pour le placeholder
+void MainWindow::on_RechercheEquipement_textChanged(const QString &text)
+{
+    if (text.isEmpty() && !recherchePlaceholderActive) {
+        colorModel->setQuery("SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT");
+    } else if (!text.isEmpty() && !recherchePlaceholderActive) {
+        QString recherche = text.trimmed();
+
+        bool ok;
+        recherche.toInt(&ok);
+
+        if (ok) {
+            QString queryStr = "SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT WHERE ID = '" + recherche + "'";
+            colorModel->setQuery(queryStr);
+
+            if (colorModel->lastError().isValid()) {
+                qDebug() << "Erreur de recherche:" << colorModel->lastError().text();
+            }
+        } else {
+            QString queryStr = "SELECT ID, NOM, PRIX, TYPE, ETAT, QUANTITE FROM EQUIPEMENT WHERE NOM LIKE '%" + recherche + "%'";
+            colorModel->setQuery(queryStr);
+        }
+    }
+}
+
 void MainWindow::on_RechercheEquipement_focusIn()
 {
     if (recherchePlaceholderActive) {

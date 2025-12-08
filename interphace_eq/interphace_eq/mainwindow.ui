@@ -4756,6 +4756,35 @@ QPushButton:pressed {
        <string>FICHE TECHNIQUE</string>
       </property>
      </widget>
+     <widget class="QLabel" name="labelEtatArduino">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>309</y>
+        <width>281</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="verifmoteur">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>245</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:10px;
+border: 3px solid #ffffff;
+color: rgb(162, 162, 162);</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

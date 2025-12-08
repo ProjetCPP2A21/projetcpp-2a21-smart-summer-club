@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "equipementc.h"
+#include "arduino.h"
 #include <QMainWindow>
 #include <QSqlQueryModel>
 #include <QColor>
@@ -17,18 +18,6 @@
 #include <QScreen>
 #include <QGuiApplication>
 #include <QTextDocument>
-#include <QPrinter>
-#include <QPageSize>
-#include <QPageLayout>
-#include <QTextBrowser>
-#include <QDialog>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-// ===========================================================
-//    CLASSE ColorSqlModel : Coloration intelligente du tableau
-// ===========================================================
 
 class ColorSqlModel : public QSqlQueryModel
 {
@@ -44,28 +33,17 @@ public:
 
             QString etatLower = etat.toLower().trimmed();
 
-            // ===========================
-            // 🚦 COLORATION AUTOMATIQUE
-            // ===========================
-
-            // Disponible → Vert
             if (etatLower.contains("dispon"))
-                return QBrush(QColor(144, 238, 144));  // vert clair
+                return QBrush(QColor(144, 238, 144));
 
-            // En panne → Rouge (toutes variantes)
-            if (
-                etatLower.contains("panne") ||
-                etatLower.contains("pan")   ||
-                etatLower.contains("pann")  ||
-                etatLower.contains("panee")
-                )
+            if (etatLower.contains("panne") || etatLower.contains("pan") ||
+                etatLower.contains("pann") || etatLower.contains("panee"))
             {
-                return QBrush(QColor(255, 120, 120)); // rouge clair
+                return QBrush(QColor(255, 120, 120));
             }
 
-            // Réservé → Jaune
             if (etatLower.contains("reserv"))
-                return QBrush(QColor(255, 255, 153));  // jaune clair
+                return QBrush(QColor(255, 255, 153));
         }
 
         return QSqlQueryModel::data(index, role);
@@ -77,10 +55,6 @@ namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
-
-// ===========================================================
-//                        MainWindow
-// ===========================================================
 
 class MainWindow : public QMainWindow
 {
@@ -102,16 +76,22 @@ private slots:
     void on_pushButton_stat_7_clicked();
     void on_ficheTechnique_clicked();
 
-    // Nouveaux slots pour la recherche améliorée
     void on_RechercheEquipement_textChanged(const QString &text);
     void on_RechercheEquipement_focusIn();
     void on_RechercheEquipement_focusOut();
+
+    void on_verifmoteur_textChanged(const QString &text);
+    void onArduinoEtatChanged(bool moteurActif, const QString &message);
+    void onArduinoMessageInfo(const QString &message);
 
 private:
     Ui::MainWindow *ui;
     equipementC e;
     ColorSqlModel *colorModel;
     bool recherchePlaceholderActive;
+    Arduino *arduino;
+
+    void updateArduinoUI(bool moteurActif, const QString &message);
 };
 
 #endif // MAINWINDOW_H
