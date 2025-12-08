@@ -58,6 +58,7 @@
 #include <QFocusEvent>
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
+#include <QTimer>
 
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     : QMainWindow(parent),
@@ -77,6 +78,12 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     case(-1):qDebug() << "arduino is not available";
     }
     QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_rfid()));
+
+    // 🎯 KEYPAD CONNECTION
+    // Add timer
+    QTimer *keypadTimer = new QTimer(this);
+    connect(keypadTimer, &QTimer::timeout, this, &interface_formateur::readArduinoData);
+    keypadTimer->start(100);
 
     qDebug() << "=== DÉMARRAGE APPLICATION ===";
     qDebug() << "Couleurs activées: Vert(disponible), Rouge(en panne), Jaune(réservé)";
@@ -2285,6 +2292,68 @@ void interface_formateur::update_rfid()
                                  "❌ Ce numéro de carte n'existe PAS : " + uid);
 
             // A.write_to_arduino("F");  // fermer servo
+        }
+    }
+}
+//Arduino apprenant in
+// Add this function to read keypad input
+void interface_formateur::readArduinoData()
+{
+    static QByteArray buffer;
+
+    // FIX: Use A instead of d
+    QSerialPort *serial = A.getserial();
+    if (!serial || !serial->isOpen()) {
+        return;
+    }
+
+    // Read all available data
+    QByteArray data = serial->readAll();
+    buffer.append(data);
+
+    // Check for complete lines
+    while (buffer.contains('\n')) {
+        int newlinePos = buffer.indexOf('\n');
+        QByteArray line = buffer.left(newlinePos).trimmed();
+        buffer = buffer.mid(newlinePos + 1);
+
+        QString idStr = QString(line);
+
+        if (!idStr.isEmpty()) {
+            bool ok;
+            int id = idStr.toInt(&ok);
+
+            if (ok && id > 0) {
+                qDebug() << "Complete ID:" << id;
+
+                // ADD THIS: Switch to apprenant page and fill ID
+                ui->stackedWidget->setCurrentIndex(4);
+                ui->lineEdit_cin_6->setText(QString::number(id));
+
+                QSqlQuery query;
+                query.prepare("SELECT NOM, PRENOM FROM APPRENANT WHERE ID_APPRENANT = ?");
+                query.addBindValue(id);
+
+                if (query.exec() && query.next()) {
+                    // ADD THIS: Fill the form
+                    ui->lineEdit_nom_3->setText(query.value(0).toString());
+                    ui->lineEdit_prenom_3->setText(query.value(1).toString());
+
+                    QMessageBox::information(this, "✅ Found",
+                                             QString("ID %1: %2 %3")
+                                                 .arg(id)
+                                                 .arg(query.value(1).toString())
+                                                 .arg(query.value(0).toString()));
+                } else {
+                    // ADD THIS: Clear form for new entry
+                    ui->lineEdit_nom_3->clear();
+                    ui->lineEdit_prenom_3->clear();
+                    ui->lineEdit_nom_3->setFocus();
+
+                    QMessageBox::warning(this, "❌ Not Found",
+                                         QString("ID %1 not in database").arg(id));
+                }
+            }
         }
     }
 }

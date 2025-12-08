@@ -174,6 +174,9 @@ private slots:
     void on_pushButton_42_clicked();
     //Arduino
     void update_rfid();
+    //arduino apprenant
+    void readArduinoData();
+
 
 private:
     Ui::interface_formateur *ui;
