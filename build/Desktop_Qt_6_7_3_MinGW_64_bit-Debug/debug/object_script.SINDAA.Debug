@@ -1,0 +1,10 @@
+debug/connection.o
+debug/employe.o
+debug/gestion_employe.o
+debug/main.o
+debug/menu.o
+debug/mot_de_passe.o
+debug/qrc_image.o
+debug/moc_gestion_employe.o
+debug/moc_menu.o
+debug/moc_mot_de_passe.o

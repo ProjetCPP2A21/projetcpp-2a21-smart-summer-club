@@ -1,0 +1,10 @@
+release/connection.o
+release/employe.o
+release/gestion_employe.o
+release/main.o
+release/menu.o
+release/mot_de_passe.o
+release/qrc_image.o
+release/moc_gestion_employe.o
+release/moc_menu.o
+release/moc_mot_de_passe.o
