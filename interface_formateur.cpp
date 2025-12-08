@@ -200,24 +200,22 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     ui->dateEdit_date->setCalendarPopup(true);
     ui->dateEdit_date->setDate(QDate::currentDate());
 
-    // ---- INPUT VALIDATORS (set once at start) ----
+    // ---- INPUT VALIDATORS for EMPLOYEE ----
     QIntValidator *intVal = new QIntValidator(this);
     ui->lineEdit_ID_2->setValidator(intVal);
     ui->lineEdit_cin_2->setValidator(intVal);
-    ui->lineEdit_num_2->setValidator(new QIntValidator(10000000, 99999999, this)); // 8 digits
+    ui->lineEdit_num_2->setValidator(new QIntValidator(10000000, 99999999, this));
 
-    // letters + space + hyphen for name fields
     QRegularExpression nameRx("^[A-Za-zÀ-ÖØ-öø-ÿ\\-\\s]+$");
     QRegularExpressionValidator *nameVal = new QRegularExpressionValidator(nameRx, this);
     ui->lineEdit_nom_2->setValidator(nameVal);
     ui->lineEdit_prenom_2->setValidator(nameVal);
 
-    // email validator
     QRegularExpression emailRx(R"(^[\w\.\-]+\@[\w\-]+\.[a-zA-Z]{2,}$)");
     ui->lineEdit_email_2->setValidator(new QRegularExpressionValidator(emailRx, this));
 
-    // Display the list at startup
-    ui->tableView_2->setModel(etmp.afficher());
+    // ✅ CHANGE THIS: Use tableView_3 for employees
+    ui->tableView_3->setModel(etmp.afficher());
     // ========== APPRENANT VALIDATION ==========
     // Contrôle de saisie pour l'ID (chiffres seulement)
     ui->lineEdit_cin_6->setValidator(new QIntValidator(0, 99999999, this));
