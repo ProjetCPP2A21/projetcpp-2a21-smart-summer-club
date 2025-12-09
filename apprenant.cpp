@@ -1172,3 +1172,36 @@ QSqlQueryModel* apprenant::getGroupeModel(const QString& groupeName)
     }
     return nullptr;
 }
+
+QString apprenant::rechercher_beneficier(int id_apprenant)
+{
+
+    QSqlQuery query;
+    query.prepare("SELECT s.nom_service "
+                  "FROM beneficier b "
+                  "JOIN service s ON b.id_service = s.id_service "
+                  "WHERE b.id_apprenant = :idA");
+    query.bindValue(":idA", id_apprenant);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();   // ✅ retourne le nom du service
+    }
+
+    return "";
+    /*QSqlQuery query;
+    query.prepare("SELECT s.nom_service "
+                  "FROM beneficier b "
+                  "JOIN service s ON b.id_service = s.id_service "
+                  "WHERE b.id_apprenant = :idA");
+    query.bindValue(":idA", id_apprenant);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur SQL:" << query.lastError().text();
+    }
+
+    if (query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";*/
+}

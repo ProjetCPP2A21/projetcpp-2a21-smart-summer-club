@@ -191,6 +191,8 @@ private slots:
 
     //Arduino
     void update_rfid();
+    void read_from_arduino();
+
 
 private:
     Ui::interface_formateur *ui;

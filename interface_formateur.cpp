@@ -77,6 +77,8 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     case(-1):qDebug() << "arduino is not available";
     }
     QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_rfid()));
+    connect(A.getserial(), &QSerialPort::readyRead,
+            this, &interface_formateur::read_from_arduino);
 
     qDebug() << "=== DÉMARRAGE APPLICATION ===";
     qDebug() << "Couleurs activées: Vert(disponible), Rouge(en panne), Jaune(réservé)";
@@ -2436,6 +2438,39 @@ void interface_formateur::update_rfid()
     }
 }
 
+void interface_formateur::read_from_arduino()
+
+{
+    QByteArray data = A.read_from_arduino();
+    QString msg = QString::fromUtf8(data).trimmed();
+
+    qDebug() << "Reçu de l'Arduino :" << msg;
+
+    if (msg.startsWith("ID:"))
+    {
+        int idA = msg.mid(3).toInt();
+
+        // ✅ Recherche SQL
+        QString service = a.rechercher_beneficier(idA).trimmed();
+
+        // ✅ Si service trouvé → accès valide
+        if (service != "") {
+            QString msg = "ACCES:" + service;
+            A.write_to_arduino(msg.toUtf8());
+
+            QString response = "ACCES:" + service + "\n";
+            A.write_to_arduino(response.toUtf8());
+
+            qDebug() << "Accès valide, service =" << service;
+        }
+        else
+        {
+            // ❌ Aucun service → accès invalide
+            A.write_to_arduino("REFUS\n");
+
+            qDebug() << "Accès invalide";
+        }
+    }}
 
 
 

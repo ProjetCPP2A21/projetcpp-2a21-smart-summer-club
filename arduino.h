@@ -22,6 +22,9 @@ private:
     QString arduino_port_name;
     bool arduino_is_available;
     QByteArray data;  // contenant les données lues à partir d'Arduino
+    //void dataReceived(QString data);  // Signal pour envoyer les données reçues
+
+    // void handleReadyRead();
 };
 
 #endif // ARDUINO_H

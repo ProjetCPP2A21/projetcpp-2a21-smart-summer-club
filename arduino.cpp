@@ -81,3 +81,12 @@ void Arduino::write_to_arduino(QByteArray d)
     }
 }
 
+/*void Arduino::handleReadyRead()
+{
+    QByteArray ba = serial->readAll();
+    QString msg = QString::fromUtf8(ba).trimmed();
+
+    if (!msg.isEmpty())
+        emit dataReceived(msg); // envoie vers interface_formateur
+}
+*/
