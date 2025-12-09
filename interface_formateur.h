@@ -108,6 +108,8 @@ private slots:
     void onSmsError(QString err);
     void on_pushButton_SMS_clicked();
     void on_pushButton_QRcode_clicked();
+    void lireBufferArduino();       // Slot pour lire le code envoyé par Arduino
+    void verifierIdTFT(const QString &code); // Vérifie ID dans Oracle
 
     // === SERVICE ===
     void on_pushButton_AJOUTER_3_clicked();
@@ -182,9 +184,15 @@ private:
     Ui::interface_formateur *ui;
     MainWindow *menuPrincipal;
 
+    // --- formateur
     Formateur F, F1;
     int IDselection = -2;
     SmsSender *smsSender;
+    //Connexion------------
+    QByteArray data;
+    Arduino B;
+    QSerialPort *arduinoSerial;
+    Arduino arduino;
 
     service s;
 

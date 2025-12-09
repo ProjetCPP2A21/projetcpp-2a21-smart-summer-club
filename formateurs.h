@@ -8,6 +8,7 @@
 #include<QDate> //modif
 #include <QObject>
 #include "sms.h"
+#include "arduino.h"
 
 
 class Formateur
@@ -73,6 +74,10 @@ public:
     // --- Metiers avances -----
     QImage generateQrCode() const;
     void setSmsSender(SmsSender *sender);
+
+    // --- ARDUINO ----
+    bool recherche_arduino(QString id);               // Vérifie si l'ID existe
+    bool donnee_arduino(int id, QString &nom, QString &prenom); // Récupère nom/prénom
 };
 
 #endif // FORMATEURS_H
