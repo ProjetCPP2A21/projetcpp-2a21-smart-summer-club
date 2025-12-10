@@ -80,4 +80,4 @@ void Arduino::write_to_arduino(QByteArray d)
         qDebug() << "Erreur : Impossible d'écrire sur le port série !";
     }
 }
-
+// arduino sinda
