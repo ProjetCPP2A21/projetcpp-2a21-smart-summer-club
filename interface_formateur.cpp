@@ -73,7 +73,7 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     recherchePlaceholderActive(false)
 {
     ui->setupUi(this);
-    //ARDUINO
+    /*ARDUINO
     int ret = A.connect_arduino(); // Connexion à l'Arduino
     switch(ret){
     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
@@ -99,9 +99,29 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     }
     connect(B.getserial(), &QSerialPort::readyRead,
             this, &interface_formateur::lireBufferArduino);
-    QObject::connect(B.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
+    //QObject::connect(B.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
+*/
     //-- FIN CONNEXION ARDUINO -------------------------------------------
 
+    //arduino karim amine///////////////////
+    int rett2 = d.connect_arduino(); // lancer la connexion à arduino
+    switch(rett2){
+    case 0:
+        qDebug() << "arduino is available and connected to : " << d.getarduino_port_name();
+        break;
+    case 1:
+        qDebug() << "arduino is available but not connected to :" << d.getarduino_port_name();
+        break;
+    case -1: // Le cas -1 n'était pas présent dans connect_arduino() mais est géré ici.
+        qDebug() << "arduino is not available";
+        break;
+    }
+    //QObject::connect(d.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
+    connect(d.getserial(), &QSerialPort::readyRead,
+            this, &interface_formateur::read_from_arduino);
+    connect(d.getserial(), &QSerialPort::readyRead,
+            this, &interface_formateur::readArduinoData);
+/*************************************************************/
 
     // 🎯 KEYPAD CONNECTION
     // Add timer
@@ -2311,7 +2331,7 @@ void interface_formateur::on_RechercheEquipement_focusOut()
 //ARDUINO ISLEM
 void interface_formateur::update_rfid()
 {
-    QSerialPort *serial = A.getserial();
+    QSerialPort *serial = d.getserial();
 
     // Lire seulement si une ligne complète est arrivée
     while (serial->canReadLine()) {
@@ -2363,12 +2383,12 @@ void interface_formateur::update_rfid()
 }
 //Arduino apprenant in
 // Add this function to read keypad input
-void interface_formateur::readArduinoData()
+/*void interface_formateur::readArduinoData()
 {
     static QByteArray buffer;
 
     // FIX: Use A instead of d
-    QSerialPort *serial = A.getserial();
+    QSerialPort *serial = d.getserial();
     if (!serial || !serial->isOpen()) {
         return;
     }
@@ -2397,7 +2417,12 @@ void interface_formateur::readArduinoData()
                 ui->lineEdit_cin_6->setText(QString::number(id));
 
                 QSqlQuery query;
-                query.prepare("SELECT NOM, PRENOM FROM APPRENANT WHERE ID_APPRENANT = ?");
+                query.prepare(
+                    "SELECT s.NOM_SERVICE "
+                    "FROM BENEFICIER b "
+                    "JOIN SERVICE s ON b.ID_SERVICE = s.ID_SERVICE "
+                    "WHERE b.ID_APPRENANT = ?"
+                    );
                 query.addBindValue(id);
 
                 if (query.exec() && query.next()) {
@@ -2423,3 +2448,99 @@ void interface_formateur::readArduinoData()
         }
     }
 }
+*/
+void interface_formateur::readArduinoData()
+{
+    static QByteArray buffer;
+
+    QSerialPort *serial = d.getserial();
+    if (!serial || !serial->isOpen()) {
+        return;
+    }
+
+    QByteArray data = serial->readAll();
+    buffer.append(data);
+
+    while (buffer.contains('\n')) {
+
+        int newlinePos = buffer.indexOf('\n');
+        QByteArray line = buffer.left(newlinePos).trimmed();
+        buffer = buffer.mid(newlinePos + 1);
+
+        QString idStr = QString(line);
+
+        if (!idStr.isEmpty()) {
+
+            bool ok;
+            int id = idStr.toInt(&ok);
+
+            if (ok && id > 0) {
+
+                qDebug() << "ID reçu :" << id;
+
+                QSqlQuery query;
+                query.prepare(
+                    "SELECT s.nom_service "
+                    "FROM beneficier b "
+                    "JOIN SERVICE s ON b.id_service = s.id_service "
+                    "WHERE b.id_apprenant = ?"
+                    );
+                query.addBindValue(id);
+
+                if (query.exec() && query.next()) {
+
+                    QString service = query.value(0).toString();
+                    qDebug() << "✅ Service trouvé :" << service;
+
+                    //  ENVOYER À ARDUINO
+                    QString response = "ACCES:" + service + "\n";
+                    serial->write(response.toUtf8());
+                }
+                else {
+
+                    qDebug() << "Aucun service trouvé pour ID" << id;
+
+                    // ✅ ENVOYER À ARDUINO
+                    serial->write("REFUS\n");
+                }
+            }
+        }
+    }
+}
+
+/****************karim & amine*********************/
+void interface_formateur::read_from_arduino()
+
+{
+    QByteArray data = d.read_from_arduino();
+    QString msg = QString::fromUtf8(data).trimmed();
+
+    qDebug() << "Reçu de l'Arduino :" << msg;
+
+    if (msg.startsWith("ID:"))
+    {
+        int idA = msg.mid(3).toInt();
+
+        // Recherche SQL
+        QString service = a.rechercher_beneficier(idA).trimmed();
+
+        //  Si service trouvé → accès valide
+        if (service != "") {
+            QString msg = "ACCES:" + service;
+            d.write_to_arduino(msg.toUtf8());
+
+            QString response = "ACCES:" + service + "\n";
+            d.write_to_arduino(response.toUtf8());
+
+            qDebug() << "Accès valide, service =" << service;
+            qDebug() << "Reçu de l'Arduino :" << msg;
+        }
+        else
+        {
+            // Aucun service → accès invalide
+            d.write_to_arduino("REFUS\n");
+
+            qDebug() << "Accès invalide";
+        }
+    }}
+

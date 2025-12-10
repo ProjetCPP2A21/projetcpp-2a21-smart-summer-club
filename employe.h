@@ -5,6 +5,7 @@
 #include <QSqlQueryModel>
 #include <QString>
 #include <QDate>
+#include <QSerialPort>
 
 class employe
 {
@@ -29,6 +30,9 @@ public:
     int getcin() const { return cin; }
     int getnum() const { return num; }
     int getID() const { return id; }
+    //mdp
+    QString recuperer_mdp(int id, int cin, const QDate &dateembauche);
+
 
     // setters
     void setnom(const QString &n) { nom = n; }
@@ -40,6 +44,7 @@ public:
     void setcin(int c) { cin = c; }
     void setnum(int nm) { num = nm; }
     void setID(int i) { id = i; }
+    void rechercherArduino(QSerialPort* arduino, const QString& idText);
 
     // fonctionnalités
     bool ajouter();
@@ -47,6 +52,14 @@ public:
     bool modifier(int id);
     QSqlQueryModel* afficher();
     QSqlQueryModel* fill(int id);
+    QSqlQueryModel* rechercher_email(const QString &email);
+    QSqlQueryModel* trier_date_croissant();
+    bool seConnecter(int id, QString mdp);
+
+
+
+
+
 };
 
 #endif // EMPLOYE_H

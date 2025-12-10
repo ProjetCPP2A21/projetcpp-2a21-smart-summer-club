@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QString>
 #include <QByteArray>
+#include <QMessageBox>
 
 Arduino::Arduino() {
     data = "";
@@ -41,6 +42,7 @@ int Arduino::connect_arduino()
             {
                 arduino_is_available = true;
                 arduino_port_name = serial_port_info.portName();
+                //arduino_port_name = "COM6";
             }
         }
     }
@@ -58,6 +60,10 @@ int Arduino::connect_arduino()
 
 /*            connect(serial, &QSerialPort::readyRead,
                     this, &Arduino::handleReadyRead);*/
+            qDebug() << " connection  avec succes" << arduino_port_name;
+            QMessageBox::critical(nullptr, " Arduino",
+                                  "connection avec succes " + arduino_port_name);
+            return -0;
 
             return 0; // Succès
         }
@@ -102,7 +108,16 @@ void Arduino::write_to_arduino(QByteArray d)
         qDebug() << "Impossible d'écrire vers Arduino !";
     }
 }
-
+/*void Arduino::write_to_arduino(QByteArray d)
+{
+    if(serial->isWritable()){
+        serial->write(d);
+        // Envoyer des données vers Arduino
+    } else {
+        qDebug() << "Erreur : Impossible d'écrire sur le port série !";
+    }
+}
+*/
 /*void Arduino::handleReadyRead()
 {
     QByteArray ba = serial->readAll();
@@ -110,5 +125,26 @@ void Arduino::write_to_arduino(QByteArray d)
 
     if (!msg.isEmpty())
         emit dataReceived(msg); // envoie vers interface_formateur
+}*/
+
+void Arduino::handleReadyRead()
+{
+    /* QByteArray ba = serial->readAll();
+    QString msg = QString::fromUtf8(ba).trimmed();
+
+    if (!msg.isEmpty())
+        emit dataReceived(msg); // envoie vers interface_formateur*/
+    static QString buffer;
+    buffer += serial->readAll();
+
+    int pos;
+    while ((pos = buffer.indexOf('\n')) != -1) {
+        QString ligne = buffer.left(pos).trimmed();
+        buffer.remove(0, pos+1);
+
+        if (!ligne.isEmpty())
+            emit dataReceived(ligne);
+    }
 }
-*/
+
+

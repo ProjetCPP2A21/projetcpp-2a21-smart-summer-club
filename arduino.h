@@ -22,19 +22,20 @@ public:
 private:
     QSerialPort * serial; //Cet objet rassemble des informations (vitesse, bits de données, etc.)
     //et des fonctions (envoi, lecture de réception,...) sur ce qu'est une voie série pour Arduino.
-    static const quint16 arduino_uno_vendor_id = 6790;
-    static const quint16 arduino_uno_product_id = 29987;
-    // static const quint16 arduino_uno_vendor_id = 0x2341; // Note : J'ai corrigé 9025 en 0x2341, qui est l'ID standard d'Arduino Srl
-    // static const quint16 arduino_uno_product_id = 0x0043;
+    //static const quint16 arduino_uno_vendor_id = 9025;
+    //static const quint16 arduino_uno_product_id = 67;
+     static const quint16 arduino_uno_vendor_id = 0x2341; // Note : J'ai corrigé 9025 en 0x2341, qui est l'ID standard d'Arduino Srl
+     static const quint16 arduino_uno_product_id = 0x0043;
     QString arduino_port_name;
     bool arduino_is_available;
     QByteArray data;  // contenant les données lues à partir d'Arduino
 
 signals:
-    //void dataReceived(QString data);  // Signal pour envoyer les données reçues
+    void dataReceived(QString data);  // Signal pour envoyer les données reçues
 
 private slots:
-   // void handleReadyRead();
+   void handleReadyRead();
+
 };
 
 #endif // ARDUINO_H

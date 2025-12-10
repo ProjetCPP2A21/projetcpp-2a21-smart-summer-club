@@ -204,6 +204,7 @@ private:
 
     employe etmp;
     apprenant a;
+    Arduino d;
 
     // === EQUIPEMENT ===
     equipementC e;
@@ -212,6 +213,7 @@ private:
 
     // Service validation method
     bool verife();
+    void read_from_arduino();
 };
 
 #endif // INTERFACE_FORMATEUR_H
