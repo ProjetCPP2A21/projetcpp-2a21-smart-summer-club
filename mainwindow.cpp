@@ -80,6 +80,7 @@ void MainWindow::on_pushButton_gestionservice_clicked()
 
     interface_formateur *inter = new interface_formateur(this);
     inter->setPage(6);  // forcer l'affichage dans la page service
+    inter->show();
     service s;
     s.alert_capacite(101);
     s.alert_capacite(102);

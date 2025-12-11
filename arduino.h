@@ -22,6 +22,13 @@ private:
     QString arduino_port_name;
     bool arduino_is_available;
     QByteArray data;  // contenant les données lues à partir d'Arduino
+
+/* --- ARDUINO FORMATEUR ------------------
+ signals:
+    void dataReceived(QString data);  // Signal pour envoyer les données reçues
+
+private slots:
+    void handleReadyRead();*/
 };
 
 #endif // ARDUINO_H

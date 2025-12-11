@@ -74,10 +74,39 @@ QByteArray Arduino::read_from_arduino()
 
 void Arduino::write_to_arduino(QByteArray d)
 {
-    if(serial->isWritable()){
-        serial->write(d); // Envoyer des données vers Arduino
-    } else {
-        qDebug() << "Erreur : Impossible d'écrire sur le port série !";
+    if (serial->isOpen() && serial->isWritable())
+    {
+        serial->write(d);
+    }
+    else
+    {
+        qDebug() << "Impossible d'écrire vers Arduino !";
     }
 }
 // arduino sinda
+
+
+
+
+
+
+/* --- ARDUINO FORMATEUR ----
+ void Arduino::handleReadyRead()
+{
+    /* QByteArray ba = serial->readAll();
+    QString msg = QString::fromUtf8(ba).trimmed();
+
+    if (!msg.isEmpty())
+        emit dataReceived(msg); // envoie vers interface_formateur*/
+/*    static QString buffer;
+    buffer += serial->readAll();
+
+    int pos;
+    while ((pos = buffer.indexOf('\n')) != -1) {
+        QString ligne = buffer.left(pos).trimmed();
+        buffer.remove(0, pos+1);
+
+        if (!ligne.isEmpty())
+            emit dataReceived(ligne);
+    }
+}*/

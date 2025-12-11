@@ -20,25 +20,25 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>30</y>
-      <width>1271</width>
-      <height>751</height>
+      <x>230</x>
+      <y>40</y>
+      <width>1301</width>
+      <height>781</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">border: none;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page_employe">
      <widget class="QWidget" name="Formateur" native="true">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>10</y>
-        <width>1161</width>
+        <x>0</x>
+        <y>0</y>
+        <width>1291</width>
         <height>911</height>
        </rect>
       </property>
@@ -462,10 +462,10 @@ border: 2px solid #649dce;
       <widget class="QFrame" name="frame_11">
        <property name="geometry">
         <rect>
-         <x>270</x>
-         <y>50</y>
-         <width>751</width>
-         <height>711</height>
+         <x>310</x>
+         <y>70</y>
+         <width>1001</width>
+         <height>651</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -610,7 +610,7 @@ QPushButton:hover{
           <x>20</x>
           <y>410</y>
           <width>711</width>
-          <height>281</height>
+          <height>221</height>
          </rect>
         </property>
        </widget>
@@ -746,7 +746,7 @@ QPushButton:hover{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1271</width>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -1578,7 +1578,7 @@ border-radius:20px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1271</width>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -1997,9 +1997,9 @@ border-radius:20px;
      <widget class="QWidget" name="Formateur_3" native="true">
       <property name="geometry">
        <rect>
-        <x>-10</x>
+        <x>0</x>
         <y>0</y>
-        <width>1371</width>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -2073,7 +2073,7 @@ border: 2px solid #649dce;
         <rect>
          <x>330</x>
          <y>40</y>
-         <width>941</width>
+         <width>991</width>
          <height>701</height>
         </rect>
        </property>
@@ -2743,7 +2743,7 @@ border-radius:10px;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1271</width>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -2778,7 +2778,7 @@ border-radius:30px;</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1271</width>
+         <width>1291</width>
          <height>751</height>
         </rect>
        </property>
@@ -3079,7 +3079,7 @@ border: 2px solid #649dce;
          <rect>
           <x>330</x>
           <y>40</y>
-          <width>931</width>
+          <width>981</width>
           <height>681</height>
          </rect>
         </property>
@@ -3339,9 +3339,9 @@ QPushButton:hover{
      <widget class="QWidget" name="Formateur_8" native="true">
       <property name="geometry">
        <rect>
-        <x>-10</x>
-        <y>10</y>
-        <width>1271</width>
+        <x>0</x>
+        <y>0</y>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -3670,7 +3670,7 @@ border: 2px solid #649dce;
         <rect>
          <x>330</x>
          <y>40</y>
-         <width>931</width>
+         <width>961</width>
          <height>681</height>
         </rect>
        </property>
@@ -4010,7 +4010,7 @@ QPushButton:pressed {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1271</width>
+        <width>1291</width>
         <height>751</height>
        </rect>
       </property>
@@ -4045,7 +4045,7 @@ border-radius:30px;</string>
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1271</width>
+         <width>1291</width>
          <height>751</height>
         </rect>
        </property>
@@ -4080,7 +4080,7 @@ border-radius:30px;</string>
          <rect>
           <x>330</x>
           <y>40</y>
-          <width>1001</width>
+          <width>981</width>
           <height>681</height>
          </rect>
         </property>

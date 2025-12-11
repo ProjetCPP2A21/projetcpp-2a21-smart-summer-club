@@ -290,7 +290,7 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
         );
 
     // 🆕 POSITION EN HAUT À GAUCHE
-    pushButton_TOGGLE_CHATBOT->setGeometry(20, 20, 150, 35);
+    pushButton_TOGGLE_CHATBOT->setGeometry(1150, 100, 150, 44);
 
     // === FRAME CHATBOT (CACHÉ AU DÉBUT) ===
     frameChatbot = new QFrame(parent);
@@ -304,7 +304,7 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
         "}"
         );
     // 🆕 POSITION SOUS LE BOUTON
-    frameChatbot->setGeometry(20, 60, 380, 400);
+    frameChatbot->setGeometry(1150, 150, 380, 500);
     frameChatbot->hide();  // 🆕 CACHÉ AU DÉBUT
 
     // === LAYOUT VERTICAL ===
@@ -766,7 +766,7 @@ void apprenant::creerInterfaceGroupes(QWidget *parent)
         "}"
         );
     // 🆕 POSITION EN HAUT À DROITE (à côté du chatbot)
-    pushButton_TOGGLE_GROUPES->setGeometry(180, 20, 120, 35);
+    pushButton_TOGGLE_GROUPES->setGeometry(1350, 105, 120, 35);
 
     // === FRAME GROUPES (CACHÉ AU DÉBUT) ===
     frameGroupes = new QFrame(parent);
@@ -789,7 +789,7 @@ void apprenant::creerInterfaceGroupes(QWidget *parent)
         "}"
         );
     // 🆕 POSITION SOUS LE BOUTON GROUPES
-    frameGroupes->setGeometry(180, 60, 300, 500);
+    frameGroupes->setGeometry(1170, 150, 300, 500);
     frameGroupes->hide();  // CACHÉ AU DÉBUT !
 
     QVBoxLayout *layoutGroupes = new QVBoxLayout(frameGroupes);
@@ -1138,7 +1138,8 @@ void apprenant::on_pushButton_TOGGLE_GROUPES_clicked()
             "}"
             );
         // 🆕 REPOSITIONNE LE BOUTON
-        pushButton_TOGGLE_GROUPES->setGeometry(180, 20, 120, 35);
+
+        pushButton_TOGGLE_GROUPES->setGeometry(1350, 105, 120, 35);
     } else {
         // Afficher l'interface groupes
         frameGroupes->show();
@@ -1172,3 +1173,4 @@ QSqlQueryModel* apprenant::getGroupeModel(const QString& groupeName)
     }
     return nullptr;
 }
+

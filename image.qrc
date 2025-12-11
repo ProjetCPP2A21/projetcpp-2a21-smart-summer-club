@@ -15,8 +15,12 @@
         <file>glass.png</file>
         <file>formateur.png</file>
         <file>warning.png</file>
+        <file>user2.png</file>
+        <file>mdp.png</file>
+        <file>utilisateur.png</file>
     </qresource>
     <qresource prefix="/icon">
         <file>warning.png</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>

@@ -78,6 +78,26 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     }
     QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_rfid()));
 
+
+    /* -- CONNEXION ARDUINO FORMATEUR-------------------------------------------
+    int rett = B.connect_arduino(); // lancer la connexion à arduino
+    switch(rett){
+    case 0:
+        qDebug() << "arduino is available and connected to : " << B.getarduino_port_name();
+        break;
+    case 1:
+        qDebug() << "arduino is available but not connected to :" << B.getarduino_port_name();
+        break;
+    case -1: // Le cas -1 n'était pas présent dans connect_arduino() mais est géré ici.
+        qDebug() << "arduino is not available";
+        break;
+    }
+    connect(B.getserial(), &QSerialPort::readyRead,
+            this, &interface_formateur::lireBufferArduino);
+    //QObject::connect(B.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
+    //-- FIN CONNEXION ARDUINO FORMATEUR -------------------------------------------
+*/
+
     qDebug() << "=== DÉMARRAGE APPLICATION ===";
     qDebug() << "Couleurs activées: Vert(disponible), Rouge(en panne), Jaune(réservé)";
 
@@ -117,7 +137,7 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
 
     connect(ui->tableEquipement, &QTableView::clicked, this, &interface_formateur::on_EquipementTable_clicked);
 
-    // 🆕 CREATE CHATBOT INTERFACE - PASS 'this' AS PARENT
+   // 🆕 CREATE CHATBOT INTERFACE - PASS 'this' AS PARENT
     a.creerInterfaceChatbot(this);
     // 🆕 CREATE GROUPES INTERFACE
     a.creerInterfaceGroupes(this);
@@ -335,8 +355,48 @@ void interface_formateur::on_pushButton_equipement_clicked()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------DEBUT_FORMATEUR_CRUD-------------------------------------------------------------------------------------------------------------------------------------------------
-//metier
+/* --- ECRAN TACTIL MALEK ----------------------
+void interface_formateur::lireBufferArduino()
+{
+    static QString bufferPartiel;
+    QByteArray data = B.read_from_arduino();
+    bufferPartiel += QString::fromUtf8(data);
 
+    int pos = bufferPartiel.indexOf('\n');
+    while (pos != -1) {
+        QString ligne = bufferPartiel.left(pos).trimmed();
+        bufferPartiel.remove(0, pos + 1);
+
+        if (!ligne.isEmpty()) {
+            qDebug() << "[Arduino] Code reçu :" << ligne;
+            verifierIdTFT(ligne);                 // Vérification dans Oracle
+        }
+        pos = bufferPartiel.indexOf('\n');
+    }
+}
+
+void interface_formateur::verifierIdTFT(const QString &code)
+{
+    Formateur FA;
+    QString message;
+
+    if (FA.recherche_arduino(code)) {
+        int id = code.toInt();
+        QString nom, prenom;
+        if (FA.donnee_arduino(id, nom, prenom)) {
+            message = "*****Bienvenue*****"+nom + " " + prenom;
+        }
+    } else {
+        message = "Formateur inconnu";
+    }
+
+    // Envoyer message à Arduino pour affichage sur TFT
+    QByteArray data = message.toUtf8();
+    data.append('\n');
+    B.write_to_arduino(data);
+}
+// --- ECRAN TACTIL MALEK ----------------------*/
+//metier
 void interface_formateur::onTableSelectionChanged()
 {
     QModelIndexList indexes = ui->Tab_Formateur->selectionModel()->selectedRows();

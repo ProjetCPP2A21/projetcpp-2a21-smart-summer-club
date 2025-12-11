@@ -22,131 +22,232 @@
      <rect>
       <x>-10</x>
       <y>-30</y>
-      <width>1531</width>
-      <height>691</height>
+      <width>2000</width>
+      <height>1800</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: rgb(255, 255, 255);</string>
     </property>
     <widget class="QWidget" name="page_login">
      <widget class="QStackedWidget" name="stackedWidget_login">
       <property name="geometry">
        <rect>
-        <x>460</x>
-        <y>60</y>
-        <width>701</width>
-        <height>771</height>
+        <x>780</x>
+        <y>70</y>
+        <width>541</width>
+        <height>711</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(106, 166, 218);
-
+border: none;
 border-radius:30px;</string>
       </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
       <widget class="QWidget" name="page_authentification">
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>290</x>
-          <y>430</y>
-          <width>93</width>
-          <height>29</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>mdp oublié</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>50</y>
-          <width>311</width>
-          <height>81</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-font: 22pt &quot;Segoe UI&quot;;</string>
-        </property>
-        <property name="text">
-         <string>   bienvenue</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_6">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>190</y>
-          <width>121</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>ID :</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_7">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>270</y>
-          <width>121</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>mot de passe :</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>200</y>
-          <width>161</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>280</y>
-          <width>151</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButton_se_connecter">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>360</y>
-          <width>111</width>
-          <height>41</height>
+          <x>140</x>
+          <y>370</y>
+          <width>251</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 10px;</string>
+         <string notr="true">QPushButton{
+	font: 700 10pt &quot;Rockwell&quot;;
+color: #ffffff;
+border-radius:10px;
+border : 2px solid #ffffff;
+	background-color: rgb(93, 147, 191);
+}
+QPushButton:hover{
+	background-color: #466e8f;
+	color: rgb(255, 255, 255);
+	font: 700 11pt &quot;Rockwell&quot;;
+}
+
+
+
+
+</string>
         </property>
         <property name="text">
          <string>Se connecter</string>
         </property>
        </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>50</y>
+          <width>261</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">	color: rgb(4, 4, 87);
+background-color: rgb(106, 166, 218);
+	font: 700 30pt &quot;Rockwell&quot;;
+border :none;</string>
+        </property>
+        <property name="text">
+         <string>Bienvenue</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_19">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>220</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border: 1px solid #ffffff;
+border-radius: 10px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+font: 11pt &quot;Segoe UI&quot;;
+border: 3px solid #ffffff;
+border-radius : 20px;</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_20">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>280</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border: 1px solid #ffffff;
+border-radius: 10px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);
+border:2px solid #ffffff;
+border-radius : 20px;
+font: 11pt &quot;Segoe UI&quot;;</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_15">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>220</y>
+          <width>21</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="image.qrc">:/img/utilisateur.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_16">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>280</y>
+          <width>21</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="image.qrc">:/img/mdp.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>311</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+font: 8pt &quot;Rockwell&quot;;
+	color: rgb(4, 4, 87);
+}
+QPushButton:hover{
+	color:#ffffff;
+   text-decoration: underline;
+
+}
+
+
+
+
+</string>
+        </property>
+        <property name="text">
+         <string>Mot de passe oublié</string>
+        </property>
+       </widget>
+       <zorder>frame_19</zorder>
+       <zorder>pushButton_se_connecter</zorder>
+       <zorder>label_2</zorder>
+       <zorder>frame_20</zorder>
+       <zorder>label_15</zorder>
+       <zorder>label_16</zorder>
+       <zorder>pushButton</zorder>
       </widget>
       <widget class="QWidget" name="page_mdp_oublie">
        <widget class="QFrame" name="frame_12">
@@ -315,6 +416,76 @@ border-radius:10px;</string>
        </widget>
       </widget>
      </widget>
+     <widget class="QFrame" name="frame_3">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>491</width>
+        <height>971</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+background-color: rgb(106, 166, 218);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>-10</x>
+         <y>170</y>
+         <width>501</width>
+         <height>451</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius : 20px;
+background-color: rgb(240, 195, 0);
+background-color: rgb(106, 166, 218);
+border : none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="image.qrc">:/img/image.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_17">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>170</y>
+        <width>621</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border : 3px solid #040457;
+background-color: #ffffff;
+border-radius:20px;
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+     </widget>
+     <zorder>frame_17</zorder>
+     <zorder>stackedWidget_login</zorder>
+     <zorder>frame_3</zorder>
     </widget>
     <widget class="QWidget" name="page_menu">
      <widget class="QFrame" name="frame_4">

@@ -107,6 +107,7 @@ private:
     QLabel *labelStatutGroupe;
     QPushButton *pushButton_TOGGLE_GROUPES;
     QFrame *frameGroupes;
+
 };
 
 #endif // APPRENANT_H
