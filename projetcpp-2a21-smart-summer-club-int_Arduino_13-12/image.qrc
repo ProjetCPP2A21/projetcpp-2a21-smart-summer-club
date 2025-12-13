@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>download.png</file>
+        <file>image.png</file>
+        <file>loupe.png</file>
+        <file>money.png</file>
+        <file>reglag3.png</file>
+        <file>reglage.png</file>
+        <file>retourr.png</file>
+        <file>stat.png</file>
+        <file>trie.png</file>
+        <file>Untitled-1.png</file>
+        <file>poubelle.png</file>
+        <file>retour.png</file>
+        <file>glass.png</file>
+        <file>formateur.png</file>
+        <file>warning.png</file>
+        <file>user2.png</file>
+        <file>mdp.png</file>
+        <file>utilisateur.png</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>warning.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
+</RCC>

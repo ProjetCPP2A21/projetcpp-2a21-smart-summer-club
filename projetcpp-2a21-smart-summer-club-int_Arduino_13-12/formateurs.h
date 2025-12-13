@@ -1,0 +1,85 @@
+#ifndef FORMATEURS_H
+#define FORMATEURS_H
+#include <QMainWindow>
+#include <QString>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QTableView>
+#include<QDate> //modif
+#include <QObject>
+#include "sms.h"
+#include "arduino.h"
+
+
+class Formateur
+{
+private:
+    int IdFormateur;
+    QString NomFormateur;
+    QString PrenomFormateur;
+    QString ContactFormateur;
+    QString SexeFormateur;
+    QDate DateEmbauche;//Modif
+    QString SpecialiteFormateur;
+    float HeuresPrevuesFormateur;
+    float SalaireFormateur;
+
+    SmsSender *smsSender = nullptr;
+
+
+public:
+    // Constructeur par défaut
+    Formateur();
+
+    // Constructeur paramétré
+    Formateur(int id, const QString &nom, const QString &prenom, const QString &contact,const QString &sexe,
+              const QDate &dateEmbauche,const QString &specialite,float heuresPrevues, float salaire);
+
+    // --- Getters ---
+    int getIdFormateur() const;
+    QString getNomFormateur() const;
+    QString getPrenomFormateur() const;
+    QString getContactFormateur() const;
+    QString getSexeFormateur() const;
+    QDate getDateEmbauche() const;//modif
+    QString getSpecialiteFormateur() const;
+    float getHeuresPrevuesFormateur() const;
+    float getSalaireFormateur() const;
+
+    // --- Setters ---
+    void setIdFormateur(int id);
+    void setNomFormateur(const QString &nom);
+    void setPrenomFormateur(const QString &prenom);
+    void setContactFormateur(const QString &contact);
+    void setSexeFormateur(const QString &sexe);
+    void setDateEmbauche(const QDate &date);//modif
+    void setSpecialiteFormateur(const QString &spec);
+    void setHeuresPrevuesFormateur(float heures);
+    void setSalaireFormateur(float salaire);
+
+
+    // --- BASIC_CRUD----------
+    bool ajouter();
+    QSqlQueryModel * afficher();
+    QSqlQueryModel* Afficher_recherche(int id);
+    bool supprimer(int id);
+    bool modifier();
+
+    // --- METIERS-------------
+    QMap<QString, int> statistiquesSexe();
+    QSqlQueryModel * trierDateEmbauche();
+    void exporterPDF();
+    bool recherche(int id);
+
+    // --- Metiers avances -----
+    QImage generateQrCode() const;
+    void setSmsSender(SmsSender *sender);
+
+    // --- ARDUINO ----
+    bool recherche_arduino(QString id);               // Vérifie si l'ID existe
+    bool donnee_arduino(int id, QString &nom, QString &prenom); // Récupère nom/prénom
+};
+
+#endif // FORMATEURS_H
+
+
