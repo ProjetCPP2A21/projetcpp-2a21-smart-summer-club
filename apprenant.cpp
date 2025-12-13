@@ -20,6 +20,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QScrollBar>
+#include  "interface_formateur.h"
 
 // Constructeur modifié
 apprenant::apprenant(QObject *parent) : QObject(parent)
@@ -271,7 +272,7 @@ void apprenant::statistiques_ages(QWidget *parent)
 // 🆕 IMPLÉMENTATION CHATBOT
 void apprenant::creerInterfaceChatbot(QWidget *parent)
 {
-    // === BOUTON AFFICHER/MASQUER ===
+    // === BOUTON AFFICHER/MASQUER ===//
     pushButton_TOGGLE_CHATBOT = new QPushButton("🤖 Ouvrir l'Assistant", parent);
     pushButton_TOGGLE_CHATBOT->setObjectName("pushButton_TOGGLE_CHATBOT");
     pushButton_TOGGLE_CHATBOT->setStyleSheet(
@@ -284,17 +285,16 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
         "font-size: 10pt; "
         "margin: 5px; "
         "}"
-        "QPushButton:hover { "
-        "background-color: #8e44ad; "
-        "}"
+        "QPushButton:hover { background-color: #8e44ad; }"
         );
 
-    // 🆕 POSITION EN HAUT À GAUCHE
-    pushButton_TOGGLE_CHATBOT->setGeometry(1150, 100, 150, 44);
+    // Position du bouton Chatbot
+    pushButton_TOGGLE_CHATBOT->setGeometry(1100, 100, 150, 44);
 
-    // === FRAME CHATBOT (CACHÉ AU DÉBUT) ===
+    // === FRAME CHATBOT ===
     frameChatbot = new QFrame(parent);
     frameChatbot->setObjectName("frameChatbot");
+    frameChatbot->setGeometry(900, 150, 380, 500);   // ✔ Aligné avec le bouton Chatbot
     frameChatbot->setStyleSheet(
         "QFrame { "
         "background-color: #f8f9fa; "
@@ -303,9 +303,41 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
         "padding: 15px; "
         "}"
         );
-    // 🆕 POSITION SOUS LE BOUTON
-    frameChatbot->setGeometry(1150, 150, 380, 500);
-    frameChatbot->hide();  // 🆕 CACHÉ AU DÉBUT
+    frameChatbot->hide();
+
+    // === BOUTON GROUPES ===
+    pushButton_TOGGLE_GROUPES = new QPushButton("📚 Groupes", parent);
+    pushButton_TOGGLE_GROUPES->setGeometry(950, 100, 150, 44);
+    pushButton_TOGGLE_GROUPES->setStyleSheet(
+        "QPushButton { "
+        "background-color: #9b59b6; "
+        "color: white; "
+        "padding: 8px 15px; "
+        "border: none; "
+        "border-radius: 5px; "
+        "font-size: 10pt; "
+        "margin: 5px; "
+        "}"
+        "QPushButton:hover { background-color: #8e44ad; }"
+        );
+
+    // === FRAME GROUPES ===
+    frameGroupes = new QFrame(parent);
+    frameGroupes->setObjectName("frameGroupes");
+    frameGroupes->setGeometry(850, 150, 380, 500);   // ✔ Aligné avec le bouton Groupes
+    frameGroupes->setStyleSheet(
+        "QFrame { "
+        "background-color: #f8f9fa; "
+        "border: 2px solid #dee2e6; "
+        "border-radius: 15px; "
+        "padding: 15px; "
+        "}"
+        );
+    frameGroupes->hide();
+    // 🆕 CACHÉ AU DÉBUT
+
+
+
 
     // === LAYOUT VERTICAL ===
     QVBoxLayout *layoutChatbot = new QVBoxLayout(frameChatbot);
@@ -351,6 +383,7 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
     layoutChatbot->addWidget(textEdit_chat);
 
     // === ZONE DE SAISIE ===
+
     QHBoxLayout *layoutSaisie = new QHBoxLayout();
 
     lineEdit_question = new QLineEdit(frameChatbot);
@@ -393,6 +426,8 @@ void apprenant::creerInterfaceChatbot(QWidget *parent)
     connect(pushButton_CHATBOT, &QPushButton::clicked, this, &apprenant::on_pushButton_CHATBOT_clicked);
     connect(lineEdit_question, &QLineEdit::returnPressed, this, &apprenant::on_pushButton_CHATBOT_clicked);
     connect(pushButton_TOGGLE_CHATBOT, &QPushButton::clicked, this, &apprenant::on_pushButton_TOGGLE_CHATBOT_clicked);  // 🆕 CONNECTION
+    connect(pushButton_TOGGLE_GROUPES, &QPushButton::clicked,this, &apprenant::on_pushButton_TOGGLE_GROUPES_clicked);
+    //connect(pushButton_CREER_GROUPES, &QPushButton::clicked,this, &apprenant::on_pushButton_TOGGLE_GROUPES_clicked);
 
     // === MESSAGE DE BIENVENUE ===
     textEdit_chat->setTextColor(Qt::black);  // 🎯 FORCER LA COULEUR NOIRE
@@ -748,6 +783,7 @@ void apprenant::debugTables()
 
 void apprenant::creerInterfaceGroupes(QWidget *parent)
 {
+
     // === BOUTON POUR AFFICHER/MASQUER LES GROUPES ===
     pushButton_TOGGLE_GROUPES = new QPushButton("🎯 Groupes", parent);
     pushButton_TOGGLE_GROUPES->setObjectName("pushButton_TOGGLE_GROUPES");
@@ -789,8 +825,9 @@ void apprenant::creerInterfaceGroupes(QWidget *parent)
         "}"
         );
     // 🆕 POSITION SOUS LE BOUTON GROUPES
-    frameGroupes->setGeometry(1170, 150, 300, 500);
+    frameGroupes->setGeometry(900, 150, 300, 500);
     frameGroupes->hide();  // CACHÉ AU DÉBUT !
+
 
     QVBoxLayout *layoutGroupes = new QVBoxLayout(frameGroupes);
     layoutGroupes->setSpacing(10);  // 🆕 ESPACEMENT
@@ -1174,3 +1211,35 @@ QSqlQueryModel* apprenant::getGroupeModel(const QString& groupeName)
     return nullptr;
 }
 
+QString apprenant::rechercher_beneficier(int id_apprenant)
+{
+
+    QSqlQuery query;
+    query.prepare("SELECT s.nom_service "
+                  "FROM beneficier b "
+                  "JOIN service s ON b.id_service = s.id_service "
+                  "WHERE b.id_apprenant = :idA");
+    query.bindValue(":idA", id_apprenant);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();   // ✅ retourne le nom du service
+    }
+
+    return "";
+    /*QSqlQuery query;
+    query.prepare("SELECT s.nom_service "
+                  "FROM beneficier b "
+                  "JOIN service s ON b.id_service = s.id_service "
+                  "WHERE b.id_apprenant = :idA");
+    query.bindValue(":idA", id_apprenant);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur SQL:" << query.lastError().text();
+    }
+
+    if (query.next()) {
+        return query.value(0).toString();
+    }
+
+    return "";*/
+}

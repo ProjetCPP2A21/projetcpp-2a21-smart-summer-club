@@ -172,6 +172,9 @@ border:2px solid #ffffff;
 border-radius : 20px;
 font: 11pt &quot;Segoe UI&quot;;</string>
          </property>
+         <property name="echoMode">
+          <enum>QLineEdit::EchoMode::Password</enum>
+         </property>
         </widget>
        </widget>
        <widget class="QLabel" name="label_15">

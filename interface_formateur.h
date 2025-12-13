@@ -34,6 +34,7 @@
 #include "sendgridclient.h"
 #include "sms.h"
 
+
 class MainWindow;
 
 /* ============================
@@ -191,8 +192,11 @@ private slots:
     void on_pushButton_47_clicked();
     void on_pushButton_42_clicked();
 
-    //Arduino
+    //Arduino karim&amine
     void update_rfid();
+
+    void read_from_arduino();
+    //void readArduinoData();
 
 private:
     Ui::interface_formateur *ui;
@@ -201,12 +205,14 @@ private:
     Formateur F, F1;
     int IDselection = -2;
     SmsSender *smsSender;
-    Arduino B;
-    QByteArray data;
+
 
     QSerialPort *arduinoSerial;
     Arduino arduino;
-
+    Arduino B;
+    QByteArray data;
+    /*-----karim----*/
+    Arduino d;
 
     service s;
 
@@ -226,6 +232,10 @@ private:
 
     // Service validation method
     bool verife();
+    //apprenant *apprenantObj;
+
+
+
 };
 
 #endif // INTERFACE_FORMATEUR_H

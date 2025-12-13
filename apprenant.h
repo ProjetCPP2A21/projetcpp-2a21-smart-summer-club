@@ -84,6 +84,7 @@ public:
     QSqlQueryModel* afficherGroupe(const QList<int>& idsApprenants);
     void exporterGroupesWord(const QMap<QString, QList<int>>& groupes);
     QSqlQueryModel* getGroupeModel(const QString& groupeName);
+    QString rechercher_beneficier(int id_apprenant);
 
 signals:
     // 🆕 SIGNAL TO REQUEST GROUP DISPLAY
@@ -107,6 +108,7 @@ private:
     QLabel *labelStatutGroupe;
     QPushButton *pushButton_TOGGLE_GROUPES;
     QFrame *frameGroupes;
+
 
 };
 

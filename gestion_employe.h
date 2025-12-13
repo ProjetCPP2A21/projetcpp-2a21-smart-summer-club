@@ -12,7 +12,7 @@
 //j'ajoute
 //#include <QtPdf/QPdfWriter>
 //#include <QPainter>
-
+#include "arduino.h"
 #include <QSerialPort>
 
 class MainWindow;
@@ -74,11 +74,13 @@ private slots:
 
 
 
+
 private:
     Ui::gestion_employe *ui;
     employe etmp; // ✅ plus d’erreur ici
-private:
+
     QSerialPort* arduino;
+    Arduino d;
 
 };
 

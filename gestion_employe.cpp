@@ -27,14 +27,16 @@
 #include <QSqlError>
 #include <QSqlTableModel>
 #include <QThread>
-
+#include "arduino.h"
 
 gestion_employe::gestion_employe(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::gestion_employe)
 {
     ui->setupUi(this);
-    arduino = new QSerialPort(this);
+    //arduino = new QSerialPort(this);
+    Arduino d;
+
 
     // ---- INPUT VALIDATORS (set once at start) ----
     QIntValidator *intVal = new QIntValidator(this);
@@ -61,21 +63,21 @@ gestion_employe::gestion_employe(QWidget *parent)
     });
 
     // Trouver automatiquement l'Arduino
-    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+   /* foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
         if (info.vendorIdentifier() != 0) {   // Arduino détecté
             arduino->setPort(info);
             break;
         }
-    }
+    }*/
 
-    arduino->setBaudRate(QSerialPort::Baud9600);
+   /* arduino->setBaudRate(QSerialPort::Baud9600);
 
     if (arduino->open(QIODevice::ReadWrite)) {
         qDebug() << "Arduino connecté !";
         QThread::msleep(1200);  // Laisser l'Arduino redémarrer
     } else {
         qDebug() << "Erreur ouverture Arduino !";
-    }
+    }*/
 }
 
 gestion_employe::~gestion_employe()

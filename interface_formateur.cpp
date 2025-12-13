@@ -58,6 +58,9 @@
 #include <QFocusEvent>
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
+#include "arduino.h"
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     : QMainWindow(parent),
@@ -68,7 +71,7 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
 {
     ui->setupUi(this);
     //ARDUINO
-    int ret = A.connect_arduino(); // Connexion à l'Arduino
+    /*int ret = A.connect_arduino(); // Connexion à l'Arduino
     switch(ret){
     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
         break;
@@ -76,7 +79,7 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
         break;
     case(-1):qDebug() << "arduino is not available";
     }
-    QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_rfid()));
+    QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_rfid()));*/
 
 
     /* -- CONNEXION ARDUINO FORMATEUR-------------------------------------------
@@ -97,7 +100,24 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     //QObject::connect(B.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
     //-- FIN CONNEXION ARDUINO FORMATEUR -------------------------------------------
 */
+/********************arduino service_apprenant***************************/
+    int rett2 = d.connect_arduino(); // lancer la connexion à arduino
+    switch(rett2){
+    case 0:
+        qDebug() << "arduino is available and connected to : " << d.getarduino_port_name();
+        break;
+    case 1:
+        qDebug() << "arduino is available but not connected to :" << d.getarduino_port_name();
+        break;
+    case -1: // Le cas -1 n'était pas présent dans connect_arduino() mais est géré ici.
+        qDebug() << "arduino is not available";
+        break;
+    }
+    connect(d.getserial(), &QSerialPort::readyRead,
+            this, &interface_formateur::read_from_arduino);
+/****************************************************************************/
 
+    //QObject::connect(d.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
     qDebug() << "=== DÉMARRAGE APPLICATION ===";
     qDebug() << "Couleurs activées: Vert(disponible), Rouge(en panne), Jaune(réservé)";
 
@@ -138,9 +158,13 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
     connect(ui->tableEquipement, &QTableView::clicked, this, &interface_formateur::on_EquipementTable_clicked);
 
    // 🆕 CREATE CHATBOT INTERFACE - PASS 'this' AS PARENT
-    a.creerInterfaceChatbot(this);
+    //a.creerInterfaceChatbot(this);
+    a.creerInterfaceChatbot(ui->Formateur_4);
+
     // 🆕 CREATE GROUPES INTERFACE
-    a.creerInterfaceGroupes(this);
+    //a.creerInterfaceGroupes(this);
+    a.creerInterfaceGroupes(ui->Formateur_4);
+
     // 🆕 CONNECT GROUP DISPLAY SIGNAL
     connect(&a, &apprenant::groupeAAfficher, this, &interface_formateur::onGroupeAAfficher);
 
@@ -278,7 +302,7 @@ interface_formateur::interface_formateur(MainWindow *menu, QWidget *parent)
 
 
     // Display the list at startup
-    ui->tableView_2->setModel(etmp.afficher());
+    ui->tableView_3->setModel(etmp.afficher());
 
 }
 
@@ -341,11 +365,14 @@ void interface_formateur::on_pushButton_service_clicked()
     for (int id_service = 1; id_service <= 105; ++id_service) {
         s.alert_capacite(id_service);
     }
+
 }
 
 void interface_formateur::on_pushButton_apprenant_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
+
+
 }
 
 void interface_formateur::on_pushButton_equipement_clicked()
@@ -957,6 +984,7 @@ void interface_formateur::on_pushButton_stat_formateur_clicked()
 
     StatisticsDialog d(this);
     d.exec();
+
 }
 //-------------------------FIN_FORMATEUR_CRUD-------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2496,6 +2524,59 @@ void interface_formateur::update_rfid()
     }
 }
 
+/*--------------in&out final karim & amine---------------*/
+void interface_formateur::read_from_arduino()
+{
+    static QByteArray buffer;
+
+    buffer.append(d.getserial()->readAll());
+
+    int pos;
+    while ((pos = buffer.indexOf('\n')) != -1) {
+
+        QByteArray line = buffer.left(pos);
+        buffer.remove(0, pos + 1);
+
+        QString msg = QString::fromUtf8(line).trimmed();
+        qDebug() << "Reçu :" << msg;
+
+        if (!msg.startsWith("ID:"))
+            continue;
+
+        int idA = msg.mid(3).toInt();
+        QString service = a.rechercher_beneficier(idA).trimmed();
+
+        if (!service.isEmpty()) {
+            QString response = "ACCES:" + service + "\n";
+            d.write_to_arduino(response.toUtf8());
+            qDebug() << "Envoi :" << response;
+        } else {
+            d.write_to_arduino("REFUS\n");
+            qDebug() << "Envoi : REFUS";
+        }
+    }
+}
+
+
+/****************karim & amine*********************/
+/*void interface_formateur::read_from_arduino()
+{
+    QByteArray data = d.read_from_arduino();
+    QString msg = QString::fromUtf8(data).trimmed();
+
+    if (!msg.startsWith("ID:"))
+        return;
+
+    int idA = msg.mid(3).toInt();
+    QString service = a.rechercher_beneficier(idA).trimmed();
+
+    if (!service.isEmpty()) {
+        d.write_to_arduino(("ACCES:" + service + "\n").toUtf8());
+    }
+    else {
+        d.write_to_arduino("REFUS\n");
+    }
+}*/
 
 
 
